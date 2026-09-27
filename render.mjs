@@ -8,7 +8,7 @@ import { pathToFileURL } from 'node:url';
 
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
 const fps = +arg('fps', 30);
-const duration = +arg('duration', 10);
+const duration = +arg('duration', 15);
 const stills = arg('stills', '');
 const ffmpeg = process.env.FFMPEG || 'ffmpeg';
 const chrome = process.env.CHROME || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';

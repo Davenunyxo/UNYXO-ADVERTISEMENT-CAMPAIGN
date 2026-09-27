@@ -1,12 +1,13 @@
 # UNYXO — Smart Booking & Scheduling ad
 
-10-second 1920×1080 ad, built as a frame-accurate HTML animation (`ad/index.html`) and rendered to MP4.
+15-second 1920×1080 ad, built as a frame-accurate HTML animation (`ad/index.html`) and rendered to MP4.
 
 | Time | Scene |
 |---|---|
-| 0–3s | Push-in on the September 2026 calendar. Tiles sweep into status colors (green = confirmed, yellow = waiting queue, blue = in progress), and the live **Online Queue** drawer slides open |
-| 3–6s | Camera pans, cursor clicks Sep 22, a glass **Client Profile** card expands, the notes field types *"VIP Client – Prefers morning follow-ups"*, and the slot is dragged from 2:00 PM to 9:30 AM |
-| 6–10s | UI tilts back into 3D, the metallic UNYXO mark draws in with its glow, then **SMART BOOKING & SCHEDULING** and *Business done easier* appear |
+| 0–3s | Push-in on the September 2026 calendar. Tiles sweep into status colors (green = confirmed, yellow = waiting queue, blue = in progress) |
+| 3–8s | **Online waiting queue.** The shop's waiting area fills up ("No seats available"), a customer scans the in-store QR code with their phone, joins the online queue, watches their place count down (#4 → #2) and gets a "your turn next" notification. The steps *Scan → Join → Get notified* light up as it happens |
+| 8–11s | Back to the dashboard (the QR customer now shows in the live queue). Cursor clicks Sep 22, a glass **Client Profile** card expands, the notes field types *"VIP Client – Prefers morning follow-ups"*, and the slot is dragged from 2:00 PM to 9:30 AM |
+| 11–15s | UI tilts back into 3D, the metallic UNYXO mark draws in with its glow, then **SMART BOOKING & SCHEDULING** and *Business done easier* appear |
 
 Output: `out/unyxo-smart-booking-ad.mp4`
 
