@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>UNYXO Smart Booking Ad</title>
+<script>/* ?portrait → 1080×1920 Instagram Reels layout */if(/portrait/.test(location.search))document.documentElement.classList.add('portrait')</script>
 <style>
 @font-face{font-family:Poppins;font-weight:400;src:url(fonts/poppins-latin-400-normal.woff2) format("woff2")}
 @font-face{font-family:Poppins;font-weight:500;src:url(fonts/poppins-latin-500-normal.woff2) format("woff2")}
@@ -257,6 +258,46 @@ body{font-family:Poppins,system-ui,sans-serif;color:var(--text);-webkit-font-smo
 #notif .t1{font-size:14px;color:#aab3c5;font-weight:600}
 #notif .t2{font-size:18px;font-weight:700;margin-top:1px}
 #notif .t3{font-size:15px;color:#c9d2e3;font-weight:500}
+
+/* ===== Instagram Reels (9:16, 1080×1920) layout — text kept inside y≈220–1540, x≈60–1020 ===== */
+html.portrait,html.portrait body,.portrait #stage{width:1080px;height:1920px}
+.portrait #pattern{inset:-300px}
+.portrait #g2{left:420px !important}
+.portrait #world{left:-50px;top:200px}
+.portrait #drawer{left:0;top:724px;width:1180px;height:720px}
+.portrait .dayv{zoom:1.2;width:983px;height:600px;padding:22px 28px}
+.portrait #card{left:85px;top:330px}
+.portrait #caption{bottom:380px;padding:0 60px}
+.portrait #caption .txt{font-size:38px;line-height:1.2}
+.portrait #iq{top:330px;font-size:100px}
+.portrait #isub{top:710px;padding:0 150px;line-height:1.4}
+.portrait #iscene{left:140px;top:900px}
+.portrait #introducing .k{top:330px}
+.portrait #introducing .mark{top:400px}
+.portrait #introducing .t{top:590px;font-size:118px;line-height:1.05}
+.portrait #introducing .t em{display:block}
+.portrait #introducing .s{top:870px;padding:0 90px}
+.portrait #introducing .s br{display:none}
+.portrait #ichips{top:1090px;flex-wrap:wrap;padding:0 60px}
+.portrait #qhead{top:240px}
+.portrait #qhead .h{font-size:64px;line-height:1.1}
+.portrait #qhead .h em{display:block}
+.portrait #steps{top:450px;flex-wrap:wrap;gap:12px 14px;padding:0 60px}
+.portrait #steps .arrow{display:none}
+.portrait .qcard{left:60px;width:960px}
+.portrait #waiting{top:590px;height:310px}
+.portrait #seats{gap:62px}
+.portrait #stand{top:930px;width:520px;height:545px;flex-direction:column;align-items:flex-start;gap:20px}
+.portrait .qrbox{align-self:center}
+.portrait .st-h{font-size:34px}
+.portrait .st-p{font-size:18px}
+.portrait #joined{left:90px;top:880px}
+.portrait #phone{left:620px;top:930px;transform-origin:0 0}
+.portrait #headline{top:400px}
+.portrait #subline{top:600px}
+.portrait #aura,.portrait #logo{left:540px;top:930px}
+.portrait #wordmark{top:1140px}
+.portrait #flare{top:930px}
 #fade{position:absolute;inset:0;background:#000;pointer-events:none}
 </style>
 </head>
@@ -364,7 +405,7 @@ body{font-family:Poppins,system-ui,sans-serif;color:var(--text);-webkit-font-smo
     <div class="k">INTRODUCING</div>
     <svg class="mark" viewBox="0 0 850 860"><use href="#ulogo" width="850" height="860"/></svg>
     <div class="t">The <em>Walk-in Queue</em></div>
-    <div class="s">Avoid the clutter in your shop — give your clients<br>the freedom to wait anywhere they like.</div>
+    <div class="s">Avoid the clutter in your shop — give your clients <br>the freedom to wait anywhere they like.</div>
     <div id="ichips"><div>QR check-in</div><div>Live queue updates</div><div>Turn-ready alerts</div></div>
   </div>
   <div id="qscene">
@@ -467,6 +508,7 @@ const eo5=x=>1-Math.pow(1-x,5);
 const eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
 const back=x=>{const c1=1.6,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
 const $=id=>document.getElementById(id);
+const PT=document.documentElement.classList.contains('portrait'), SW=PT?1080:1920, SH=PT?1920:1080;
 function rgba(hex,a){const n=parseInt(hex.slice(1),16);return `rgba(${n>>16},${n>>8&255},${n&255},${a})`}
 
 // ---------- calendar data: hour-by-hour barber schedule for every day ----------
@@ -542,7 +584,7 @@ const lqrows=[...document.querySelectorAll('.lqr')];
 // ---------- particles ----------
 const parts=[];let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
 for(let i=0;i<46;i++){const el=document.createElement('i');$('particles').appendChild(el);
-  parts.push({el,x:rnd()*1920,y:rnd()*1080,v:10+rnd()*28,a:.15+rnd()*.5,s:.6+rnd()*1.4,ph:rnd()*6.28})}
+  parts.push({el,x:rnd()*SW,y:rnd()*SH,v:10+rnd()*28,a:.15+rnd()*.5,s:.6+rnd()*1.4,ph:rnd()*6.28})}
 
 // ---------- headline letters ----------
 const H=$('headline');const lines=['SMART BOOKING','& SCHEDULING'];const letters=[];
@@ -553,8 +595,8 @@ const nodes=[...document.querySelectorAll('#logo .nd')];
 
 // ---------- intro frames ----------
 const IQ=$('iq');const iqWords=[];
-[['Missing ','out ','on'],['potential ','walk-in ','clients?']].forEach((ln,li)=>{const row=document.createElement('div');
-  ln.forEach(w=>{const sp=document.createElement('span');sp.textContent=w;if(li===1&&w!=='potential ')sp.className='hl';row.appendChild(sp);iqWords.push(sp)});IQ.appendChild(row)});
+(PT?[['Missing ','out ','on'],['potential '],['walk-in ','clients?']]:[['Missing ','out ','on'],['potential ','walk-in ','clients?']]).forEach((ln,li)=>{const row=document.createElement('div');
+  ln.forEach(w=>{const sp=document.createElement('span');sp.textContent=w;if(w==='walk-in '||w==='clients?')sp.className='hl';row.appendChild(sp);iqWords.push(sp)});IQ.appendChild(row)});
 function renderIntro(t){
   // frame 1 (0–4s): the question
   const out1=eio(P(t,3.1,3.5));
@@ -592,7 +634,7 @@ const seatCols=['#9ec5ff','#ffd98a','#8cf0c7','#f3a6ff','#ffb199','#a8b4ff'],sea
 const seats=seatCols.map((c,i)=>{const el=document.createElement('div');el.className='seat';
   el.innerHTML=`<svg viewBox="0 0 88 88"><path d="M16 40 V20 a10 10 0 0 1 10-10 h36 a10 10 0 0 1 10 10 V40" fill="none" stroke="#3a3f4a" stroke-width="5"/><rect x="8" y="40" width="72" height="22" rx="8" fill="#252932" stroke="#3a3f4a" stroke-width="3"/><path d="M18 62 V80 M70 62 V80" stroke="#3a3f4a" stroke-width="5" stroke-linecap="round"/></svg><div class="pp" style="background:${c}">${seatIni[i]}</div>`;
   $('seats').appendChild(el);return el.querySelector('.pp')});
-const beamPath=$('beampath'),BEAMLEN=beamPath.getTotalLength();
+const beamPath=$('beampath');if(PT)beamPath.setAttribute('d','M320 1085 C 480 1085, 560 1219, 700 1219');const BEAMLEN=beamPath.getTotalLength();
 const RING=2*Math.PI*98;
 
 function renderQueue(t){ // t = segment-local time (0..5), stretched by the caller
@@ -631,7 +673,7 @@ function renderQueue(t){ // t = segment-local time (0..5), stretched by the call
   // phone rises
   const pk=eo5(P(t,1.2,1.9));
   const shake=t>4.25&&t<4.6?Math.sin(t*90)*6:0;
-  $('phone').style.transform=`translate(${shake}px,${lerp(700,0,pk)}px) rotate(${lerp(8,-4,pk)+lerp(0,4,eio(P(t,2.7,3.1)))}deg)`;
+  $('phone').style.transform=`translate(${shake}px,${lerp(700,0,pk)}px) rotate(${lerp(8,-4,pk)+lerp(0,4,eio(P(t,2.7,3.1)))}deg)${PT?' scale(.74)':''}`;
   // beam QR -> phone
   const bk=P(t,1.85,2.45),bo=1-P(t,2.6,2.9);
   beamPath.style.strokeDasharray=BEAMLEN;beamPath.style.strokeDashoffset=BEAMLEN*(1-eio(bk));beamPath.style.opacity=bo*(bk>0?1:0);
@@ -689,7 +731,7 @@ function renderMain(t, rt){
   $('pattern').style.transform=`translate(${-t*6}px,${-t*3}px)`;
   $('g1').style.transform=`translate(${Math.sin(t*.6)*60}px,${Math.cos(t*.5)*-40}px)`;
   $('g2').style.transform=`translate(${Math.cos(t*.4)*-70}px,${Math.sin(t*.7)*40}px)`;
-  parts.forEach(p=>{const y=((p.y-t*p.v)%1080+1080)%1080;const x=p.x+Math.sin(t*.8+p.ph)*14;
+  parts.forEach(p=>{const y=((p.y-t*p.v)%SH+SH)%SH;const x=p.x+Math.sin(t*.8+p.ph)*14;
     p.el.style.transform=`translate(${x}px,${y}px) scale(${p.s})`;p.el.style.opacity=p.a*(.6+.4*Math.sin(t*2+p.ph))});}
 
   // ---- camera / world ----  (u: seconds into the calendar, v: seconds into the live-queue pop-up)
@@ -701,11 +743,12 @@ function renderMain(t, rt){
   const pop=eo(P(v,.6,1.1))*(1-eio(P(v,3.5,3.95)));
   let s=lerp(.86,1,push), rx=lerp(14,3,push), dx=lerp(0,-232,drawerK), dy=lerp(40,0,push);
   s=lerp(s,.74,tilt); rx=lerp(rx,64,tilt); dx=lerp(dx,-232,tilt); dy=lerp(dy,500,tilt);
+  if(PT){s=lerp(.81*lerp(.9,1,push),.6,tilt);dx=0;dy=lerp(lerp(40,0,push),760,tilt);}   // calendar stacked above its day panel
   const world=$('world');
   world.style.transform=`translate3d(${dx}px,${dy}px,0) rotateX(${rx}deg) scale(${s})`;
   world.style.opacity=lerp(1,.2,tilt)*eo(P(u,0,.6))*(1-away);
   world.style.filter=pop>.001?`brightness(${lerp(1,.5,pop)})`:'none';
-  $('drawer').style.width=lerp(0,440,drawerK)+'px';
+  if(PT)$('drawer').style.height=lerp(0,720,drawerK)+'px';else $('drawer').style.width=lerp(0,440,drawerK)+'px';
   $('drawer').style.opacity=clamp(drawerK*3);
   $('syncicon').style.transform=`rotate(${t*140}deg)`;
   $('legend').style.opacity=eo(P(u,.4,.9));
@@ -748,8 +791,8 @@ function renderMain(t, rt){
   const close=eio(P(v,3.5,3.95));
   if(v<.62||close>=1){card.style.display='none'}else{
     card.style.display='block';
-    const W=700,Hh=800,L=1070,T=120;
-    const x=lerp(src.left,L,open), y=lerp(src.top,T,open), sx=lerp(src.width/W,1,open), sy=lerp(src.height/Hh,1,open);
+    const W=700,Hh=800,L=PT?85:1070,T=PT?330:120,CK=PT?1.3:1;
+    const x=lerp(src.left,L,open), y=lerp(src.top,T,open), sx=lerp(src.width/W,CK,open), sy=lerp(src.height/Hh,CK,open);
     card.style.transform=`translate(${x-L}px,${y-T+close*40}px) scale(${sx*(1-.08*close)},${sy*(1-.08*close)})`;
     card.style.opacity=1-close;
     $('cardcontent').style.opacity=eo(P(v,.95,1.25));
@@ -778,7 +821,7 @@ function renderMain(t, rt){
   const nr=nb.getBoundingClientRect(), nc={x:nr.left+nr.width*.45,y:nr.top+nr.height*.55};
   if(v>-.2&&v<3.6){
     co=eo(P(v,-.2,.05))*(1-P(v,3.2,3.5));
-    const m1=eio(P(v,-.15,.45));cx=lerp(1500,oc.x,m1);cy=lerp(1010,oc.y,m1);
+    const m1=eio(P(v,-.15,.45));cx=lerp(PT?900:1500,oc.x,m1);cy=lerp(PT?1500:1010,oc.y,m1);
     const m2=eio(P(v,1.75,2.28));cx=lerp(cx,nc.x,m2);cy=lerp(cy,nc.y,m2);
     csc=1-.15*Math.sin(Math.PI*P(v,.48,.64))-.15*Math.sin(Math.PI*P(v,2.3,2.45));
   }
