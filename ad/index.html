@@ -137,6 +137,29 @@ body{font-family:Poppins,system-ui,sans-serif;color:var(--text);-webkit-font-smo
 #flare{position:absolute;left:0;top:520px;width:260px;height:520px;margin-top:-260px;
   background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);filter:blur(12px);mix-blend-mode:overlay}
 
+
+/* ===== intro question + "introducing" frames ===== */
+#intro,#introducing{position:absolute;inset:0;text-align:center}
+#iq{position:absolute;left:0;right:0;top:230px;font-size:104px;font-weight:800;line-height:1.08;letter-spacing:-1.5px}
+#iq span{display:inline-block;white-space:pre}
+#iq .hl{background:linear-gradient(90deg,#ff8a95,#ffc93c);-webkit-background-clip:text;background-clip:text;color:transparent}
+#isub{position:absolute;left:0;right:0;top:505px;font-size:34px;font-weight:500;color:#aab3c5}
+#iscene{position:absolute;left:560px;top:640px;width:800px;height:300px}
+#door{position:absolute;left:40px;top:40px;width:190px;height:250px;border-radius:18px 18px 4px 4px;
+  background:linear-gradient(180deg,#1c2029,#11141a);border:2px solid #2d323d;box-shadow:inset 0 0 40px rgba(0,0,0,.5)}
+#door .win{position:absolute;left:22px;right:22px;top:24px;height:100px;border-radius:10px;background:linear-gradient(160deg,rgba(255,201,60,.25),rgba(255,201,60,.05));border:1px solid rgba(255,201,60,.3)}
+#door .knob{position:absolute;right:22px;top:140px;width:12px;height:12px;border-radius:50%;background:#6d7380}
+#sign{position:absolute;left:67px;top:0;width:136px;height:50px;border-radius:10px;display:grid;place-items:center;z-index:2;
+  font-size:22px;font-weight:800;letter-spacing:3px;color:#fff;background:#e5484d;box-shadow:0 0 30px rgba(229,72,77,.6)}
+.walker{position:absolute;left:250px;top:120px;width:70px;height:170px}
+#iwalk{position:absolute;right:30px;top:120px;font-size:22px;font-weight:600;color:#ff8a95;text-align:left;line-height:1.35}
+#introducing .k{position:absolute;left:0;right:0;top:250px;font-size:22px;font-weight:700;letter-spacing:10px;color:#7fa9ff}
+#introducing .mark{position:absolute;left:50%;top:320px;width:140px;height:130px;margin-left:-70px}
+#introducing .t{position:absolute;left:0;right:0;top:470px;font-size:120px;font-weight:800;letter-spacing:-2px;line-height:1}
+#introducing .t em{font-style:normal;background:linear-gradient(90deg,#ffe29a,#ffc93c);-webkit-background-clip:text;background-clip:text;color:transparent}
+#introducing .s{position:absolute;left:0;right:0;top:625px;font-size:36px;font-weight:500;color:#c9d2e3}
+#ichips{position:absolute;left:0;right:0;top:720px;display:flex;justify-content:center;gap:18px}
+#ichips div{padding:12px 24px;border-radius:40px;font-size:22px;font-weight:600;background:rgba(255,201,60,.1);border:1px solid rgba(255,201,60,.4);color:#ffe29a}
 /* ===== online waiting queue segment ===== */
 #qscene{position:absolute;inset:0}
 #qhead{position:absolute;left:0;right:0;top:64px;text-align:center}
@@ -300,9 +323,28 @@ body{font-family:Poppins,system-ui,sans-serif;color:var(--text);-webkit-font-smo
   <div id="caption"><div class="num" id="capnum"></div><div class="txt" id="captxt"></div></div>
 
 
+
+  <div id="intro">
+    <div id="iq"></div>
+    <div id="isub">When every seat is taken, walk-ins walk right back out.</div>
+    <div id="iscene">
+      <div id="sign">FULL</div>
+      <div id="door"><div class="win"></div><div class="knob"></div></div>
+      <svg class="walker" viewBox="0 0 70 170"><circle cx="35" cy="22" r="18" fill="#8a91a0"/><rect x="14" y="46" width="42" height="70" rx="20" fill="#8a91a0"/><rect class="lg1" x="18" y="104" width="14" height="60" rx="7" fill="#6d7380"/><rect class="lg2" x="38" y="104" width="14" height="60" rx="7" fill="#6d7380"/></svg><svg class="walker" viewBox="0 0 70 170"><circle cx="35" cy="22" r="18" fill="#8a91a0"/><rect x="14" y="46" width="42" height="70" rx="20" fill="#8a91a0"/><rect class="lg1" x="18" y="104" width="14" height="60" rx="7" fill="#6d7380"/><rect class="lg2" x="38" y="104" width="14" height="60" rx="7" fill="#6d7380"/></svg><svg class="walker" viewBox="0 0 70 170"><circle cx="35" cy="22" r="18" fill="#8a91a0"/><rect x="14" y="46" width="42" height="70" rx="20" fill="#8a91a0"/><rect class="lg1" x="18" y="104" width="14" height="60" rx="7" fill="#6d7380"/><rect class="lg2" x="38" y="104" width="14" height="60" rx="7" fill="#6d7380"/></svg>
+      <div id="iwalk">−3 clients<br><span style="color:#8a91a0;font-size:18px">in the last 10 minutes</span></div>
+    </div>
+  </div>
+  <div id="introducing">
+    <div class="k">INTRODUCING</div>
+    <svg class="mark" viewBox="0 0 300 280"><path d="M80 50 V150 A70 70 0 0 0 220 150 V50" fill="none" stroke="url(#metal)" stroke-width="34" stroke-linecap="round"/>
+      <circle cx="80" cy="46" r="27" fill="url(#node)"/><circle cx="220" cy="46" r="27" fill="url(#node)"/><circle cx="150" cy="220" r="27" fill="url(#node)"/></svg>
+    <div class="t">The <em>Walk-in Queue</em></div>
+    <div class="s">Your customers wait anywhere — not in your shop.</div>
+    <div id="ichips"><div>QR check-in</div><div>Live queue updates</div><div>Turn-ready alerts</div></div>
+  </div>
   <div id="qscene">
     <div id="qhead">
-      <div class="k">02 — ONLINE WAITING QUEUE</div>
+      <div class="k">01 — THE WALK-IN QUEUE</div>
       <div class="h">No free seats? <em>Skip the waiting room.</em></div>
     </div>
     <div id="steps">
@@ -482,6 +524,36 @@ function fmt(min){let h=Math.floor(min/60),m=min%60;const ap=h>=12?'PM':'AM';h=h
 $('ghost').style.left=xOf(840)+'px';$('ghost').style.width=45*MIN_PX+'px';
 
 
+
+// ---------- intro frames ----------
+const IQ=$('iq');const iqWords=[];
+[['Missing ','out ','on'],['potential ','walk-in ','clients?']].forEach((ln,li)=>{const row=document.createElement('div');
+  ln.forEach(w=>{const sp=document.createElement('span');sp.textContent=w;if(li===1&&w!=='potential ')sp.className='hl';row.appendChild(sp);iqWords.push(sp)});IQ.appendChild(row)});
+const walkers=[...document.querySelectorAll('.walker')];
+function renderIntro(t){
+  // frame 1 (0–4s): the question
+  const out1=eio(P(t,3.55,4.0));
+  $('intro').style.display=out1>=1?'none':'block';
+  $('intro').style.opacity=1-out1;$('intro').style.transform=`scale(${1+.08*out1})`;$('intro').style.filter=out1>0?`blur(${8*out1}px)`:'none';
+  iqWords.forEach((w,i)=>{const k=eo(P(t,.25+i*.13,.75+i*.13));w.style.opacity=k;w.style.transform=`translateY(${lerp(40,0,k)}px)`;w.style.filter=`blur(${lerp(12,0,k)}px)`});
+  const sk=eo(P(t,1.2,1.7));$('isub').style.opacity=sk;$('isub').style.transform=`translateY(${lerp(14,0,sk)}px)`;
+  const sc=eo(P(t,1.4,1.9));$('iscene').style.opacity=sc;
+  const sg=.5+.5*Math.sin(t*8);$('sign').style.boxShadow=`0 0 ${14+26*sg}px rgba(229,72,77,${.35+.4*sg})`;
+  walkers.forEach((w,i)=>{const k=P(t,1.7+i*.45,3.3+i*.45);const x=lerp(0,330,eio(k));
+    w.style.transform=`translate(${x}px,${Math.abs(Math.sin(k*18))*-5}px)`;w.style.opacity=k<=0?0:Math.min(1,k*6)*(1-P(k,.6,1));
+    w.querySelector('.lg1').setAttribute('transform',`rotate(${Math.sin(k*18)*18} 25 108)`);w.querySelector('.lg2').setAttribute('transform',`rotate(${-Math.sin(k*18)*18} 45 108)`)});
+  $('iwalk').style.opacity=eo(P(t,2.3,2.7));
+  // frame 2 (4–7s): introducing the Walk-in Queue
+  const inK=eo(P(t,4.0,4.5)),out2=eio(P(t,6.55,7.0));
+  const f=$('introducing');f.style.display=t<4||out2>=1?'none':'block';f.style.opacity=inK*(1-out2);f.style.transform=`scale(${lerp(.94,1,inK)*(1+.06*out2)})`;
+  const kk=eo(P(t,4.1,4.6));f.querySelector('.k').style.opacity=kk;f.querySelector('.k').style.letterSpacing=lerp(24,10,kk)+'px';
+  const mk=back(P(t,4.2,4.8));f.querySelector('.mark').style.transform=`scale(${Math.max(0,mk)}) translateY(${Math.sin(t*2)*4}px)`;
+  const tk=eo(P(t,4.45,5.0));f.querySelector('.t').style.opacity=tk;f.querySelector('.t').style.transform=`translateY(${lerp(30,0,tk)}px)`;
+  f.querySelector('.t').style.textShadow=`0 0 ${40*Math.max(0,1-Math.abs(t-5.0)*2)}px rgba(255,201,60,.5)`;
+  const ssk=eo(P(t,4.9,5.4));f.querySelector('.s').style.opacity=ssk;f.querySelector('.s').style.transform=`translateY(${lerp(14,0,ssk)}px)`;
+  [...$('ichips').children].forEach((c,i)=>{const k=back(P(t,5.3+i*.15,5.7+i*.15));c.style.opacity=clamp(k);c.style.transform=`scale(${Math.max(0,k)})`});
+}
+
 // ---------- online waiting queue segment ----------
 function qrSVG(){
   const N=25;let sd=1234;const r=()=>(sd=(sd*16807)%2147483647)/2147483647;
@@ -501,7 +573,7 @@ const seats=seatCols.map((c,i)=>{const el=document.createElement('div');el.class
 const beamPath=$('beampath'),BEAMLEN=beamPath.getTotalLength();
 const RING=2*Math.PI*98;
 
-function renderQueue(t){ // t = seconds into the segment (segment runs 0..5)
+function renderQueue(t){ // t = segment-local time (0..5), stretched by the caller
   const inK=eo(P(t,0,.5)), outK=eio(P(t,4.75,5.1));
   const q=$('qscene');
   if(t<0||outK>=1){q.style.display='none';return}
@@ -583,8 +655,11 @@ function renderQueue(t){ // t = seconds into the segment (segment runs 0..5)
 
 // ---------- render(t) ----------
 function render(t){
-  renderQueue(t-3);
-  renderMain(t<3?t:t<8?3:t-5, t);
+  // 0–4 question · 4–7 introducing · 7–16.5 walk-in queue · 16.5–20 calendar · 20–25 client profile · 25–30 brand
+  renderIntro(t);
+  renderQueue((t-7)/1.9);
+  renderMain(t<16.5?0:t<20?(t-16.5)*3/3.5:t<25?3+(t-20)*3/5:6+(t-25)*.8, t);
+  $('fade').style.opacity=1-eo(P(t,0,.45));
 }
 function renderMain(t, rt){
   // background life (real time)
@@ -597,15 +672,15 @@ function renderMain(t, rt){
 
   // ---- camera / world ----
   const push=eio(P(t,0,3.0));                 // scene 1 push-in
-  const drawerK=rt<5?0:1;                        // queue drawer is open once we return from the queue segment
-  const away=rt<5?eio(P(rt,2.65,3.15)):1-eo(P(rt,7.75,8.25)); // world hidden during queue segment
+  const drawerK=eo(P(t,1.55,2.35));             // queue drawer opens
+  const away=rt<16.5?1:0;                       // dashboard hidden until its segment
   const pan=eio(P(t,3.0,4.3));                  // scene 2 pan
   const tilt=eio(P(t,6.0,7.3));                 // scene 3 tilt back
   let s=lerp(.84,1,push), rx=lerp(16,4,push), dx=lerp(0,-232,drawerK), dy=lerp(40,0,push);
   s=lerp(s,1.14,pan); rx=lerp(rx,0,pan); dx=lerp(dx,-40,pan); dy=lerp(dy,40,pan);
   s=lerp(s,.74,tilt); rx=lerp(rx,64,tilt); dx=lerp(dx,-232,tilt); dy=lerp(dy,500,tilt);
   const world=$('world');
-  world.style.transform=`translate3d(${dx}px,${dy}px,0) rotateX(${rx}deg) scale(${s*(1+(rt<5?.12:-.06)*away)})`;
+  world.style.transform=`translate3d(${dx}px,${dy}px,0) rotateX(${rx}deg) scale(${s})`;
   world.style.opacity=lerp(1,.2,tilt)*eo(P(t,0,.6))*(1-away);
   world.style.filter=t>3.8&&t<6.6?`brightness(${lerp(1,.62,eo(P(t,3.8,4.3))*(1-P(t,6.0,6.6)))})`:'none';
   $('drawer').style.width=lerp(0,440,drawerK)+'px';
@@ -706,9 +781,9 @@ function renderMain(t, rt){
 
   // ---- captions ----
   const c1=eo(P(t,.3,.8))*(1-P(t,2.75,3.0)), c2=eo(P(t,3.15,3.6))*(1-P(t,5.75,6.0));
-  if(t<3.05){$('capnum').textContent='01 — LIVE SCHEDULING';$('captxt').innerHTML='Every booking, <em>color-coded</em> at a glance';}
+  if(t<3.05){$('capnum').textContent='02 — SMART SCHEDULING';$('captxt').innerHTML='Every booking, <em>color-coded</em> at a glance';}
   else{$('capnum').textContent='03 — KNOW EVERY CLIENT';$('captxt').innerHTML='Client profiles & <em>custom notes</em>';}
-  const ck=Math.max(c1,c2)*(rt>=3&&rt<8?0:1);
+  const ck=Math.max(c1,c2)*(1-away);
   $('caption').style.opacity=ck;$('caption').style.transform=`translateY(${lerp(18,0,ck)}px)`;
 
   // ---- brand reveal (scene 3) ----
@@ -736,7 +811,6 @@ function renderMain(t, rt){
   $('wordmark').style.opacity=wk;$('wordmark').style.letterSpacing=lerp(40,22,wk)+'px';
   const fl=P(t,8.6,9.5);$('flare').style.opacity=fl>0&&fl<1?Math.sin(Math.PI*fl):0;
   $('flare').style.transform=`translateX(${lerp(560,1300,eio(fl))}px) skewX(-18deg)`;
-  $('fade').style.opacity=1-eo(P(t,0,.45));
 }
 window.render=render;
 window.ready=document.fonts.ready.then(()=>{render(0);return true});
@@ -744,7 +818,7 @@ window.ready=document.fonts.ready.then(()=>{render(0);return true});
 const qs=new URLSearchParams(location.search);
 if(!navigator.webdriver){
   if(qs.has('t'))document.fonts.ready.then(()=>render(+qs.get('t')));
-  else{let t0;const loop=ts=>{t0??=ts;render(((ts-t0)/1000)%15.5);requestAnimationFrame(loop)};requestAnimationFrame(loop)}
+  else{let t0;const loop=ts=>{t0??=ts;render(((ts-t0)/1000)%30.5);requestAnimationFrame(loop)};requestAnimationFrame(loop)}
 }
 </script>
 </body>
