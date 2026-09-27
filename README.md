@@ -4,12 +4,12 @@
 
 | Time | Scene |
 |---|---|
-| 0–4s | **Question:** "Missing out on potential walk-in clients?" A door marked FULL with customers walking away: "When every seat is taken, walk-ins walk right back out." |
+| 0–4s | **Question:** "Missing out on potential walk-in clients?" A door marked FULL: "−3 clients turned away in the last hour" |
 | 4–7s | **Introducing the Walk-in Queue:** "Your customers wait anywhere — not in your shop." Chips: QR check-in · Live queue updates · Turn-ready alerts |
-| 7–16.5s | **How it works:** the shop's waiting area fills up ("No seats available"), a customer scans the in-store QR code, joins the queue, watches their place count down (#4 → #2) and gets a "your turn next" notification. The steps *Scan → Join → Get notified* light up as it happens |
-| 16.5–20s | Color-coded September 2026 calendar (green = confirmed, yellow = waiting, blue = in progress); the live queue panel opens and the QR customer appears in it |
-| 20–25s | Cursor clicks Sep 22, a glass **Client Profile** card expands, the notes field types *"VIP Client – Prefers morning follow-ups"*, and the slot is dragged from 2:00 PM to 9:30 AM |
-| 25–30s | UI tilts back into 3D, the metallic UNYXO mark draws in, then **SMART BOOKING & SCHEDULING** and *Business done easier* appear |
+| 7–15s | **How it works** (purple): the barbershop's seats fill up ("No seats available"), a customer scans the in-store QR code, joins the queue, watches their place count down (#4 → #2) and gets a "your turn next" notification |
+| 15–22.5s | **Calendar:** every day of September 2026 shows counts of Confirmed (green), Pending confirmation (yellow) and Canceled (red) plus a 9 AM–5 PM hourly status strip. The Day Schedule panel lists each hour with client name, barber ("with Marcus") and status: first Sep 22, then **Today, Sep 27** with its purple **Walk-in Queue (today only)** |
+| 22.5–26.5s | Cursor clicks Sep 22, a glass **Client Profile** card expands (2:00 PM · Fade + beard · with Marcus), notes type *"VIP Client – Prefers morning follow-ups"*, and the slot is dragged to 9:30 AM |
+| 26.5–30s | UI tilts back into 3D, the metallic UNYXO mark draws in, then **SMART BOOKING & SCHEDULING** and *Business done easier* appear |
 
 Output: `out/unyxo-smart-booking-ad.mp4`
 
