@@ -13,7 +13,7 @@
 :root{
   --bg:#050608; --panel:#0c0e13; --tile:#15181f; --line:rgba(255,255,255,.08);
   --text:#f2f4f8; --muted:#8a91a0;
-  --green:#22e39a; --yellow:#ffc93c; --blue:#3d8bff; --gold:#f5c96a;
+  --green:#22e39a; --yellow:#ffc93c; --red:#ff5d6c; --purple:#a970ff; --blue:#3d8bff; --gold:#f5c96a;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:1920px;height:1080px;background:var(--bg);overflow:hidden}
@@ -42,42 +42,57 @@ body{font-family:Poppins,system-ui,sans-serif;color:var(--text);-webkit-font-smo
 .cal-title{font-size:30px;font-weight:700;letter-spacing:-.3px}
 .sync{display:flex;align-items:center;gap:10px;font-size:17px;color:var(--muted);font-weight:500}
 .sync svg{width:18px;height:18px}
-.legend{display:flex;gap:22px;font-size:16px;font-weight:500;color:#c9cdd6}
+.legend{display:flex;gap:16px;font-size:14.5px;font-weight:500;color:#c9cdd6}
 .legend span{display:flex;align-items:center;gap:8px}
 .legend b{width:11px;height:11px;border-radius:50%}
 .weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:14px;margin:18px 0 12px;
   font-size:15px;font-weight:600;color:var(--muted);letter-spacing:1.5px;text-align:center}
 .grid{display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:repeat(5,94px);gap:14px}
 .tile{position:relative;border-radius:14px;background:var(--tile);
-  border:1px solid rgba(255,255,255,.06);padding:12px 14px;overflow:hidden}
-.tile .n{font-size:19px;font-weight:600;color:#d8dce4}
+  border:1px solid rgba(255,255,255,.07);padding:10px 12px;overflow:hidden}
+.tile .n{font-size:18px;font-weight:600;color:#d8dce4;line-height:1}
 .tile.mute .n{color:#454a55}
-.tile .tag{position:absolute;left:14px;bottom:22px;font-size:13px;font-weight:600;letter-spacing:.3px;white-space:nowrap}
-.tile .bar{position:absolute;left:14px;right:14px;bottom:10px;height:4px;border-radius:4px}
-.tile .fill{position:absolute;inset:0;border-radius:14px}
-.tile.today::after{content:"";position:absolute;inset:3px;border-radius:11px;border:1.5px dashed rgba(255,255,255,.35)}
+.tile .todaychip{position:absolute;right:10px;top:9px;font-size:10.5px;font-weight:800;letter-spacing:1px;color:#e6d8ff;
+  padding:3px 7px;border-radius:6px;background:rgba(169,112,255,.3);border:1px solid rgba(169,112,255,.6)}
+.cts{position:absolute;left:12px;right:10px;top:40px;display:flex;gap:9px;font-size:13.5px;font-weight:700}
+.cts span{display:flex;align-items:center;gap:4px}
+.cts i{width:7px;height:7px;border-radius:50%}
+.strip{position:absolute;left:12px;right:12px;bottom:11px;height:12px;display:flex;gap:2px}
+.strip b{flex:1;border-radius:2px;background:rgba(255,255,255,.06)}
+.tile .sel{position:absolute;inset:0;border-radius:14px;pointer-events:none}
 
-/* queue drawer */
+/* day schedule panel */
 #drawer{left:1204px;top:0;width:440px;height:700px;overflow:hidden}
-#drawer .inner{position:absolute;left:0;top:0;width:440px;height:700px;padding:30px 28px}
-.dq-head{display:flex;align-items:center;justify-content:space-between}
-.dq-title{font-size:24px;font-weight:700}
-.live{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:1.5px;color:var(--green);
-  padding:6px 12px;border-radius:30px;background:rgba(34,227,154,.12);border:1px solid rgba(34,227,154,.3)}
-.live i{width:8px;height:8px;border-radius:50%;background:var(--green)}
-.dq-stats{display:flex;gap:12px;margin:20px 0 18px}
+.dayv{position:absolute;left:0;top:0;width:440px;height:700px;padding:22px 24px}
+.dv-k{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--muted)}
+.dv-t{font-size:24px;font-weight:700;margin-top:2px;display:flex;align-items:center;gap:10px}
+.dv-t .tc{font-size:12px;font-weight:800;letter-spacing:1px;color:#e6d8ff;padding:4px 9px;border-radius:7px;background:rgba(169,112,255,.3);border:1px solid rgba(169,112,255,.6)}
+.dv-stats{display:flex;gap:8px;margin:12px 0 10px}
+.dv-stats div{flex:1;border-radius:12px;padding:7px 10px;font-size:11.5px;font-weight:600;color:#c9cdd6}
+.dv-stats b{display:block;font-size:20px;line-height:1.15}
+.hr{display:flex;align-items:center;gap:10px;height:38px;border-top:1px solid rgba(255,255,255,.05)}
+.hr .tm{width:56px;font-size:12.5px;font-weight:600;color:var(--muted);flex:none}
+.hr .cb{width:4px;height:26px;border-radius:3px;flex:none}
+.hr .who{flex:1;min-width:0;line-height:1.15}
+.hr .nm{font-size:14px;font-weight:600;white-space:nowrap}
+.hr .sv{font-size:11.5px;color:var(--muted);font-weight:500;white-space:nowrap}
+.hr .sv em{font-style:normal;color:#c9cdd6;font-weight:600}
+.hr.open .nm{color:#5d6370;font-weight:500}
+.hr.x .nm{text-decoration:line-through;text-decoration-color:rgba(255,93,108,.7);color:#9aa1ad}
+.pill{font-size:11px;font-weight:700;padding:4px 9px;border-radius:30px;white-space:nowrap}
+.wq{margin-top:10px;border-radius:16px;padding:10px 14px;border:1px solid rgba(169,112,255,.55);
+  background:linear-gradient(160deg,rgba(169,112,255,.2),rgba(169,112,255,.06))}
+.wq-h{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:800;letter-spacing:1.5px;color:#cfb2ff}
+.wq-h span:last-child{letter-spacing:.3px;color:#e6d8ff}
+.wqi{display:flex;align-items:center;gap:10px;height:31px;font-size:13.5px;font-weight:600}
+.wqi .no{width:26px;height:22px;border-radius:6px;display:grid;place-items:center;font-size:12px;font-weight:800;background:rgba(169,112,255,.35);color:#f1e9ff}
+.wqi .sv{flex:1;font-size:11.5px;color:#b9a8d8;font-weight:500}
+.wqi .eta{font-size:12px;color:#e6d8ff;font-weight:700}
+.wq.off{border-style:dashed;border-color:rgba(169,112,255,.3);background:rgba(169,112,255,.04);font-size:12.5px;font-weight:600;color:#9d8cc0;display:flex;align-items:center;gap:8px}
 .stat{flex:1;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--line);padding:12px 14px}
 .stat .v{font-size:26px;font-weight:700}
 .stat .l{font-size:13px;color:var(--muted);font-weight:500}
-#qlist{position:relative;height:470px}
-.qi{position:absolute;left:0;right:0;height:68px;border-radius:16px;display:flex;align-items:center;gap:14px;
-  padding:0 16px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07)}
 .av{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:16px;color:#0b0d12;flex:none}
-.qi .who{flex:1;min-width:0}
-.qi .nm{font-size:17px;font-weight:600}
-.qi .sv{font-size:13px;color:var(--muted);font-weight:500}
-.pill{font-size:12px;font-weight:700;padding:5px 11px;border-radius:30px;white-space:nowrap}
-.qi .eta{font-size:13px;color:#c9cdd6;font-weight:600;width:52px;text-align:right}
 
 /* profile card (screen space) */
 #card{position:absolute;left:1070px;top:150px;width:700px;height:720px;border-radius:30px;transform-origin:0 0;
@@ -145,27 +160,26 @@ body{font-family:Poppins,system-ui,sans-serif;color:var(--text);-webkit-font-smo
 #iq .hl{background:linear-gradient(90deg,#ff8a95,#ffc93c);-webkit-background-clip:text;background-clip:text;color:transparent}
 #isub{position:absolute;left:0;right:0;top:505px;font-size:34px;font-weight:500;color:#aab3c5}
 #iscene{position:absolute;left:560px;top:640px;width:800px;height:300px}
-#door{position:absolute;left:40px;top:40px;width:190px;height:250px;border-radius:18px 18px 4px 4px;
+#door{position:absolute;left:100px;top:40px;width:190px;height:250px;border-radius:18px 18px 4px 4px;
   background:linear-gradient(180deg,#1c2029,#11141a);border:2px solid #2d323d;box-shadow:inset 0 0 40px rgba(0,0,0,.5)}
-#door .win{position:absolute;left:22px;right:22px;top:24px;height:100px;border-radius:10px;background:linear-gradient(160deg,rgba(255,201,60,.25),rgba(255,201,60,.05));border:1px solid rgba(255,201,60,.3)}
+#door .win{position:absolute;left:22px;right:22px;top:24px;height:100px;border-radius:10px;background:linear-gradient(160deg,rgba(169,112,255,.25),rgba(169,112,255,.05));border:1px solid rgba(169,112,255,.3)}
 #door .knob{position:absolute;right:22px;top:140px;width:12px;height:12px;border-radius:50%;background:#6d7380}
-#sign{position:absolute;left:67px;top:0;width:136px;height:50px;border-radius:10px;display:grid;place-items:center;z-index:2;
+#sign{position:absolute;left:127px;top:0;width:136px;height:50px;border-radius:10px;display:grid;place-items:center;z-index:2;
   font-size:22px;font-weight:800;letter-spacing:3px;color:#fff;background:#e5484d;box-shadow:0 0 30px rgba(229,72,77,.6)}
-.walker{position:absolute;left:250px;top:120px;width:70px;height:170px}
-#iwalk{position:absolute;right:30px;top:120px;font-size:22px;font-weight:600;color:#ff8a95;text-align:left;line-height:1.35}
+#iwalk{position:absolute;left:340px;top:120px;font-size:40px;font-weight:600;color:#ff8a95;text-align:left;line-height:1.35}
 #introducing .k{position:absolute;left:0;right:0;top:250px;font-size:22px;font-weight:700;letter-spacing:10px;color:#7fa9ff}
 #introducing .mark{position:absolute;left:50%;top:320px;width:140px;height:130px;margin-left:-70px}
 #introducing .t{position:absolute;left:0;right:0;top:470px;font-size:120px;font-weight:800;letter-spacing:-2px;line-height:1}
-#introducing .t em{font-style:normal;background:linear-gradient(90deg,#ffe29a,#ffc93c);-webkit-background-clip:text;background-clip:text;color:transparent}
+#introducing .t em{font-style:normal;background:linear-gradient(90deg,#e6d8ff,#a970ff);-webkit-background-clip:text;background-clip:text;color:transparent}
 #introducing .s{position:absolute;left:0;right:0;top:625px;font-size:36px;font-weight:500;color:#c9d2e3}
 #ichips{position:absolute;left:0;right:0;top:720px;display:flex;justify-content:center;gap:18px}
-#ichips div{padding:12px 24px;border-radius:40px;font-size:22px;font-weight:600;background:rgba(255,201,60,.1);border:1px solid rgba(255,201,60,.4);color:#ffe29a}
+#ichips div{padding:12px 24px;border-radius:40px;font-size:22px;font-weight:600;background:rgba(169,112,255,.1);border:1px solid rgba(169,112,255,.4);color:#e6d8ff}
 /* ===== online waiting queue segment ===== */
 #qscene{position:absolute;inset:0}
 #qhead{position:absolute;left:0;right:0;top:64px;text-align:center}
-#qhead .k{font-size:16px;font-weight:700;letter-spacing:4px;color:#ffc93c}
+#qhead .k{font-size:16px;font-weight:700;letter-spacing:4px;color:#a970ff}
 #qhead .h{font-size:62px;font-weight:800;letter-spacing:-.5px;margin-top:6px}
-#qhead .h em{font-style:normal;background:linear-gradient(90deg,#ffe29a,#ffc93c);-webkit-background-clip:text;background-clip:text;color:transparent}
+#qhead .h em{font-style:normal;background:linear-gradient(90deg,#e6d8ff,#a970ff);-webkit-background-clip:text;background-clip:text;color:transparent}
 #steps{position:absolute;left:0;right:0;top:196px;display:flex;justify-content:center;gap:18px}
 .step{display:flex;align-items:center;gap:12px;padding:10px 22px 10px 12px;border-radius:40px;font-size:21px;font-weight:600;
   background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:#8a91a0}
@@ -189,10 +203,10 @@ body{font-family:Poppins,system-ui,sans-serif;color:var(--text);-webkit-font-smo
 .wa-foot{display:flex;justify-content:space-between;margin-top:22px;font-size:18px;font-weight:600;color:#c9cdd6}
 .wa-foot span:last-child{color:#ff8a95}
 #stand{top:660px;height:330px;display:flex;gap:34px;align-items:center;
-  border-color:rgba(255,201,60,.35);box-shadow:0 40px 120px rgba(0,0,0,.6),0 0 60px rgba(255,201,60,.12)}
+  border-color:rgba(169,112,255,.35);box-shadow:0 40px 120px rgba(0,0,0,.6),0 0 60px rgba(169,112,255,.12)}
 .qrbox{width:250px;height:250px;border-radius:20px;background:#fff;padding:12px;flex:none;position:relative}
 .qrbox svg{width:100%;height:100%;display:block}
-.st-k{font-size:15px;font-weight:800;letter-spacing:3px;color:#ffc93c}
+.st-k{font-size:15px;font-weight:800;letter-spacing:3px;color:#a970ff}
 .st-h{font-size:40px;font-weight:800;line-height:1.1;margin:8px 0 12px}
 .st-p{font-size:19px;color:#aab3c5;font-weight:500;line-height:1.45}
 #joined{position:absolute;left:458px;top:680px;display:flex;align-items:center;gap:10px;padding:10px 18px;border-radius:14px;
@@ -207,7 +221,7 @@ body{font-family:Poppins,system-ui,sans-serif;color:var(--text);-webkit-font-smo
 #cam .vf{position:absolute;left:50%;top:44%;width:230px;height:230px;margin:-115px 0 0 -115px;border-radius:14px;background:#fff;padding:10px}
 #cam .vf svg{width:100%;height:100%;display:block}
 .br{position:absolute;width:56px;height:56px;border:6px solid #fff;border-radius:6px}
-#scanline{position:absolute;left:44px;right:44px;height:4px;border-radius:4px;background:#ffc93c;box-shadow:0 0 18px 4px rgba(255,201,60,.7)}
+#scanline{position:absolute;left:44px;right:44px;height:4px;border-radius:4px;background:#a970ff;box-shadow:0 0 18px 4px rgba(169,112,255,.7)}
 #campill{position:absolute;left:24px;right:24px;bottom:56px;padding:14px 16px;border-radius:18px;text-align:center;font-size:17px;font-weight:600;
   background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(10px)}
 #flash{position:absolute;inset:0;background:#fff;pointer-events:none}
@@ -257,29 +271,20 @@ body{font-family:Poppins,system-ui,sans-serif;color:var(--text);-webkit-font-smo
         <div class="cal-head">
           <div style="display:flex;align-items:center;gap:22px">
             <div class="cal-title">September 2026</div>
-            <div class="sync"><svg id="syncicon" viewBox="0 0 24 24" fill="none" stroke="#22e39a" stroke-width="2.4" stroke-linecap="round"><path d="M20 12a8 8 0 0 1-14 5.3M4 12a8 8 0 0 1 14-5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></svg>Availability · auto-synced</div>
+            <div class="sync"><svg id="syncicon" viewBox="0 0 24 24" fill="none" stroke="#22e39a" stroke-width="2.4" stroke-linecap="round"><path d="M20 12a8 8 0 0 1-14 5.3M4 12a8 8 0 0 1 14-5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></svg>Auto-synced</div>
           </div>
           <div class="legend" id="legend">
             <span><b style="background:var(--green);box-shadow:0 0 10px var(--green)"></b>Confirmed</span>
-            <span><b style="background:var(--yellow);box-shadow:0 0 10px var(--yellow)"></b>Waiting queue</span>
-            <span><b style="background:var(--blue);box-shadow:0 0 10px var(--blue)"></b>In progress</span>
+            <span><b style="background:var(--yellow);box-shadow:0 0 10px var(--yellow)"></b>Pending confirmation</span>
+            <span><b style="background:var(--red);box-shadow:0 0 10px var(--red)"></b>Canceled</span>
+            <span><b style="background:var(--purple);box-shadow:0 0 10px var(--purple)"></b>Walk-in Queue · today</span>
           </div>
         </div>
         <div class="weekdays"><div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div><div>SUN</div></div>
         <div class="grid" id="grid"></div>
       </div>
 
-      <div class="panel" id="drawer">
-        <div class="inner">
-          <div class="dq-head"><div class="dq-title">Online Queue</div><div class="live"><i id="livedot"></i>LIVE</div></div>
-          <div class="dq-stats">
-            <div class="stat"><div class="v" id="qcount">5</div><div class="l">In queue</div></div>
-            <div class="stat"><div class="v" id="qwait">12m</div><div class="l">Avg. wait</div></div>
-            <div class="stat"><div class="v" id="qdone">18</div><div class="l">Served today</div></div>
-          </div>
-          <div id="qlist"></div>
-        </div>
-      </div>
+      <div class="panel" id="drawer"><div class="dayv" id="dv22"></div><div class="dayv" id="dv27"></div></div>
     </div>
   </div>
 
@@ -291,7 +296,7 @@ body{font-family:Poppins,system-ui,sans-serif;color:var(--text);-webkit-font-smo
         <div class="av">AM</div>
         <div>
           <div class="nm">Aria Mendes <span class="vip">VIP</span></div>
-          <div class="sub">Tue, Sep 22 · Strategy session · 45 min</div>
+          <div class="sub">Tue, Sep 22 · 2:00 PM · Fade + beard · with Marcus</div>
         </div>
       </div>
       <div class="row3">
@@ -330,8 +335,8 @@ body{font-family:Poppins,system-ui,sans-serif;color:var(--text);-webkit-font-smo
     <div id="iscene">
       <div id="sign">FULL</div>
       <div id="door"><div class="win"></div><div class="knob"></div></div>
-      <svg class="walker" viewBox="0 0 70 170"><circle cx="35" cy="22" r="18" fill="#8a91a0"/><rect x="14" y="46" width="42" height="70" rx="20" fill="#8a91a0"/><rect class="lg1" x="18" y="104" width="14" height="60" rx="7" fill="#6d7380"/><rect class="lg2" x="38" y="104" width="14" height="60" rx="7" fill="#6d7380"/></svg><svg class="walker" viewBox="0 0 70 170"><circle cx="35" cy="22" r="18" fill="#8a91a0"/><rect x="14" y="46" width="42" height="70" rx="20" fill="#8a91a0"/><rect class="lg1" x="18" y="104" width="14" height="60" rx="7" fill="#6d7380"/><rect class="lg2" x="38" y="104" width="14" height="60" rx="7" fill="#6d7380"/></svg><svg class="walker" viewBox="0 0 70 170"><circle cx="35" cy="22" r="18" fill="#8a91a0"/><rect x="14" y="46" width="42" height="70" rx="20" fill="#8a91a0"/><rect class="lg1" x="18" y="104" width="14" height="60" rx="7" fill="#6d7380"/><rect class="lg2" x="38" y="104" width="14" height="60" rx="7" fill="#6d7380"/></svg>
-      <div id="iwalk">−3 clients<br><span style="color:#8a91a0;font-size:18px">in the last 10 minutes</span></div>
+      
+      <div id="iwalk">−3 clients<br><span style="color:#8a91a0;font-size:22px">turned away in the last hour</span></div>
     </div>
   </div>
   <div id="introducing">
@@ -355,7 +360,7 @@ body{font-family:Poppins,system-ui,sans-serif;color:var(--text);-webkit-font-smo
 
     <div class="qcard" id="waiting">
       <div class="wa-head">
-        <div><div class="wa-title">IN THE SHOP · WAITING AREA</div><div class="wa-name">Downtown Studio</div></div>
+        <div><div class="wa-title">IN THE SHOP · WAITING AREA</div><div class="wa-name">Downtown Barbershop</div></div>
         <div class="full" id="fullbadge"><i></i>NO SEATS AVAILABLE</div>
       </div>
       <div id="seats"></div>
@@ -372,7 +377,7 @@ body{font-family:Poppins,system-ui,sans-serif;color:var(--text);-webkit-font-smo
     </div>
     <div id="joined"><svg width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#22e39a"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#06231a" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Jordan joined the queue via QR · #4</div>
 
-    <svg id="beam"><defs><linearGradient id="bg1" x1="0" x2="1"><stop offset="0" stop-color="#ffc93c" stop-opacity="0"/><stop offset=".5" stop-color="#ffc93c"/><stop offset="1" stop-color="#fff"/></linearGradient></defs>
+    <svg id="beam"><defs><linearGradient id="bg1" x1="0" x2="1"><stop offset="0" stop-color="#a970ff" stop-opacity="0"/><stop offset=".5" stop-color="#a970ff"/><stop offset="1" stop-color="#fff"/></linearGradient></defs>
       <path id="beampath" d="M410 825 C 760 825, 900 560, 1270 540" fill="none" stroke="url(#bg1)" stroke-width="4" stroke-linecap="round"/>
       <circle id="beamdot" r="9" fill="#fff"/></svg>
 
@@ -389,11 +394,11 @@ body{font-family:Poppins,system-ui,sans-serif;color:var(--text);-webkit-font-smo
           <div id="campill">Scan the QR code</div>
         </div>
         <div id="app">
-          <div class="a-top">DOWNTOWN STUDIO</div>
+          <div class="a-top">DOWNTOWN BARBERSHOP</div>
           <div class="a-h" id="ah">You're in the queue!</div>
           <div id="ring">
             <svg viewBox="0 0 230 230"><circle cx="115" cy="115" r="98" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="14"/>
-              <circle id="ringp" cx="115" cy="115" r="98" fill="none" stroke="#ffc93c" stroke-width="14" stroke-linecap="round" transform="rotate(-90 115 115)"/></svg>
+              <circle id="ringp" cx="115" cy="115" r="98" fill="none" stroke="#a970ff" stroke-width="14" stroke-linecap="round" transform="rotate(-90 115 115)"/></svg>
             <div class="c"><div id="pos">#4</div><div class="l">YOUR PLACE</div></div>
           </div>
           <div class="a-stats">
@@ -406,7 +411,7 @@ body{font-family:Poppins,system-ui,sans-serif;color:var(--text);-webkit-font-smo
         </div>
         <div id="notif">
           <div class="ic"><svg width="30" height="30" viewBox="0 0 300 280"><path d="M80 50 V150 A70 70 0 0 0 220 150 V50" fill="none" stroke="#1a1d24" stroke-width="40" stroke-linecap="round"/></svg></div>
-          <div><div class="t1">UNYXO · now</div><div class="t2">It's your turn next!</div><div class="t3">Head back to Downtown Studio.</div></div>
+          <div><div class="t1">UNYXO · now</div><div class="t2">It's your turn next!</div><div class="t3">Head back to Downtown Barbershop.</div></div>
         </div>
         <div id="flash"></div>
       </div>
@@ -455,14 +460,35 @@ const eo5=x=>1-Math.pow(1-x,5);
 const eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
 const back=x=>{const c1=1.6,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
 const $=id=>document.getElementById(id);
-const COL={C:'#22e39a',Q:'#ffc93c',P:'#3d8bff'};
-const TAG={C:'Confirmed',Q:'In queue',P:'In progress'};
 function rgba(hex,a){const n=parseInt(hex.slice(1),16);return `rgba(${n>>16},${n>>8&255},${n&255},${a})`}
 
-// ---------- calendar build ----------
-const status={1:'C',2:'Q',3:'C',4:'P',7:'C',8:'C',9:'Q',10:'C',11:'P',14:'C',15:'Q',16:'C',17:'P',18:'C',19:'Q',
-  21:'C',22:'C',23:'Q',24:'P',25:'C',26:'Q',28:'C',29:'Q',30:'P'};
-const counts={1:3,2:2,3:4,4:1,7:5,8:3,9:2,10:4,11:1,14:3,15:4,16:2,17:1,18:5,19:2,21:4,22:3,23:2,24:1,25:3,26:5,28:2,29:3,30:1};
+// ---------- calendar data: hour-by-hour barber schedule for every day ----------
+const SC={C:'#22e39a',P:'#ffc93c',X:'#ff5d6c'};
+const SL={C:'Confirmed',P:'Pending',X:'Canceled'};
+const HOURS=[9,10,11,12,13,14,15,16,17];
+const BARBERS=['Marcus','Dre','Luis'];
+const SERVICES=['Skin fade','Beard trim','Fade + beard','Line-up','Buzz cut','Kids cut','Taper'];
+const NAMES=['Leo Brooks','Priya Nair','Omar Haddad','Ethan Park','Chris Vega','Noah Kim','Ravi Patel','Malik Ward','Kai Morgan',
+  'Diego Santos','Isaac Cole','Tyler Grant','Ben Adler','Luca Rossi','Maya Chen','Nate Cruz','Sam Ortiz','Jordan Reyes','Aria Mendes','Andre Lewis'];
+const hh=h=>`${h%12||12}:00 ${h<12?'AM':'PM'}`;
+const DAYS={};
+let dseed=99;const drnd=()=>(dseed=(dseed*16807)%2147483647)/2147483647;
+for(let d=1;d<=30;d++){
+  DAYS[d]=HOURS.map(h=>{const r=drnd();
+    const st=r<.22?null:r<.72?'C':r<.88?'P':'X';
+    return st&&{h,st,n:NAMES[Math.floor(drnd()*NAMES.length)],b:BARBERS[Math.floor(drnd()*3)],sv:SERVICES[Math.floor(drnd()*SERVICES.length)]}});
+}
+const mk=(h,n,b,sv,st)=>({h,n,b,sv,st});
+DAYS[22]=[mk(9,'Leo Brooks','Marcus','Skin fade','C'),mk(10,'Priya Nair','Dre','Beard trim','C'),mk(11,'Omar Haddad','Luis','Line-up','X'),null,
+  mk(13,'Ethan Park','Dre','Buzz cut','P'),mk(14,'Aria Mendes','Marcus','Fade + beard','C'),mk(15,'Chris Vega','Luis','Kids cut','P'),
+  mk(16,'Noah Kim','Marcus','Skin fade','C'),mk(17,'Ravi Patel','Dre','Fade + beard','C')];
+DAYS[27]=[mk(9,'Malik Ward','Dre','Taper','C'),mk(10,'Kai Morgan','Marcus','Skin fade','C'),mk(11,'Diego Santos','Luis','Beard trim','X'),
+  mk(12,'Isaac Cole','Marcus','Fade + beard','C'),mk(13,'Tyler Grant','Dre','Line-up','P'),mk(14,'Ben Adler','Luis','Buzz cut','C'),null,
+  mk(16,'Luca Rossi','Marcus','Skin fade','P'),mk(17,'Maya Chen','Dre','Taper','C')];
+const WALKIN=[{n:'Sam Ortiz',sv:'Next · with Dre',eta:'~5 min'},{n:'Jordan Reyes',sv:'Joined via QR · with Luis',eta:'~15 min'},{n:'Nate Cruz',sv:'Joined via QR · first free',eta:'~25 min'}];
+const tally=d=>{const c={C:0,P:0,X:0};DAYS[d].forEach(a=>a&&c[a.st]++);return c};
+const pillHTML=st=>`<span class="pill" style="color:${SC[st]};background:${rgba(SC[st],.13)};border:1px solid ${rgba(SC[st],.4)}">${SL[st]}</span>`;
+
 const cells=[];
 const grid=$('grid');
 for(let i=0;i<35;i++){
@@ -470,35 +496,36 @@ for(let i=0;i<35;i++){
   let label, mute=false, day=null;
   if(d<1){label=31;mute=true}else if(d>30){label=d-30;mute=true}else{label=d;day=d}
   const el=document.createElement('div');
-  el.className='tile'+(mute?' mute':'')+(day===27?' today':'');
-  el.innerHTML=`<div class="fill"></div><div class="n">${label}</div><div class="tag"></div><div class="bar"></div>`;
+  el.className='tile'+(mute?' mute':'');
+  let inner=`<div class="n">${label}</div>`;
+  if(day){
+    const c=tally(day);
+    inner+=(day===27?'<div class="todaychip">WALK-IN</div>':'')+
+      `<div class="cts"><span style="color:${SC.C}"><i style="background:${SC.C}"></i>${c.C}</span><span style="color:${SC.P}"><i style="background:${SC.P}"></i>${c.P}</span><span style="color:${SC.X}"><i style="background:${SC.X}"></i>${c.X}</span></div>`+
+      `<div class="strip">${DAYS[day].map(()=>'<b></b>').join('')}</div>`;
+  }
+  el.innerHTML=inner+'<div class="sel"></div>';
   grid.appendChild(el);
-  const st=day&&status[day];
-  if(st){el.querySelector('.tag').textContent=st==='Q'?`${counts[day]} waiting`:st==='P'?'Live now':`${counts[day]} booked`}
-  cells.push({el,st,row:Math.floor(i/7),col:i%7,day,fill:el.querySelector('.fill'),tag:el.querySelector('.tag'),bar:el.querySelector('.bar')});
+  cells.push({el,day,row:Math.floor(i/7),col:i%7,cts:el.querySelector('.cts'),blocks:day?[...el.querySelectorAll('.strip b')]:[],sel:el.querySelector('.sel'),chip:el.querySelector('.todaychip')});
 }
-const tile22=cells.find(c=>c.day===22);
+const tile22=cells.find(c=>c.day===22), tile27=cells.find(c=>c.day===27);
 
-// ---------- queue build ----------
-const Q=[
-  {n:'Maya Chen',s:'Consultation',st:'P',eta:'Now',av:'#9ec5ff',in:2.05,out:4.55},
-  {n:'Leo Brooks',s:'Follow-up',st:'Q',eta:'4 min',av:'#ffd98a',in:2.13,next:4.6},
-  {n:'Priya Nair',s:'Onboarding',st:'Q',eta:'11 min',av:'#8cf0c7',in:2.21},
-  {n:'Sam Ortiz',s:'Strategy call',st:'Q',eta:'19 min',av:'#f3a6ff',in:2.29},
-  {n:'Noah Kim',s:'Check-in',st:'C',eta:'2:30',av:'#ffb199',in:2.37},
-  {n:'Jordan Reyes',s:'Joined via QR',st:'Q',eta:'26 min',av:'#ffc93c',in:2.75,fresh:true},
-];
-const qlist=$('qlist');
-Q.forEach(q=>{
-  const el=document.createElement('div');el.className='qi';
-  const ini=q.n.split(' ').map(w=>w[0]).join('');
-  el.innerHTML=`<div class="av" style="background:${q.av}">${ini}</div><div class="who"><div class="nm">${q.n}</div><div class="sv">${q.s}</div></div><div class="pill"></div><div class="eta">${q.eta}</div>`;
-  qlist.appendChild(el);q.el=el;q.pill=el.querySelector('.pill');q.etaEl=el.querySelector('.eta');
-});
-function setPill(pill,st){
-  const c=COL[st];pill.textContent=st==='P'?'In progress':st==='Q'?'Waiting':'Confirmed';
-  pill.style.color=c;pill.style.background=rgba(c,.13);pill.style.border=`1px solid ${rgba(c,.4)}`;
+function dayPanel(id,d,title,today){
+  const c=tally(d);
+  let h=`<div class="dv-k">DAY SCHEDULE · HOUR BY HOUR</div><div class="dv-t">${title}${today?'<span class="tc">TODAY</span>':''}</div>
+  <div class="dv-stats">${['C','P','X'].map(k=>`<div style="background:${rgba(SC[k],.1)};border:1px solid ${rgba(SC[k],.35)}"><b style="color:${SC[k]}">${c[k]}</b>${k==='C'?'Confirmed':k==='P'?'Pending confirmation':'Canceled'}</div>`).join('')}</div>`;
+  DAYS[d].forEach((a,i)=>{
+    const hr=HOURS[i];
+    h+=a?`<div class="hr${a.st==='X'?' x':''}"><div class="tm">${hh(hr)}</div><div class="cb" style="background:${SC[a.st]};box-shadow:0 0 8px ${rgba(SC[a.st],.6)}"></div><div class="who"><div class="nm">${a.n}</div><div class="sv">with <em>${a.b}</em> · ${a.sv}</div></div>${pillHTML(a.st)}</div>`
+        :`<div class="hr open"><div class="tm">${hh(hr)}</div><div class="cb" style="background:rgba(255,255,255,.1)"></div><div class="who"><div class="nm">Open slot</div></div></div>`;
+  });
+  h+=today?`<div class="wq"><div class="wq-h"><span>● WALK-IN QUEUE · TODAY ONLY</span><span>${WALKIN.length} waiting</span></div>${WALKIN.map((w,i)=>`<div class="wqi"><div class="no">#${i+1}</div><span>${w.n}</span><div class="sv">${w.sv}</div><div class="eta">${w.eta}</div></div>`).join('')}</div>`
+           :`<div class="wq off">● Walk-in Queue opens on the current day only</div>`;
+  $(id).innerHTML=h;
 }
+dayPanel('dv22',22,'Tue, Sep 22',false);
+dayPanel('dv27',27,'Sun, Sep 27',true);
+const rows22=[...$('dv22').querySelectorAll('.hr')],rows27=[...$('dv27').querySelectorAll('.hr')],wqis=[...$('dv27').querySelectorAll('.wqi')];
 
 // ---------- particles ----------
 const parts=[];let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
@@ -529,7 +556,6 @@ $('ghost').style.left=xOf(840)+'px';$('ghost').style.width=45*MIN_PX+'px';
 const IQ=$('iq');const iqWords=[];
 [['Missing ','out ','on'],['potential ','walk-in ','clients?']].forEach((ln,li)=>{const row=document.createElement('div');
   ln.forEach(w=>{const sp=document.createElement('span');sp.textContent=w;if(li===1&&w!=='potential ')sp.className='hl';row.appendChild(sp);iqWords.push(sp)});IQ.appendChild(row)});
-const walkers=[...document.querySelectorAll('.walker')];
 function renderIntro(t){
   // frame 1 (0–4s): the question
   const out1=eio(P(t,3.55,4.0));
@@ -539,17 +565,14 @@ function renderIntro(t){
   const sk=eo(P(t,1.2,1.7));$('isub').style.opacity=sk;$('isub').style.transform=`translateY(${lerp(14,0,sk)}px)`;
   const sc=eo(P(t,1.4,1.9));$('iscene').style.opacity=sc;
   const sg=.5+.5*Math.sin(t*8);$('sign').style.boxShadow=`0 0 ${14+26*sg}px rgba(229,72,77,${.35+.4*sg})`;
-  walkers.forEach((w,i)=>{const k=P(t,1.7+i*.45,3.3+i*.45);const x=lerp(0,330,eio(k));
-    w.style.transform=`translate(${x}px,${Math.abs(Math.sin(k*18))*-5}px)`;w.style.opacity=k<=0?0:Math.min(1,k*6)*(1-P(k,.6,1));
-    w.querySelector('.lg1').setAttribute('transform',`rotate(${Math.sin(k*18)*18} 25 108)`);w.querySelector('.lg2').setAttribute('transform',`rotate(${-Math.sin(k*18)*18} 45 108)`)});
-  $('iwalk').style.opacity=eo(P(t,2.3,2.7));
+  $('iwalk').style.opacity=eo(P(t,1.9,2.4));$('iwalk').style.transform=`translateX(${lerp(-20,0,eo(P(t,1.9,2.4)))}px)`;
   // frame 2 (4–7s): introducing the Walk-in Queue
   const inK=eo(P(t,4.0,4.5)),out2=eio(P(t,6.55,7.0));
   const f=$('introducing');f.style.display=t<4||out2>=1?'none':'block';f.style.opacity=inK*(1-out2);f.style.transform=`scale(${lerp(.94,1,inK)*(1+.06*out2)})`;
   const kk=eo(P(t,4.1,4.6));f.querySelector('.k').style.opacity=kk;f.querySelector('.k').style.letterSpacing=lerp(24,10,kk)+'px';
   const mk=back(P(t,4.2,4.8));f.querySelector('.mark').style.transform=`scale(${Math.max(0,mk)}) translateY(${Math.sin(t*2)*4}px)`;
   const tk=eo(P(t,4.45,5.0));f.querySelector('.t').style.opacity=tk;f.querySelector('.t').style.transform=`translateY(${lerp(30,0,tk)}px)`;
-  f.querySelector('.t').style.textShadow=`0 0 ${40*Math.max(0,1-Math.abs(t-5.0)*2)}px rgba(255,201,60,.5)`;
+  f.querySelector('.t').style.textShadow=`0 0 ${40*Math.max(0,1-Math.abs(t-5.0)*2)}px rgba(169,112,255,.5)`;
   const ssk=eo(P(t,4.9,5.4));f.querySelector('.s').style.opacity=ssk;f.querySelector('.s').style.transform=`translateY(${lerp(14,0,ssk)}px)`;
   [...$('ichips').children].forEach((c,i)=>{const k=back(P(t,5.3+i*.15,5.7+i*.15));c.style.opacity=clamp(k);c.style.transform=`scale(${Math.max(0,k)})`});
 }
@@ -582,7 +605,7 @@ function renderQueue(t){ // t = segment-local time (0..5), stretched by the call
   const hk=eo(P(t,.1,.6));
   $('qhead').style.opacity=hk;$('qhead').style.transform=`translateY(${lerp(-20,0,hk)}px)`;
   // steps light up as the story advances
-  [['s1',1.8,'#ffc93c'],['s2',2.85,'#ffc93c'],['s3',4.2,'#22e39a']].forEach(([id,at,c],i)=>{
+  [['s1',1.8,'#a970ff'],['s2',2.85,'#a970ff'],['s3',4.2,'#22e39a']].forEach(([id,at,c],i)=>{
     const el=$(id),a=eo(P(t,.35+i*.08,.8+i*.08)),on=eo(P(t,at,at+.3));
     el.style.opacity=a;el.style.transform=`translateY(${lerp(14,0,a)}px) scale(${1+.06*Math.sin(Math.PI*P(t,at,at+.4))})`;
     el.style.color=on?`rgba(255,255,255,${.55+.45*on})`:'#8a91a0';
@@ -605,7 +628,7 @@ function renderQueue(t){ // t = segment-local time (0..5), stretched by the call
   const sk=eo(P(t,1.0,1.5));
   $('stand').style.opacity=sk;$('stand').style.transform=`translateY(${lerp(50,0,sk)}px)`;
   const qrGlow=Math.max(0,Math.sin(Math.PI*P(t,1.6,2.9)));
-  $('standqr').style.boxShadow=`0 0 ${50*qrGlow}px rgba(255,201,60,${.8*qrGlow})`;
+  $('standqr').style.boxShadow=`0 0 ${50*qrGlow}px rgba(169,112,255,${.8*qrGlow})`;
   // phone rises
   const pk=eo5(P(t,1.2,1.9));
   const shake=t>4.25&&t<4.6?Math.sin(t*90)*6:0;
@@ -638,12 +661,12 @@ function renderQueue(t){ // t = segment-local time (0..5), stretched by the call
   const cp=$('checkp');cp.style.strokeDasharray=100;cp.style.strokeDashoffset=100*(1-eo(P(t,2.95,3.2)));
   const place=t<3.55?4:t<4.0?3:2;
   const flip=Math.max(Math.sin(Math.PI*P(t,3.55,3.8)),Math.sin(Math.PI*P(t,4.0,4.25)));
-  $('pos').textContent='#'+place;$('pos').style.transform=`scale(${1+.18*flip})`;$('pos').style.color=flip>.1?'#ffc93c':'#fff';
+  $('pos').textContent='#'+place;$('pos').style.transform=`scale(${1+.18*flip})`;$('pos').style.color=flip>.1?'#cfb2ff':'#fff';
   $('aeta').textContent=place===4?'~26 min':place===3?'~15 min':'~6 min';
   const prog=place===4?.3:place===3?.55:.8;
   const shown=lerp(0,prog,eo(P(t,3.1,3.5)));
   $('ringp').style.strokeDasharray=RING;$('ringp').style.strokeDashoffset=RING*(1-(t<3.55?shown:t<4.0?lerp(.3,.55,eo(P(t,3.55,3.85))):lerp(.55,.8,eo(P(t,4.0,4.3)))));
-  $('ringp').style.stroke=t>4.2?'#22e39a':'#ffc93c';
+  $('ringp').style.stroke=t>4.2?'#22e39a':'#a970ff';
   $('ahead').textContent=`Live updates · ${place-1} ${place===2?'person':'people'} ahead`;
   $('ah').textContent=t>4.2?"You're up next!":"You're in the queue!";
   const nk=eo5(P(t,4.2,4.5));
@@ -655,10 +678,10 @@ function renderQueue(t){ // t = segment-local time (0..5), stretched by the call
 
 // ---------- render(t) ----------
 function render(t){
-  // 0–4 question · 4–7 introducing · 7–16.5 walk-in queue · 16.5–20 calendar · 20–25 client profile · 25–30 brand
+  // 0–4 question · 4–7 introducing · 7–15 walk-in queue · 15–22.5 calendar · 22.5–26.5 client profile · 26.5–30 brand
   renderIntro(t);
-  renderQueue((t-7)/1.9);
-  renderMain(t<16.5?0:t<20?(t-16.5)*3/3.5:t<25?3+(t-20)*3/5:6+(t-25)*.8, t);
+  renderQueue((t-7)/1.6);
+  renderMain(t<15?0:t<22.5?(t-15)*3/7.5:t<26.5?3+(t-22.5)*.75:6+(t-26.5)*4/3.5, t);
   $('fade').style.opacity=1-eo(P(t,0,.45));
 }
 function renderMain(t, rt){
@@ -671,9 +694,9 @@ function renderMain(t, rt){
     p.el.style.transform=`translate(${x}px,${y}px) scale(${p.s})`;p.el.style.opacity=p.a*(.6+.4*Math.sin(t*2+p.ph))});}
 
   // ---- camera / world ----
-  const push=eio(P(t,0,3.0));                 // scene 1 push-in
-  const drawerK=eo(P(t,1.55,2.35));             // queue drawer opens
-  const away=rt<16.5?1:0;                       // dashboard hidden until its segment
+  const push=eio(P(rt,15,17.6));                // calendar push-in
+  const drawerK=eo(P(rt,16.9,17.5));            // day schedule panel opens
+  const away=rt<15?1:0;                         // dashboard hidden until its segment
   const pan=eio(P(t,3.0,4.3));                  // scene 2 pan
   const tilt=eio(P(t,6.0,7.3));                 // scene 3 tilt back
   let s=lerp(.84,1,push), rx=lerp(16,4,push), dx=lerp(0,-232,drawerK), dy=lerp(40,0,push);
@@ -681,53 +704,45 @@ function renderMain(t, rt){
   s=lerp(s,.74,tilt); rx=lerp(rx,64,tilt); dx=lerp(dx,-232,tilt); dy=lerp(dy,500,tilt);
   const world=$('world');
   world.style.transform=`translate3d(${dx}px,${dy}px,0) rotateX(${rx}deg) scale(${s})`;
-  world.style.opacity=lerp(1,.2,tilt)*eo(P(t,0,.6))*(1-away);
+  world.style.opacity=lerp(1,.2,tilt)*eo(P(rt,15,15.6))*(1-away);
   world.style.filter=t>3.8&&t<6.6?`brightness(${lerp(1,.62,eo(P(t,3.8,4.3))*(1-P(t,6.0,6.6)))})`:'none';
   $('drawer').style.width=lerp(0,440,drawerK)+'px';
   $('drawer').style.opacity=clamp(drawerK*3);
   $('syncicon').style.transform=`rotate(${t*140}deg)`;
-  $('legend').style.opacity=eo(P(t,1.1,1.7));
-  $('legend').style.transform=`translateY(${lerp(8,0,eo(P(t,1.1,1.7)))}px)`;
+  $('legend').style.opacity=eo(P(rt,15.9,16.5));
+  $('legend').style.transform=`translateY(${lerp(8,0,eo(P(rt,15.9,16.5)))}px)`;
 
-  // ---- tiles: color-code sweep ----
+  // ---- tiles: per-day counts + hourly status strip sweep in ----
+  const showToday=rt>=19.7;                      // panel switches from Sep 22 to today (Sep 27)
   cells.forEach(c=>{
-    if(!c.st){c.el.style.transform='';return}
-    const st=.45+(c.row+c.col)*.07;
-    const k=P(t,st,st+.4), e=eo(k);
-    const col=COL[c.st];
-    const pulse=c.st==='P'?.6+.4*Math.sin(t*5+c.col):1;
-    c.fill.style.background=`linear-gradient(160deg,${rgba(col,.26*e)},${rgba(col,.06*e)})`;
-    c.el.style.borderColor=rgba(col,.08+.55*e*pulse);
-    c.el.style.boxShadow=`0 0 ${26*e}px ${rgba(col,.28*e*pulse)}, inset 0 0 18px ${rgba(col,.12*e)}`;
-    c.bar.style.background=col;c.bar.style.opacity=e;
-    c.bar.style.boxShadow=`0 0 12px ${col}`;c.bar.style.transform=`scaleX(${e})`;c.bar.style.transformOrigin='left';
-    c.tag.style.color=col;c.tag.style.opacity=eo(P(t,st+.2,st+.55));
-    let sc=1+.09*Math.sin(Math.PI*k);
+    if(!c.day){c.el.style.transform='';return}
+    const st=15.35+(c.row+c.col)*.05;
+    const k=P(rt,st,st+.35);
+    c.cts.style.opacity=eo(P(rt,st+.1,st+.4));
+    c.blocks.forEach((b,i)=>{const a=DAYS[c.day][i];const bk=eo(P(rt,st+i*.03,st+i*.03+.2));
+      if(a){b.style.background=rgba(SC[a.st],.25+.7*bk);b.style.boxShadow=`0 0 ${6*bk}px ${rgba(SC[a.st],.5*bk)}`}});
+    let sc=1+.06*Math.sin(Math.PI*k);
     if(c===tile22){const pr=P(t,3.62,3.82);sc*=1-.07*Math.sin(Math.PI*pr);}
     c.el.style.transform=`scale(${sc})`;
+    // selection rings: Sep 22 while its schedule is shown, then today in purple
+    let ring='none';
+    if(c===tile22&&rt>17.2&&!showToday){const r=eo(P(rt,17.2,17.6));ring=`0 0 0 ${2*r}px #fff inset, 0 0 ${24*r}px rgba(255,255,255,.25)`}
+    if(c===tile27){const r=eo(P(rt,st,st+.4)),on=eo(P(rt,19.7,20.1)),pu=.6+.4*Math.sin(rt*4);
+      c.el.style.borderColor=rgba('#a970ff',.35+.5*r);c.el.style.background=`linear-gradient(160deg,${rgba('#a970ff',.12+.12*on)},var(--tile))`;
+      ring=`0 0 0 ${2*on}px #a970ff inset, 0 0 ${(14+30*on)*pu}px ${rgba('#a970ff',.35+.3*on)}`;
+      c.chip.style.opacity=r;}
+    c.sel.style.boxShadow=ring;
   });
 
-  // ---- queue ----
-  let acc=0;
-  const done=t>4.55;
-  Q.forEach(q=>{
-    const ein=eo(P(t,q.in,q.in+.4));
-    const eout=q.out?eio(P(t,q.out,q.out+.45)):0;
-    const presence=ein*(1-eout);
-    q.el.style.transform=`translate(${lerp(60,0,ein)+eout*-40}px,${acc*78}px)`;
-    q.el.style.opacity=presence;
-    acc+=presence;
-    let st=q.st;
-    if(q.next&&t>q.next)st='P';
-    if(q.out&&t>q.out-.35)st='C';
-    setPill(q.pill,st);
-    if(q.next)q.etaEl.textContent=t>q.next?'Now':'4 min';
-    if(q.fresh){const f=1-P(t,3.1,3.9);q.el.style.background=`rgba(255,201,60,${.035+.14*f*ein})`;q.el.style.borderColor=`rgba(255,201,60,${.07+.5*f*ein})`}
-  });
-  $('qcount').textContent=t<2.75?5:t<4.55?6:5;
-  $('qdone').textContent=t<4.55?18:19;
-  $('qwait').textContent=t<2.75?'12m':t<4.55?'14m':'11m';
-  $('livedot').style.opacity=.4+.6*Math.abs(Math.sin(t*3));
+  // ---- day schedule panel: Sep 22, then today with its Walk-in Queue ----
+  const sw=eio(P(rt,19.5,19.9));
+  $('dv22').style.opacity=1-sw;$('dv22').style.transform=`translateY(${-20*sw}px)`;
+  $('dv27').style.opacity=sw;$('dv27').style.transform=`translateY(${20*(1-sw)}px)`;
+  rows22.forEach((r,i)=>{const k=eo(P(rt,17.3+i*.07,17.6+i*.07));r.style.opacity=k;r.style.transform=`translateX(${lerp(24,0,k)}px)`});
+  rows27.forEach((r,i)=>{const k=eo(P(rt,19.7+i*.05,20+i*.05));r.style.opacity=k;r.style.transform=`translateX(${lerp(24,0,k)}px)`});
+  wqis.forEach((r,i)=>{const k=back(P(rt,20.3+i*.18,20.7+i*.18));r.style.opacity=clamp(k);r.style.transform=`translateX(${lerp(30,0,clamp(k))}px)`});
+  const wqb=$('dv27').querySelector('.wq'),wp=.5+.5*Math.sin(rt*4);
+  wqb.style.boxShadow=`0 0 ${20+20*wp}px rgba(169,112,255,${.25+.2*wp*sw})`;
 
   // ---- profile card (scene 2) ----
   const card=$('card');
@@ -780,8 +795,9 @@ function renderMain(t, rt){
   rip.style.transform=`translate(${tc.x}px,${tc.y}px) scale(${lerp(.2,1.4,eo(rp))})`;
 
   // ---- captions ----
-  const c1=eo(P(t,.3,.8))*(1-P(t,2.75,3.0)), c2=eo(P(t,3.15,3.6))*(1-P(t,5.75,6.0));
-  if(t<3.05){$('capnum').textContent='02 — SMART SCHEDULING';$('captxt').innerHTML='Every booking, <em>color-coded</em> at a glance';}
+  const c1=eo(P(rt,15.5,16))*(1-P(rt,22.2,22.5)), c2=eo(P(t,3.15,3.6))*(1-P(t,5.75,6.0));
+  if(rt<19.6){$('capnum').textContent='02 — SMART SCHEDULING';$('captxt').innerHTML='Confirmed, pending & canceled — <em>hour by hour</em>';}
+  else if(t<3.05){$('capnum').textContent='02 — SMART SCHEDULING';$('captxt').innerHTML='Today only: your live <em style="color:#cfb2ff">Walk-in Queue</em>';}
   else{$('capnum').textContent='03 — KNOW EVERY CLIENT';$('captxt').innerHTML='Client profiles & <em>custom notes</em>';}
   const ck=Math.max(c1,c2)*(1-away);
   $('caption').style.opacity=ck;$('caption').style.transform=`translateY(${lerp(18,0,ck)}px)`;
