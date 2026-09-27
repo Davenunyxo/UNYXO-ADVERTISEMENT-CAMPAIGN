@@ -47,18 +47,16 @@ body{font-family:Poppins,system-ui,sans-serif;color:var(--text);-webkit-font-smo
 .legend b{width:11px;height:11px;border-radius:50%}
 .weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:14px;margin:18px 0 12px;
   font-size:15px;font-weight:600;color:var(--muted);letter-spacing:1.5px;text-align:center}
-.grid{display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:repeat(5,94px);gap:14px}
-.tile{position:relative;border-radius:14px;background:var(--tile);
-  border:1px solid rgba(255,255,255,.07);padding:12px 14px;overflow:hidden}
-.tile .n{font-size:22px;font-weight:700;color:#e6e9ef;line-height:1}
-.tile.mute .n{color:#3d424c}
-.tile .todaychip{position:absolute;right:10px;top:10px;font-size:10.5px;font-weight:800;letter-spacing:1px;color:#e6d8ff;
-  padding:3px 7px;border-radius:6px;background:rgba(169,112,255,.3);border:1px solid rgba(169,112,255,.6)}
-.cts{position:absolute;left:14px;right:12px;top:46px;display:flex;gap:13px;font-size:15px;font-weight:700}
-.cts span{display:flex;align-items:center;gap:5px}
-.cts i{width:8px;height:8px;border-radius:50%}
-.tbar{position:absolute;left:14px;right:14px;bottom:12px;height:6px;border-radius:6px;display:flex;gap:2px;overflow:hidden;transform-origin:left}
-.tbar b{height:100%;border-radius:3px}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:repeat(5,94px);gap:12px}
+.tile{position:relative;border-radius:16px;background:linear-gradient(180deg,#1a1d25,#14171e);
+  border:1px solid rgba(255,255,255,.06);padding:13px 15px;overflow:hidden}
+.tile .n{font-size:24px;font-weight:600;color:#eef0f4;line-height:1}
+.tile.mute{background:transparent;border-color:rgba(255,255,255,.035)}
+.tile.mute .n{color:#343842}
+.tile .todaychip{position:absolute;right:11px;top:12px;font-size:10.5px;font-weight:800;letter-spacing:1px;color:#fff;
+  padding:3px 8px;border-radius:20px;background:#8b54f0}
+.dots{position:absolute;left:15px;right:12px;bottom:15px;display:flex;gap:5px}
+.dots i{width:10px;height:10px;border-radius:50%}
 .tile .sel{position:absolute;inset:0;border-radius:14px;pointer-events:none}
 
 /* day schedule panel */
@@ -510,12 +508,11 @@ for(let i=0;i<35;i++){
   if(day){
     const c=tally(day);
     inner+=(day===27?'<div class="todaychip">WALK-IN</div>':'')+
-      `<div class="cts"><span style="color:${SC.C}"><i style="background:${SC.C}"></i>${c.C}</span><span style="color:${SC.P}"><i style="background:${SC.P}"></i>${c.P}</span><span style="color:${SC.X}"><i style="background:${SC.X}"></i>${c.X}</span></div>`+
-      `<div class="tbar">${['C','P','X'].filter(k=>c[k]).map(k=>`<b style="flex:${c[k]};background:${SC[k]};box-shadow:0 0 8px ${rgba(SC[k],.6)}"></b>`).join('')}</div>`;
+      `<div class="dots">${DAYS[day].filter(Boolean).sort((x,y)=>'CPX'.indexOf(x.st)-'CPX'.indexOf(y.st)).map(a=>`<i style="background:${SC[a.st]};box-shadow:0 0 8px ${rgba(SC[a.st],.55)}"></i>`).join('')}</div>`;
   }
   el.innerHTML=inner+'<div class="sel"></div>';
   grid.appendChild(el);
-  cells.push({el,day,row:Math.floor(i/7),col:i%7,cts:el.querySelector('.cts'),bar:el.querySelector('.tbar'),sel:el.querySelector('.sel'),chip:el.querySelector('.todaychip')});
+  cells.push({el,day,row:Math.floor(i/7),col:i%7,dots:day?[...el.querySelectorAll('.dots i')]:[],sel:el.querySelector('.sel'),chip:el.querySelector('.todaychip')});
 }
 const tile22=cells.find(c=>c.day===22), tile27=cells.find(c=>c.day===27);
 
@@ -720,13 +717,12 @@ function renderMain(t, rt){
     if(!c.day){c.el.style.transform='';return}
     const st=.15+(c.row+c.col)*.045;
     const k=P(u,st,st+.35);
-    c.cts.style.opacity=eo(P(u,st+.05,st+.35));
-    c.bar.style.transform=`scaleX(${eo(P(u,st+.1,st+.5))})`;
-    c.el.style.transform=`scale(${1+.05*Math.sin(Math.PI*k)})`;
+    c.dots.forEach((d,i)=>{const dk=back(P(u,st+.05+i*.03,st+.3+i*.03));d.style.transform=`scale(${Math.max(0,dk)})`});
+    c.el.style.transform=`scale(${1+.04*Math.sin(Math.PI*k)})`;
     let ring='none';
     if(c===tile22&&u>1.0&&!showToday){const r=eo(P(u,1.0,1.3));ring=`0 0 0 ${2*r}px #fff inset, 0 0 ${24*r}px rgba(255,255,255,.25)`}
     if(c===tile27){const r=eo(P(u,st,st+.4)),on=eo(P(u,2.6,3.0)),pu=.6+.4*Math.sin(rt*4);
-      c.el.style.borderColor=rgba('#a970ff',.35+.5*r);c.el.style.background=`linear-gradient(160deg,${rgba('#a970ff',.12+.12*on)},var(--tile))`;
+      c.el.style.borderColor=rgba('#a970ff',.35+.5*r);c.el.style.background=`linear-gradient(160deg,${rgba('#a970ff',.28+.14*on)},${rgba('#a970ff',.1)})`;
       ring=`0 0 0 ${2*on}px #a970ff inset, 0 0 ${(14+30*on)*pu}px ${rgba('#a970ff',.35+.3*on)}`;
       c.chip.style.opacity=r;}
     c.sel.style.boxShadow=ring;
