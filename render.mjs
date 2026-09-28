@@ -2,7 +2,7 @@
 // Usage: node render.mjs [--fps 30] [--duration 10] [--stills 1.5,4.8,9.5]
 import { chromium } from 'playwright-core';
 import { spawn } from 'node:child_process';
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
@@ -28,12 +28,14 @@ if (stills) {
   }
 } else {
   const out = portrait ? 'out/unyxo-smart-booking-ad-reels.mp4' : 'out/unyxo-smart-booking-ad.mp4';
-  // Instagram-friendly: H.264 High@4.2, yuv420p, constant 30fps, high bitrate, AAC track (silent), faststart
+  // Instagram-friendly: H.264 High@4.2, yuv420p, constant 30fps, high bitrate, AAC audio, faststart
   const ff = spawn(ffmpeg, ['-y', '-f', 'image2pipe', '-framerate', String(fps), '-i', '-',
-    '-f', 'lavfi', '-i', 'anullsrc=channel_layout=stereo:sample_rate=48000', '-shortest',
+    // sound effects from `python3 sfx.py` (ad/sfx.wav); silent track if it hasn't been generated
+    ...(existsSync('ad/sfx.wav') ? ['-i', 'ad/sfx.wav'] : ['-f', 'lavfi', '-i', 'anullsrc=channel_layout=stereo:sample_rate=48000']),
+    '-t', String(duration),
     '-c:v', 'libx264', '-preset', 'slow', '-profile:v', 'high', '-level', '4.2', '-crf', '15',
     '-maxrate', '25M', '-bufsize', '50M', '-pix_fmt', 'yuv420p', '-r', String(fps), '-g', String(fps * 2),
-    '-c:a', 'aac', '-b:a', '128k', '-movflags', '+faststart', out],
+    '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', out],
     { stdio: ['pipe', 'inherit', 'inherit'] });
   const frames = Math.round(fps * duration);
   for (let f = 0; f < frames; f++) {
