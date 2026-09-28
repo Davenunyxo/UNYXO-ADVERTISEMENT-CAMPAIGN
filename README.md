@@ -15,6 +15,9 @@ Outputs:
 - `out/unyxo-smart-booking-ad-reels.mp4` — **Instagram Reels**: 1080×1920 (9:16), H.264 High@4.2, 30 fps, AAC audio track, faststart. All text stays inside the Reels safe area (roughly y 220–1540 px, x 60–1020 px), clear of Instagram's top bar, right-hand buttons and bottom caption area.
 - `out/unyxo-smart-booking-ad.mp4` — 1920×1080 (16:9) for YouTube / web.
 
+## Sound
+`python3 sfx.py` (needs numpy) synthesises `ad/sfx.wav`: whooshes on scene changes, pops as seats fill, a buzzer on "No seats available", scanner + shutter + chime for the QR scan, count-down ticks, phone vibration + notification ding, UI clicks on "Open live queue" / "Notify", and a riser → impact → shimmer for the logo reveal. Mixed to about −14 LUFS; `render.mjs` muxes it in automatically.
+
 ## Preview / re-render
 - Open `ad/index.html` in a browser to watch the 16:9 version loop, or `ad/index.html?portrait` for the 9:16 Reels layout. Add `&t=4.5` (or `?t=4.5`) to freeze a frame.
 - `npm install`, then `node render.mjs` (16:9) or `node render.mjs --portrait` (Reels). Set `FFMPEG` and `CHROME` env vars if needed; add `--stills 1,5,9` to export PNG frames instead.
