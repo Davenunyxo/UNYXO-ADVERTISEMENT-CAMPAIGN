@@ -8,6 +8,7 @@
 @font-face{font-family:Poppins;font-weight:600;src:url(fonts/poppins-latin-600-normal.woff2) format("woff2")}
 @font-face{font-family:Poppins;font-weight:700;src:url(fonts/poppins-latin-700-normal.woff2) format("woff2")}
 @font-face{font-family:Poppins;font-weight:800;src:url(fonts/poppins-latin-800-normal.woff2) format("woff2")}
+@font-face{font-family:Poppins;font-weight:900;src:url(fonts/poppins-latin-900-normal.woff2) format("woff2")}
 :root{--bg:#09090B;--cyan:#22d3ee;--purple:#a855f7;--green:#10b981;--text:#f4f4f5;--muted:#8b8b95}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:1080px;height:1920px;background:var(--bg);overflow:hidden}
@@ -47,7 +48,10 @@ body{font-family:Poppins,system-ui,sans-serif;color:var(--text);-webkit-font-smo
 .spec{position:absolute;font-size:22px;font-weight:600;letter-spacing:6px;text-transform:uppercase;color:rgba(244,244,245,.75);display:flex;align-items:center;gap:16px}
 .spec b{font-weight:700;color:var(--cyan)}
 .spec i{display:block;height:1px;width:120px;background:linear-gradient(90deg,rgba(255,255,255,.7),rgba(34,211,238,.9))}
-#h1{left:80px;top:300px;font-size:92px;font-weight:700;line-height:1.02;letter-spacing:-1.5px}
+#h1{z-index:10;left:70px;top:290px;font-size:104px;font-weight:900;line-height:1;letter-spacing:-2.5px}
+#h1 .m{text-shadow:0 4px 30px rgba(0,0,0,.6)}
+#h1 .m:not(.grad){color:#fff}
+#h1 .m.grad{background:linear-gradient(90deg,#67e8f9,#c084fc);-webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 0 24px rgba(103,232,249,.35))}
 
 /* ---------- scene 2: dashboard */
 #h2{position:absolute;left:0;right:0;top:250px;text-align:center;font-size:58px;font-weight:700;line-height:1.1;letter-spacing:-.5px}
