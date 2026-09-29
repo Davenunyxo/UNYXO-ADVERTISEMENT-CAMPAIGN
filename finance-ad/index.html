@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Unyxo Finance Ad</title>
+<style>
+@font-face{font-family:Poppins;font-weight:500;src:url(fonts/poppins-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:Poppins;font-weight:600;src:url(fonts/poppins-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:Poppins;font-weight:700;src:url(fonts/poppins-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:Poppins;font-weight:800;src:url(fonts/poppins-latin-800-normal.woff2) format("woff2")}
+:root{--bg:#09090B;--cyan:#22d3ee;--purple:#a855f7;--green:#10b981;--text:#f4f4f5;--muted:#8b8b95}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;background:var(--bg);overflow:hidden}
+body{font-family:Poppins,system-ui,sans-serif;color:var(--text);-webkit-font-smoothing:antialiased}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--bg)}
+.scene{position:absolute;inset:0;overflow:hidden}
+.cam{position:absolute;inset:0}
+.grad{background:linear-gradient(90deg,var(--cyan),var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent}
+.ambient{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none}
+#vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.8) 100%)}
+#grain{position:absolute;inset:-50%;pointer-events:none;opacity:.06;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+#flash{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 55%,#e9fdff,#67e8f9 30%,rgba(168,85,247,.6) 60%,transparent 80%);opacity:0}
+#streak{position:absolute;left:-600px;top:-400px;width:900px;height:3200px;opacity:0;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(34,211,238,.0) 20%,rgba(34,211,238,.85) 45%,#fff 50%,rgba(168,85,247,.85) 55%,transparent 80%);filter:blur(6px);mix-blend-mode:screen}
+
+/* ---------- echo headline (DRIP-style motion trail) */
+.echo{position:absolute;white-space:pre}
+.echo .g{position:absolute;left:0;right:0;top:0;color:rgba(255,255,255,.18)}
+.echo .g2{color:rgba(255,255,255,.07)}
+.echo .m{position:relative}
+
+/* ---------- scene 1: shell game */
+#surface{position:absolute;left:-200px;right:-200px;top:1040px;height:1300px;
+  background:
+    radial-gradient(60% 30% at 50% 12%,rgba(160,190,220,.22),transparent 70%),
+    repeating-linear-gradient(90deg,rgba(255,255,255,.028) 0 2px,transparent 2px 6px),
+    linear-gradient(180deg,#23262d 0%,#15171c 25%,#0b0c0f 70%);
+  border-top:1px solid rgba(200,220,255,.25)}
+#horizon{position:absolute;left:0;right:0;top:1036px;height:10px;background:linear-gradient(90deg,transparent,rgba(34,211,238,.55),rgba(168,85,247,.55),transparent);filter:blur(4px)}
+.shell,.refl{position:absolute;left:0;top:0;width:280px;height:230px;margin-left:-140px}
+.refl{opacity:.2;transform-origin:50% 50%;-webkit-mask-image:linear-gradient(0deg,rgba(0,0,0,.9),transparent 70%);mask-image:linear-gradient(0deg,rgba(0,0,0,.9),transparent 70%)}
+#cash,#cashRefl{position:absolute;left:0;top:0;width:210px;height:130px;margin-left:-105px}
+#cashRefl{opacity:.16;-webkit-mask-image:linear-gradient(0deg,rgba(0,0,0,.9),transparent 70%);mask-image:linear-gradient(0deg,rgba(0,0,0,.9),transparent 70%)}
+#emptyGlow{position:absolute;left:540px;top:1178px;width:320px;height:70px;margin:-35px 0 0 -160px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(34,211,238,.45),rgba(168,85,247,.2) 55%,transparent);opacity:0}
+.spec{position:absolute;font-size:22px;font-weight:600;letter-spacing:6px;text-transform:uppercase;color:rgba(244,244,245,.75);display:flex;align-items:center;gap:16px}
+.spec b{font-weight:700;color:var(--cyan)}
+.spec i{display:block;height:1px;width:120px;background:linear-gradient(90deg,rgba(255,255,255,.7),rgba(34,211,238,.9))}
+#h1{left:80px;top:300px;font-size:92px;font-weight:700;line-height:1.02;letter-spacing:-1.5px}
+
+/* ---------- scene 2: dashboard */
+#h2{position:absolute;left:0;right:0;top:250px;text-align:center;font-size:58px;font-weight:700;line-height:1.1;letter-spacing:-.5px}
+#h2 .echo{position:relative;display:block}
+#dash{position:absolute;left:60px;top:450px;width:960px;height:1050px;border-radius:36px;padding:28px;transform-style:preserve-3d;
+  background:linear-gradient(160deg,rgba(40,44,60,.7),rgba(16,17,24,.86) 45%,rgba(12,12,18,.92));
+  border:1px solid rgba(255,255,255,.12);box-shadow:0 60px 140px rgba(0,0,0,.7),0 0 90px rgba(34,211,238,.12),inset 0 1px 0 rgba(255,255,255,.18)}
+.card{position:absolute;left:28px;right:28px;border-radius:22px;padding:20px 24px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08)}
+.row{display:flex;justify-content:space-between;align-items:center}
+.lbl{font-size:17px;font-weight:600;color:var(--muted);letter-spacing:.5px}
+.ttl{font-size:21px;font-weight:700}
+.chip{font-size:16px;font-weight:700;padding:5px 12px;border-radius:30px}
+.up{color:#34d399;background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.4)}
+.down{color:#67e8f9;background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.4)}
+#dhead{position:absolute;left:28px;right:28px;top:26px;height:50px}
+.brand{display:flex;align-items:center;gap:12px;font-size:22px;font-weight:800;letter-spacing:4px}
+.brand span{font-weight:500;letter-spacing:.5px;color:var(--muted);font-size:18px}
+.seg{display:flex;gap:6px;padding:5px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+.seg div{padding:6px 14px;border-radius:10px;font-size:15px;font-weight:700;color:var(--muted)}
+.seg .on{background:linear-gradient(90deg,var(--cyan),var(--purple));color:#07070a}
+#kpis{position:absolute;left:28px;right:28px;top:94px;height:150px;display:flex;gap:16px}
+.kpi{flex:1;border-radius:22px;padding:18px 20px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08)}
+.kpi .v{font-size:36px;font-weight:800;margin:6px 0 8px;letter-spacing:-.5px}
+#cLine{top:262px;height:290px}
+#cBars{top:570px;height:190px}
+#cTable{top:778px;height:244px;padding:16px 24px}
+.tbl{width:100%;border-collapse:collapse;margin-top:8px;font-size:18px}
+.tbl th{font-size:14px;font-weight:700;letter-spacing:1.5px;color:var(--muted);text-align:right;padding:4px 0 8px}
+.tbl th:first-child,.tbl td:first-child{text-align:left}
+.tbl td{text-align:right;padding:7px 0;border-top:1px solid rgba(255,255,255,.06);font-weight:600}
+.tbl td.g{color:#34d399}
+.callout{position:absolute;display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:14px;font-size:18px;font-weight:700;white-space:nowrap;
+  background:rgba(9,9,11,.85);border:1px solid rgba(34,211,238,.55);box-shadow:0 0 30px rgba(34,211,238,.35)}
+.callout i{width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+
+/* ---------- scene 3: growth */
+#s3bg{position:absolute;inset:0;background:
+  radial-gradient(70% 45% at 50% 48%,rgba(16,185,129,.55),transparent 70%),
+  radial-gradient(60% 40% at 80% 90%,rgba(34,211,238,.35),transparent 70%),
+  linear-gradient(180deg,#021b14,#03261c 45%,#021016)}
+#s3grid{position:absolute;inset:0;opacity:.18;background:
+  repeating-linear-gradient(0deg,rgba(255,255,255,.35) 0 1px,transparent 1px 120px),
+  repeating-linear-gradient(90deg,rgba(255,255,255,.35) 0 1px,transparent 1px 120px)}
+#s3lbl{position:absolute;left:0;right:0;top:560px;text-align:center;font-size:30px;font-weight:600;letter-spacing:10px;text-transform:uppercase;color:#a7f3d0}
+#bigstat{left:50%;top:640px;font-size:250px;font-weight:800;letter-spacing:-8px;line-height:1}
+#bigstat .m{background:linear-gradient(180deg,#ffffff,#a7f3d0 70%,#34d399);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 40px rgba(16,185,129,.6))}
+#bigstat .g{color:rgba(167,243,208,.2)}#bigstat .g2{color:rgba(167,243,208,.08)}
+#s3sub{position:absolute;left:0;right:0;top:960px;text-align:center}
+#s3sub .v{font-size:96px;font-weight:800;letter-spacing:-2px}
+#s3sub .l{font-size:26px;font-weight:600;letter-spacing:6px;text-transform:uppercase;color:#a7f3d0;margin-top:4px}
+.coin{position:absolute;left:0;top:0;width:150px;height:150px;margin:-75px 0 0 -75px;border-radius:50%;display:grid;place-items:center;
+  font-size:84px;font-weight:800;color:#ecfdf5;
+  background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.55),rgba(52,211,153,.55) 30%,rgba(6,95,70,.85) 70%);
+  border:2px solid rgba(167,243,208,.8);box-shadow:0 0 50px rgba(16,185,129,.7),inset 0 -10px 20px rgba(0,0,0,.35),inset 0 6px 14px rgba(255,255,255,.35);
+  text-shadow:0 2px 10px rgba(0,0,0,.35)}
+.coin.c{border-color:rgba(165,243,252,.85);box-shadow:0 0 50px rgba(34,211,238,.7),inset 0 -10px 20px rgba(0,0,0,.35),inset 0 6px 14px rgba(255,255,255,.35);
+  background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.55),rgba(34,211,238,.5) 30%,rgba(14,80,110,.85) 70%)}
+
+/* ---------- scene 4: brand */
+#glowC,#glowP{position:absolute;width:760px;height:760px;border-radius:50%;filter:blur(90px)}
+#glowC{left:40px;top:560px;background:rgba(34,211,238,.45)}
+#glowP{left:300px;top:640px;background:rgba(168,85,247,.45)}
+#logo{position:absolute;left:540px;top:820px;width:330px;height:334px;margin:-167px 0 0 -165px;filter:drop-shadow(0 0 30px rgba(165,243,252,.7)) drop-shadow(0 0 80px rgba(168,85,247,.5))}
+#word{position:absolute;left:0;right:0;top:1040px;text-align:center;font-size:74px;font-weight:800;letter-spacing:26px;padding-left:26px;
+  background:linear-gradient(180deg,#fff,#c9ced8 60%,#8d939e);-webkit-background-clip:text;background-clip:text;color:transparent}
+#h4{position:absolute;left:0;right:0;top:1200px;text-align:center;font-size:66px;font-weight:700;line-height:1.1;letter-spacing:-.5px}
+#h4 .echo{position:relative;display:block}
+#tag{position:absolute;left:0;right:0;top:1395px;text-align:center;font-size:28px;font-weight:500;letter-spacing:8px;text-transform:uppercase;color:#c4c4cc}
+</style>
+</head>
+<body>
+<div id="stage">
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <radialGradient id="shellG" cx=".35" cy=".25" r=".9">
+        <stop offset="0" stop-color="#5a606c"/><stop offset=".35" stop-color="#23262d"/><stop offset=".8" stop-color="#0b0c0f"/><stop offset="1" stop-color="#050506"/>
+      </radialGradient>
+      <linearGradient id="rimG" x1="0" x2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#a855f7"/></linearGradient>
+      <linearGradient id="billG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2fae76"/><stop offset=".5" stop-color="#1b7a52"/><stop offset="1" stop-color="#0f5a3b"/></linearGradient>
+      <symbol id="shellS" viewBox="0 0 280 230">
+        <ellipse cx="140" cy="214" rx="132" ry="15" fill="#050506"/>
+        <path d="M12 212 C 12 88, 66 14, 140 14 C 214 14, 268 88, 268 212 Z" fill="url(#shellG)"/>
+        <path d="M12 212 C 12 88, 66 14, 140 14 C 214 14, 268 88, 268 212" fill="none" stroke="url(#rimG)" stroke-width="2.5" opacity=".55"/>
+        <path d="M58 150 C 64 88, 98 46, 140 40" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".28"/>
+        <path d="M24 176 C 90 160, 190 160, 256 176" fill="none" stroke="#fff" stroke-width="1.5" opacity=".12"/>
+        <ellipse cx="140" cy="212" rx="128" ry="12" fill="none" stroke="url(#rimG)" stroke-width="2" opacity=".6"/>
+      </symbol>
+      <symbol id="cashS" viewBox="0 0 210 130">
+        <g>
+          <rect x="6" y="54" width="198" height="66" rx="8" fill="#0c4a31"/>
+          <rect x="6" y="46" width="198" height="66" rx="8" fill="#12603f" stroke="#2fae76" stroke-width="1"/>
+          <rect x="6" y="38" width="198" height="66" rx="8" fill="#15704a" stroke="#34c285" stroke-width="1"/>
+          <rect x="6" y="30" width="198" height="66" rx="8" fill="url(#billG)" stroke="#6ee7b7" stroke-width="1.5"/>
+          <rect x="18" y="38" width="174" height="50" rx="5" fill="none" stroke="#a7f3d0" stroke-width="1" opacity=".5"/>
+          <ellipse cx="105" cy="63" rx="24" ry="19" fill="#0f5a3b" stroke="#a7f3d0" stroke-width="1.2" opacity=".9"/>
+          <text x="105" y="73" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="28" fill="#d1fae5">$</text>
+          <rect x="84" y="28" width="42" height="70" rx="3" fill="#f5f0e6" opacity=".92"/>
+          <rect x="84" y="28" width="42" height="70" rx="3" fill="none" stroke="#c9b98f" stroke-width="1"/>
+          <text x="105" y="67" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="13" fill="#3b3a36">$10K</text>
+        </g>
+      </symbol>
+      <mask id="uholes" maskUnits="userSpaceOnUse" x="0" y="560" width="900" height="920">
+        <rect x="0" y="560" width="900" height="920" fill="#fff"/>
+        <circle cx="143" cy="920" r="52" fill="#000"/><circle cx="747" cy="920" r="52" fill="#000"/><circle cx="445" cy="1333" r="52" fill="#000"/>
+      </mask>
+      <symbol id="ulogo" viewBox="20 600 850 860">
+        <g mask="url(#uholes)" fill="#fff">
+          <path d="M143 674 V1000 A302 333 0 0 0 747 1000 V674" fill="none" stroke="#fff" stroke-width="124" stroke-linecap="round"/>
+          <circle cx="143" cy="920" r="114"/><circle cx="747" cy="920" r="114"/><circle cx="445" cy="1333" r="114"/>
+        </g>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- ===================== SCENE 1 · THE SHELL GAME ===================== -->
+  <div class="scene" id="s1">
+    <div class="ambient" style="left:-200px;top:300px;width:700px;height:700px;background:rgba(34,211,238,.18)"></div>
+    <div class="ambient" style="left:600px;top:500px;width:700px;height:700px;background:rgba(168,85,247,.18)"></div>
+    <div class="cam" id="s1cam">
+      <div id="surface"></div><div id="horizon"></div>
+      <div id="emptyGlow"></div>
+      <svg class="refl" id="r0"><use href="#shellS"/></svg><svg class="refl" id="r1"><use href="#shellS"/></svg><svg class="refl" id="r2"><use href="#shellS"/></svg>
+      <svg id="cashRefl"><use href="#cashS"/></svg>
+      <svg id="cash"><use href="#cashS"/></svg>
+      <svg class="shell" id="sh0"><use href="#shellS"/></svg><svg class="shell" id="sh1"><use href="#shellS"/></svg><svg class="shell" id="sh2"><use href="#shellS"/></svg>
+    </div>
+    <div class="spec" id="spec1" style="left:80px;top:1440px"><b>01</b>Your cash<i></i></div>
+    <div class="spec" id="spec2" style="right:80px;top:1440px"><i style="background:linear-gradient(90deg,rgba(168,85,247,.9),rgba(255,255,255,.7))"></i>Somewhere<b>?</b></div>
+    <div class="echo" id="h1" data-lines="your finances|shouldn't be a|guessing game."></div>
+  </div>
+
+  <!-- ===================== SCENE 2 · DASHBOARD ===================== -->
+  <div class="scene" id="s2">
+    <div class="ambient" style="left:-250px;top:200px;width:800px;height:800px;background:rgba(34,211,238,.16)"></div>
+    <div class="ambient" style="left:500px;top:1000px;width:800px;height:800px;background:rgba(168,85,247,.16)"></div>
+    <div id="h2"><span class="echo" data-lines="keep track of all your financials"></span><span class="echo" data-lines="in one convenient space" data-grad="1"></span></div>
+    <div class="cam" id="s2cam" style="perspective:1800px">
+      <div id="dash">
+        <div id="dhead" class="row">
+          <div class="brand"><svg width="30" height="30" viewBox="20 600 850 860"><use href="#ulogo"/></svg>UNYXO <span>Finance</span></div>
+          <div class="seg"><div>Q1</div><div>Q2</div><div>Q3</div><div class="on">Q4</div></div>
+        </div>
+        <div id="kpis">
+          <div class="kpi"><div class="lbl">Revenue</div><div class="v" data-count="148920" data-prefix="$">$0</div><span class="chip up">▲ 32%</span></div>
+          <div class="kpi" id="kExp"><div class="lbl">Expenses</div><div class="v" data-count="61480" data-prefix="$">$0</div><span class="chip down">▼ 12%</span></div>
+          <div class="kpi"><div class="lbl">Net profit</div><div class="v" data-count="87440" data-prefix="$">$0</div><span class="chip up">▲ 48%</span></div>
+        </div>
+        <div class="card" id="cLine">
+          <div class="row"><div class="ttl">Revenue growth</div><span class="chip up">+32% YoY</span></div>
+          <svg id="lineSvg" width="856" height="210" viewBox="0 0 856 210" style="margin-top:10px;overflow:visible">
+            <defs><linearGradient id="areaG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22d3ee" stop-opacity=".45"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></linearGradient>
+              <linearGradient id="lineG" x1="0" x2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#a855f7"/></linearGradient>
+              <clipPath id="lineClip"><rect id="lineClipR" x="0" y="-20" width="0" height="260"/></clipPath></defs>
+            <g stroke="rgba(255,255,255,.07)"><line x1="0" x2="856" y1="40" y2="40"/><line x1="0" x2="856" y1="100" y2="100"/><line x1="0" x2="856" y1="160" y2="160"/></g>
+            <g clip-path="url(#lineClip)"><path id="area" fill="url(#areaG)"/><path id="line" fill="none" stroke="url(#lineG)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 0 10px rgba(34,211,238,.7))"/></g>
+            <circle id="lineHead" r="9" fill="#fff" style="filter:drop-shadow(0 0 12px #22d3ee)"/>
+            <g id="months" font-family="Poppins" font-size="14" font-weight="600" fill="#6b6b75"></g>
+          </svg>
+        </div>
+        <div class="card" id="cBars">
+          <div class="row"><div class="ttl">Monthly profit</div><div class="lbl">Jan – Dec</div></div>
+          <div id="bars" style="position:absolute;left:24px;right:24px;bottom:18px;height:112px;display:flex;align-items:flex-end;gap:14px"></div>
+        </div>
+        <div class="card" id="cTable">
+          <div class="row"><div class="ttl">Quarterly performance</div><div class="lbl">FY 2026</div></div>
+          <table class="tbl"><thead><tr><th>QUARTER</th><th>REVENUE</th><th>EXPENSES</th><th>PROFIT</th><th>GROWTH</th></tr></thead><tbody id="tbody"></tbody></table>
+        </div>
+      </div>
+      <div class="callout" id="co1" style="left:600px;top:712px"><i></i>Q4 · best quarter</div>
+      <div class="callout" id="co2" style="left:360px;top:492px;border-color:rgba(168,85,247,.6);box-shadow:0 0 30px rgba(168,85,247,.35)"><i style="background:#c084fc;box-shadow:0 0 12px #c084fc"></i>Costs down 12%</div>
+    </div>
+  </div>
+
+  <!-- ===================== SCENE 3 · GROWTH ===================== -->
+  <div class="scene" id="s3">
+    <div class="cam" id="s3cam">
+      <div id="s3bg"></div><div id="s3grid"></div>
+      <svg width="1080" height="1920" style="position:absolute;inset:0">
+        <defs><linearGradient id="trendG" x1="0" x2="1"><stop offset="0" stop-color="#34d399" stop-opacity=".2"/><stop offset="1" stop-color="#a7f3d0"/></linearGradient></defs>
+        <path id="trend" d="M-40 1640 C 160 1600, 220 1520, 360 1480 S 560 1360, 680 1250 S 900 1000, 1120 820" fill="none" stroke="url(#trendG)" stroke-width="8" stroke-linecap="round" style="filter:drop-shadow(0 0 16px #34d399)"/>
+      </svg>
+      <div id="s3lbl">profit growth · Q1 → Q4</div>
+      <div class="echo" id="bigstat" data-lines="+266%"></div>
+      <div id="s3sub"><div class="v" id="s3v">$0</div><div class="l">revenue this year</div></div>
+      <div id="coins"></div>
+    </div>
+  </div>
+
+  <!-- ===================== SCENE 4 · BRAND ===================== -->
+  <div class="scene" id="s4">
+    <div id="glowC"></div><div id="glowP"></div>
+    <svg id="logo" viewBox="0 0 850 860"><use href="#ulogo" width="850" height="860"/></svg>
+    <div id="word">UNYXO</div>
+    <div id="h4"><span class="echo" data-lines="track your financials"></span><span class="echo" data-lines="with Unyxo" data-grad="1"></span></div>
+    <div id="tag">Business done better.</div>
+  </div>
+
+  <div id="streak"></div>
+  <div id="flash"></div>
+  <div id="vignette"></div>
+  <div id="grain"></div>
+</div>
+
+<script>
+// ---------- helpers (every visual is a pure function of t) ----------
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const P=(t,a,b)=>clamp((t-a)/(b-a));
+const lerp=(a,b,x)=>a+(b-a)*x;
+const eo=x=>1-Math.pow(1-x,3), eo5=x=>1-Math.pow(1-x,5), ei=x=>x*x*x;
+const eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const back=x=>{const c1=1.7,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const $=id=>document.getElementById(id);
+const show=(el,on)=>{el.style.display=on?'block':'none'};
+
+// echo headlines: main line + two trailing ghosts that converge onto it
+const echoes={};
+document.querySelectorAll('.echo').forEach((el,k)=>{
+  const lines=el.dataset.lines.split('|'); el.innerHTML='';
+  const L=lines.map(tx=>{const row=document.createElement('div');row.style.position='relative';
+    const g2=document.createElement('div');g2.className='g g2';g2.textContent=tx;
+    const g=document.createElement('div');g.className='g';g.textContent=tx;
+    const m=document.createElement('div');m.className='m'+(el.dataset.grad?' grad':'');m.textContent=tx;
+    if(tx==='guessing game.'){m.className='m grad'}
+    row.append(g2,g,m);el.appendChild(row);return {row,g,g2,m}});
+  echoes[el.id||('e'+k)]=L; el._L=L;
+});
+function echo(el,t0,t,{dur=.7,stagger=.12,spread=34,dir=1}={}){
+  if(!el._L){[...el.querySelectorAll('.echo')].forEach((c,i)=>echo(c,t0+i*stagger*2,t,{dur,stagger,spread,dir}));return}
+  el._L.forEach((l,i)=>{const k=P(t,t0+i*stagger,t0+i*stagger+dur),e=eo5(k);
+    l.m.style.opacity=e;l.m.style.transform=`translateY(${(1-e)*50*dir}px)`;l.m.style.filter=`blur(${(1-e)*10}px)`;
+    const s=(1-e)*spread+(1-k)*0;
+    l.g.style.opacity=k>0&&k<1?.9:0;l.g.style.transform=`translateY(${(1-e)*50*dir+s}px)`;
+    l.g2.style.opacity=k>0&&k<1?.9:0;l.g2.style.transform=`translateY(${(1-e)*50*dir+s*2}px)`;});
+}
+
+// ---------- scene 1 data ----------
+const SX=[240,540,840], BASE=1190;          // shell slots, shell rim baseline
+const SWAPS=[[2.35,0,1],[2.76,1,2],[3.17,0,2],[3.58,0,1]], SD=.36;
+const shells=[0,1,2].map(i=>$('sh'+i)), refls=[0,1,2].map(i=>$('r'+i));
+function shellState(id,t){
+  let slot=[0,1,2];   // slot[id]
+  let st={x:SX[slot[id]],dy:0,sc:1,z:2,blur:0};
+  for(const [s,a,b] of SWAPS){
+    const ia=slot.indexOf(a), ib=slot.indexOf(b);   // shells currently in slots a,b
+    if(t>=s+SD){slot[ia]=b;slot[ib]=a;continue}
+    if(t>=s){const p=eio((t-s)/SD),arc=Math.sin(Math.PI*p);
+      if(id===ia||id===ib){const from=slot[id],to=from===a?b:a,right=to>from;
+        return {x:lerp(SX[from],SX[to],p),dy:right?60*arc:-46*arc,sc:right?1+.09*arc:1-.08*arc,z:right?4:1,blur:5*arc};}
+    }
+    break;
+  }
+  return {x:SX[slot[id]],dy:0,sc:1,z:2,blur:0};
+}
+
+// ---------- scene 2 data ----------
+const REV=[8.2,9.1,8.7,10.4,11.2,10.9,12.8,13.6,13.1,15.2,16.4,18.3];
+const PROF=[3.1,3.6,3.2,4.4,4.9,4.6,5.8,6.3,6.0,7.2,8.1,9.4];
+const MON='JFMAMJJASOND';
+const lx=i=>18+i*(820/11), ly=v=>190-(v-7)/12*170;
+(function(){
+  let d='M'+REV.map((v,i)=>`${lx(i).toFixed(1)} ${ly(v).toFixed(1)}`).join(' L');
+  $('line').setAttribute('d',d);$('area').setAttribute('d',d+` L${lx(11)} 205 L${lx(0)} 205 Z`);
+  $('months').innerHTML=[...MON].map((m,i)=>`<text x="${lx(i)}" y="232" text-anchor="middle">${m}</text>`).join('');
+  $('bars').innerHTML=PROF.map(()=>'<div style="flex:1;border-radius:8px 8px 3px 3px;background:linear-gradient(180deg,#22d3ee,#a855f7);box-shadow:0 0 16px rgba(168,85,247,.45);transform-origin:bottom"></div>').join('');
+  const Q=[['Q1','$26,000','$16,100','$9,900','—'],['Q2','$32,500','$15,480','$17,020','+25.0%'],['Q3','$39,500','$15,200','$24,300','+21.5%'],['Q4','$50,920','$14,700','$36,220','+28.9%']];
+  $('tbody').innerHTML=Q.map(r=>`<tr>${r.map((c,i)=>`<td class="${i===4&&c!=='—'?'g':''}">${c}</td>`).join('')}</tr>`).join('');
+})();
+const bars=[...$('bars').children], trs=[...$('tbody').children], kpiVals=[...document.querySelectorAll('[data-count]')];
+const cards=[$('kpis'),$('cLine'),$('cBars'),$('cTable')], DEPTH=[70,150,95,35];
+const fmt=n=>'$'+Math.round(n).toLocaleString('en-US');
+
+// ---------- scene 3 data ----------
+const COINS=[[180,420,12.40,0],[900,470,12.90,1],[150,1330,13.40,1],[920,1290,13.90,0],[330,1520,14.40,0],[760,1560,14.90,1],[540,300,14.40,1]];
+$('coins').innerHTML=COINS.map(c=>`<div class="coin${c[3]?' c':''}">$</div>`).join('');
+const coins=[...$('coins').children];
+const trend=$('trend'), TLEN=trend.getTotalLength();
+
+// ============================ render ============================
+function render(t){
+  // ---------------- SCENE 1 · 0–6.0
+  show($('s1'),t<6.1);
+  if(t<6.1){
+    // camera: extreme diagonal macro close-up → pull back to hero shot → slow drift → zoom-through into the empty spot
+    const pb=eio(P(t,0,1.5)), zi=ei(P(t,5.45,6.05));
+    const cam=$('s1cam');
+    cam.style.transformOrigin='540px 1110px';
+    cam.style.transform=`translate(${lerp(-150,0,pb)}px,${lerp(120,0,pb)}px) rotate(${lerp(-26,0,pb)}deg) scale(${lerp(2.9,1,pb)*(1+.04*P(t,1.5,5.4))*lerp(1,7,zi)})`;
+    cam.style.filter=zi>0?`blur(${zi*14}px)`:'none';
+    // cash: dropped in 1.35–1.8, covered by the shell 1.95–2.25, then hidden under it
+    const drop=P(t,1.35,1.8), cy=BASE-130+ (drop<1? -700*(1-eo(drop)) : 0) + (drop>=1?-10*Math.sin(Math.PI*P(t,1.8,1.95)):0);
+    const cashOn=t>1.35&&t<2.26;
+    show($('cash'),cashOn);show($('cashRefl'),cashOn&&drop>.8);
+    $('cash').style.transform=`translate(540px,${cy}px)`;
+    $('cashRefl').style.transform=`translate(540px,${BASE-12}px) scaleY(-1)`;
+    shells.forEach((sh,id)=>{
+      const s=shellState(id,t);
+      let lift=0,rot=0;
+      if(id===1){lift=-250*(1-eio(P(t,1.9,2.22)));}                  // hovering, then lowers over the cash
+      if(id===0){const k=eo(P(t,3.98,4.5));lift=-280*k;rot=-9*k;}     // the chosen shell — lifted: empty
+      const y=BASE-214+s.dy+lift;
+      sh.style.transform=`translate(${s.x}px,${y}px) rotate(${rot}deg) scale(${s.sc})`;
+      sh.style.zIndex=s.z;sh.style.filter=s.blur>.2?`blur(${s.blur}px)`:'none';
+      const r=refls[id];
+      r.style.transform=`translate(${s.x}px,${BASE-16+Math.max(0,-lift)-s.dy}px) rotate(${-rot}deg) scaleY(-1) scale(${s.sc})`;
+      r.style.opacity=.2*(1-P(-lift,0,300)*.7);r.style.filter=s.blur>.2?`blur(${s.blur}px)`:'none';
+    });
+    $('emptyGlow').style.opacity=eo(P(t,4.2,4.7))*(.75+.25*Math.sin(t*6));
+    // spec call-outs (reference-style), then headline with echo trails
+    const sp=eo(P(t,1.6,2.1))*(1-P(t,3.9,4.2));
+    [$('spec1'),$('spec2')].forEach((e,i)=>{e.style.opacity=sp;e.style.transform=`translateX(${(1-sp)*(i?40:-40)}px)`});
+    echo($('h1'),4.25,t,{dur:.6,stagger:.2});
+    $('h1').style.opacity=1-P(t,5.5,5.8);
+  }
+
+  // ---------------- SCENE 2 · 6.0–12.0
+  const u=t-6;
+  show($('s2'),t>5.9&&t<12.15);
+  if(t>5.9&&t<12.15){
+    echo($('h2'),6.35,t,{dur:.6,stagger:.18});
+    $('h2').style.opacity=1-P(u,5.0,5.4);
+    // dashboard: diagonal entrance straightening out (reference move), then exploded layers, then push-in
+    const en=eo5(P(u,0,1.25)), ex=eio(P(u,4.35,5.0))*(1-0), push=ei(P(u,5.1,6.05));
+    const d=$('dash');
+    d.style.transformOrigin='50% 40%';
+    d.style.transform=`translateY(${lerp(260,0,en)}px) rotateX(${lerp(42,0,en)+16*ex}deg) rotateZ(${lerp(-17,0,en)}deg) rotateY(${-20*ex}deg) scale(${lerp(1.3,1,en)*(1-.06*ex)})`;
+    d.style.opacity=clamp(en*1.6);
+    cards.forEach((c,i)=>{c.style.transform=`translateZ(${DEPTH[i]*ex}px)`;c.style.filter=push>0&&i!==1?`blur(${push*10}px)`:'none'});
+    const cam=$('s2cam');cam.style.transformOrigin='950px 790px';
+    cam.style.transform=`scale(${lerp(1,4.2,push)})`;cam.style.filter=push>.5?`blur(${(push-.5)*8}px)`:'none';
+    // KPIs count up
+    const kc=eo(P(u,.9,2.1));kpiVals.forEach(v=>v.textContent=fmt(+v.dataset.count*kc));
+    // revenue line draws, head rides the tip
+    const ld=eio(P(u,1.2,2.7)), X=lerp(0,lx(11),ld);
+    $('lineClipR').setAttribute('width',X+10);
+    let i=Math.min(10,Math.floor(ld*11)), f=ld*11-i; const Y=lerp(ly(REV[i]),ly(REV[i+1]),f);
+    $('lineHead').setAttribute('cx',X);$('lineHead').setAttribute('cy',Y);$('lineHead').style.opacity=ld>0?1:0;
+    bars.forEach((b,k)=>{const g=back(P(u,1.6+k*.07,2.1+k*.07));b.style.height=(PROF[k]/9.4*100*Math.max(0,g))+'%'});
+    trs.forEach((r,k)=>{const g=eo(P(u,2.6+k*.18,3.0+k*.18));r.style.opacity=g;r.style.transform=`translateX(${(1-g)*40}px)`});
+    [$('co1'),$('co2')].forEach((c,k)=>{const g=back(P(u,3.4+k*.3,3.8+k*.3));c.style.opacity=clamp(g)*(1-P(u,4.3,4.6));c.style.transform=`scale(${Math.max(0,g)})`});
+  }
+
+  // ---------------- SCENE 3 · 12.0–16.0
+  const v=t-12;
+  show($('s3'),t>11.95&&t<16.2);
+  if(t>11.95&&t<16.2){
+    const pull=eio(P(v,3.2,4.0)), cam=$('s3cam');
+    cam.style.transformOrigin='540px 960px';
+    cam.style.transform=`scale(${lerp(1.12,1,eo(P(v,0,.8)))*lerp(1,.3,pull)})`;
+    cam.style.borderRadius=`${pull*120}px`;cam.style.overflow='hidden';cam.style.opacity=1-P(v,3.6,4.0);
+    trend.style.strokeDasharray=TLEN;trend.style.strokeDashoffset=TLEN*(1-eio(P(v,.1,1.4)));
+    $('s3lbl').style.opacity=eo(P(v,.25,.7));
+    // big stat: echo trail re-fires on every beat
+    echo($('bigstat'),.2+12,t,{dur:.55,spread:60});
+    const beat=((v-.4)%.5+.5)%.5, pulse=v>.4?Math.exp(-beat*9):0;
+    $('bigstat').style.transform=`translateX(-50%) scale(${1+.05*pulse})`;
+    const sv=eo(P(v,.5,2.6));$('s3v').textContent=fmt(148920*sv);
+    $('s3sub').style.opacity=eo(P(v,.5,.9));
+    // $ symbols emerge and bounce on the beat
+    coins.forEach((c,k)=>{const [x,y,t0]=COINS[k];const e=back(P(t,t0,t0+.35));
+      const ph=Math.max(0,t-t0), hop=Math.abs(Math.sin(Math.PI*ph/.5))*80*Math.exp(-ph*.35), sq=1+.12*Math.exp(-((ph%.5)*14));
+      c.style.opacity=clamp(e*3);
+      c.style.transform=`translate(${x}px,${y-hop+(1-clamp(e))*160}px) scale(${Math.max(0,e)*(t>t0+.35?1:1)}) scaleX(${sq}) scaleY(${2-sq})`;});
+  }
+
+  // ---------------- SCENE 4 · 16.0–20.0
+  const w=t-16;
+  show($('s4'),t>15.6);
+  if(t>15.6){
+    const pan=eo5(P(w,-.1,1.2)), br=.75+.25*Math.sin(t*2.2);
+    $('logo').style.opacity=clamp(P(w,-.1,.4));
+    $('logo').style.transform=`perspective(1200px) translateX(${lerp(760,0,pan)}px) rotateY(${lerp(-55,0,pan)}deg) scale(${lerp(.8,1,pan)})`;
+    $('glowC').style.opacity=eo(P(w,.2,1.4))*br;$('glowP').style.opacity=eo(P(w,.4,1.6))*(1.75-br);
+    $('glowC').style.transform=`translateX(${Math.sin(t*.9)*40}px)`;$('glowP').style.transform=`translateX(${-Math.sin(t*.9)*40}px)`;
+    const wk=eo(P(w,.9,1.6));$('word').style.opacity=wk;$('word').style.letterSpacing=lerp(46,26,wk)+'px';
+    echo($('h4'),16+1.4,t,{dur:.6,stagger:.2});
+    const tg=eo(P(w,2.2,2.8));$('tag').style.opacity=tg;$('tag').style.transform=`translateY(${(1-tg)*16}px)`;
+  }
+
+  // ---------------- transitions
+  const f1=Math.max(0,1-Math.abs(t-6.0)/.22), f2=Math.max(0,1-Math.abs(t-12.02)/.25), f3=Math.max(0,1-Math.abs(t-15.95)/.3)*.35;
+  $('flash').style.opacity=Math.max(f1,f2*.9,f3);
+  $('flash').style.background=t>11?'radial-gradient(circle at 50% 50%,#ecfdf5,#6ee7b7 30%,rgba(34,211,238,.5) 60%,transparent 80%)':'';
+  const sk=P(t,5.62,6.08);
+  $('streak').style.opacity=sk>0&&sk<1?Math.sin(Math.PI*sk):0;
+  $('streak').style.transform=`rotate(24deg) translateX(${lerp(-900,2200,eio(sk))}px)`;
+  $('grain').style.transform=`translate(${(t*97%13)-6}px,${(t*71%11)-5}px)`;
+}
+window.render=render;
+window.ready=document.fonts.ready.then(()=>{render(0);return true});
+if(!navigator.webdriver){
+  const qs=new URLSearchParams(location.search);
+  if(qs.has('t'))document.fonts.ready.then(()=>render(+qs.get('t')));
+  else{let t0;const loop=ts=>{t0??=ts;render(((ts-t0)/1000)%20.5);requestAnimationFrame(loop)};requestAnimationFrame(loop)}
+}
+</script>
+</body>
+</html>
