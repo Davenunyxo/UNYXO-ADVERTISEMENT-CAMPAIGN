@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Unyxo Systems — Trailer</title>
+<style>
+@font-face{font-family:"Inter Display";src:url(fonts/inter-display.woff2) format("woff2");font-weight:100 900}
+@font-face{font-family:Cinzel;font-weight:600;src:url(fonts/cinzel-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:Cinzel;font-weight:700;src:url(fonts/cinzel-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:Cinzel;font-weight:900;src:url(fonts/cinzel-latin-900-normal.woff2) format("woff2")}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;background:#000;overflow:hidden}
+body{font-family:"Inter Display",system-ui,sans-serif;-webkit-font-smoothing:antialiased;color:#fff}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden}
+#gl{position:absolute;inset:0;width:1080px;height:1920px}
+#ui{position:absolute;inset:0;pointer-events:none}
+.layer{position:absolute;inset:0;display:none}
+.c{position:absolute;left:0;right:0;text-align:center}
+.cin{font-family:Cinzel,serif}
+.gold{background:linear-gradient(180deg,#fff6d8 0%,#ffd98a 38%,#e3a33a 62%,#fff0c2 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.silver{background:linear-gradient(180deg,#ffffff 0%,#d9dde6 45%,#8c929e 55%,#f4f6fa 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.fire{background:linear-gradient(180deg,#fffbe6 0%,#ffd36b 35%,#ff8a1f 70%,#ffcf6b 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.glow-g{filter:drop-shadow(0 0 22px rgba(255,190,90,.55)) drop-shadow(0 6px 10px rgba(0,0,0,.6))}
+.glow-f{filter:drop-shadow(0 0 30px rgba(255,120,30,.8)) drop-shadow(0 6px 12px rgba(0,0,0,.6))}
+.sheen{position:relative;display:inline-block}
+.sheen::after{content:attr(data-t);position:absolute;inset:0;color:transparent;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.95) 50%,transparent 60%) no-repeat;
+  background-size:300% 100%;background-position:var(--sx,150%) 0;-webkit-background-clip:text;background-clip:text}
+
+/* 0 · approved card */
+#L0{background:radial-gradient(90% 70% at 50% 45%,#2f8f4c,#1c6a35 60%,#0f4521)}
+#card{position:absolute;left:110px;right:110px;top:560px;border:5px solid #eaf5ea;border-radius:10px;padding:64px 48px 58px;text-align:center;font-family:Cinzel,serif;color:#f4fbf4}
+#card .s{font-size:37px;font-weight:700;letter-spacing:.06em;line-height:1.35}
+#card .b{font-size:92px;font-weight:900;line-height:1.02;margin:34px 0 36px;letter-spacing:.02em}
+#card .u{font-size:32px;font-weight:600;margin-top:44px;letter-spacing:.04em}
+
+/* 1 · presents */
+#pres1{top:1300px;font-family:Cinzel,serif;font-weight:700;font-size:78px;letter-spacing:.3em;padding-left:.3em}
+#pres2{top:1405px;font-family:Cinzel,serif;font-weight:600;font-size:34px;letter-spacing:.6em;padding-left:.6em;color:#cfd4dd}
+
+/* 2 · in a world */
+#world{top:760px;font-family:Cinzel,serif;font-weight:700;font-size:150px;line-height:1.08;letter-spacing:.04em}
+
+/* 3 · city */
+#where{top:300px;font-family:Cinzel,serif;font-weight:900;font-size:88px;line-height:1.14;letter-spacing:.05em}
+#sp47lbl{top:1200px;font-family:"Inter Display";font-weight:900;font-size:108px;letter-spacing:.04em}
+
+/* 4 · villains */
+.vt{top:255px;font-family:Cinzel,serif;font-weight:900;font-size:92px;line-height:1;letter-spacing:.02em}
+.vs{top:370px;font-family:"Inter Display";font-weight:500;font-size:42px;color:rgba(255,255,255,.88);letter-spacing:-.01em}
+
+/* 5 · chaos */
+#chaos{top:330px;font-family:Cinzel,serif;font-weight:900;font-size:168px;line-height:1.02;letter-spacing:.02em}
+
+/* 6/7 · sky + hero */
+#plane{top:1260px;font-family:"Inter Display";font-weight:900;font-size:112px;letter-spacing:-.03em;font-style:italic}
+#entered{top:1360px;font-family:"Inter Display";font-weight:700;font-size:54px;letter-spacing:-.01em}
+#entered b{font-weight:900}
+
+/* 8 · one system */
+#one{top:250px;font-family:"Inter Display";font-weight:900;font-size:150px;letter-spacing:-.05em}
+.q{top:250px;font-family:"Inter Display";font-weight:900;font-size:128px;letter-spacing:-.045em;color:#1d1d1f}
+.qs{top:400px;font-family:"Inter Display";font-weight:600;font-size:44px;color:#6e6e73;letter-spacing:-.01em}
+
+/* 9 · reviews */
+#stars{top:640px;font-size:120px;letter-spacing:.12em;padding-left:.12em}
+#stars span{display:inline-block;background:linear-gradient(180deg,#fff3c4,#ffc93c 55%,#e08a12);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 24px rgba(255,190,60,.7))}
+.rq{font-family:Cinzel,serif;font-weight:700;font-size:70px;line-height:1.15}
+.ra{font-family:"Inter Display";font-weight:700;font-size:26px;letter-spacing:.3em;color:#a1a1a6;text-transform:uppercase;margin-top:18px}
+
+/* 10 · end card */
+#uword{top:1000px;font-family:"Inter Display";font-weight:800;font-size:196px;letter-spacing:-.04em;line-height:1}
+#usys{top:1190px;font-family:Cinzel,serif;font-weight:700;font-size:52px;letter-spacing:.62em;padding-left:.62em;color:#d8dce4}
+#uss{top:1282px;font-family:"Inter Display";font-weight:800;font-size:58px;letter-spacing:-.02em}
+#usoon{top:1362px;font-family:"Inter Display";font-weight:700;font-size:28px;letter-spacing:.24em;color:#c7c7cc}
+#ucred{top:1420px;font-family:"Inter Display";font-weight:700;font-size:17px;letter-spacing:.14em;line-height:1.7;color:#8e8e93;text-transform:uppercase;padding:0 90px}
+#ubtn{top:1532px;left:50%;right:auto;transform:translateX(-50%);white-space:nowrap;padding:18px 40px;border:2px solid #fff;border-radius:14px;font-family:"Inter Display";font-weight:800;font-size:30px;letter-spacing:.1em}
+#udis{top:1618px;font-family:Cinzel,serif;font-weight:600;font-size:22px;color:#8e8e93;letter-spacing:.02em}
+</style>
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/jsm/"}}</script>
+</head>
+<body>
+<div id="stage">
+  <canvas id="gl" width="1080" height="1920"></canvas>
+  <div id="ui">
+    <div class="layer" id="L0"><div id="card">
+      <div class="s">THE FOLLOWING PREVIEW<br>HAS BEEN APPROVED FOR</div>
+      <div class="b">ALL SMALL<br>BUSINESSES</div>
+      <div class="s" style="font-size:31px">BY THE ASSOCIATION OF PEOPLE<br>WHO ARE DONE WITH SPREADSHEETS</div>
+      <div class="u">www.unyxo.dev</div>
+    </div></div>
+    <div class="layer" id="L1"><div class="c silver" id="pres1">UNYXO SYSTEMS</div><div class="c" id="pres2">PRESENTS</div></div>
+    <div class="layer" id="L2"><div class="c" id="world"></div></div>
+    <div class="layer" id="L3"><div style="position:absolute;left:0;right:0;top:0;height:900px;background:linear-gradient(180deg,rgba(2,4,12,.85),rgba(2,4,12,.5) 55%,transparent)"></div><div class="c gold glow-g" id="where">WHERE SMALL<br>BUSINESSES<br>RUN ON</div><div class="c gold glow-g" id="sp47lbl">SPREADSHEETS</div></div>
+    <div class="layer" id="L4">
+      <div class="c vt gold glow-g" id="vt"></div><div class="c vs" id="vs"></div>
+    </div>
+    <div class="layer" id="L5"><div class="c fire glow-f" id="chaos">IT WAS<br>CHAOS.</div></div>
+    <div class="layer" id="L6"><div style="position:absolute;left:0;right:0;bottom:0;height:900px;background:linear-gradient(0deg,rgba(2,4,12,.8),transparent)"></div><div class="c" id="plane">It's a plane!</div></div>
+    <div class="layer" id="L7"><div style="position:absolute;left:0;right:0;bottom:0;height:900px;background:linear-gradient(0deg,rgba(2,4,12,.85),transparent)"></div><div class="c" id="entered"><b>Unyxo Systems</b> has entered the chat.</div></div>
+    <div class="layer" id="L8"><div class="c" id="one">One system.</div><div class="c q" id="q"></div><div class="c qs" id="qs"></div></div>
+    <div class="layer" id="L9">
+      <div class="c" id="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <div class="c" id="r1" style="top:900px"><div class="rq silver">“I closed all 47 tabs.”</div><div class="ra">— A small business owner</div></div>
+      <div class="c" id="r2" style="top:1160px"><div class="rq silver">“Two thumbs up.”</div><div class="ra">— Our mom</div></div>
+    </div>
+    <div class="layer" id="L10">
+      <div class="c silver" id="uword">unyxo</div>
+      <div class="c" id="usys">SYSTEMS</div>
+      <div class="c" id="uss">Software. Simplified.</div>
+      <div class="c" id="usoon">COMING SOON TO A BROWSER NEAR YOU</div>
+      <div class="c" id="ucred">Unyxo Systems · A custom software production · Starring your bookings, your invoices, your inbox and finally some peace and quiet · Music by a very dramatic synthesizer · No spreadsheets were consulted</div>
+      <div class="c" id="ubtn">NOW BOOKING AT UNYXO.DEV</div>
+      <div class="c" id="udis"><i>Several spreadsheets were harmed in the making of this film.</i></div>
+    </div>
+  </div>
+</div>
+<script type="module" src="main.js"></script>
+</body>
+</html>
