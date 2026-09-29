@@ -26,16 +26,16 @@ node render.mjs --portrait --page finance-ad/index.html --audio finance-ad/sfx.w
 
 | Time | Picture | Motion spec | Sound |
 |---|---|---|---|
-| 0.0–1.5 | Macro close-up of a glossy black shell and its cyan/purple rim light, tilted −26°, on a brushed-metal table | Camera: scale 2.9 → 1, rotate −26° → 0°, translate (−150, +120) → 0. Ease in-out cubic. Reference move #1. | Reverse whoosh + low sub swell |
-| 1.35–1.8 | A $10K cash stack drops in under the hovering centre shell | Drop from −700px with ease-out and a 10px settle bounce. Mirrored reflection on the table. | Whoosh down → paper slap |
-| 1.6–4.2 | Spec call-outs: `01 YOUR CASH ———— SOMEWHERE ?` | Slide in 40px from the sides, fade out before the lift. Reference move #2. | — |
-| 1.9–2.25 | Centre shell lowers over the cash | Ease in-out; the cash hides under it | Shell clack on the metal |
-| 2.35–3.94 | Four fast swaps: (0↔1), (1↔2), (0↔2), (0↔1), 0.36s each | Shells travel on arcs: the front shell moves +60px and scales 1.09, the back shell moves −46px and scales 0.92. Up to 5px motion blur. Reflections follow. | A whoosh plus a clack for each swap, panned left/right |
-| 3.98–4.5 | The chosen (centre) shell lifts straight up and tilts −9°. **It's empty.** A cyan glow marks the empty spot. | Lift −280px, ease-out cubic. Reference move #3. | Rising whoosh → unresolved minor-second pad + soft boom |
+| 0.0–0.7 | Macro close-up of a coconut-shell half (fibrous brown husk, three dark "eyes" on top, cut rim with a thin line of white flesh) tilted −26° on a brushed-metal table | **Fast pan-in:** scale 2.9 → 1, rotate −26° → 0°, translate (−150, +120) → 0 in 0.7s, ease-out cubic. Reference move #1. | Snap-back whoosh + low sub hit |
+| 0.7–1.12 | A $10K cash stack drops in under the hovering centre coconut | Drop from −700px, ease-out, 10px settle bounce, mirrored reflection | Whoosh down → paper slap |
+| 0.9–4.2 | Spec call-outs: `01 YOUR CASH ———— SOMEWHERE ?` | Slide in 40px from the sides, fade out before the lift. Reference move #2. | — |
+| 1.1–1.34 | The centre coconut lowers over the cash | Ease in-out; the cash hides under it | Clack on the metal |
+| 1.55–3.62 | **Nine fast swaps**, 0.2s each on a 0.23s grid: (0↔1) (1↔2) (0↔2) (0↔1) (1↔2) (0↔2) (1↔2) (0↔1) (0↔2) | Coconuts travel on arcs: front +64px and scale 1.1, back −50px and scale 0.91. Up to 8px motion blur. Reflections follow and fade out when a coconut is lifted. | A whoosh plus a clack for every swap, panned left/right |
+| 3.98–4.5 | The coconut that ends in the centre lifts straight up and tilts −9°. **It's empty** (the cash is under the left one). A cyan glow marks the empty spot. | Lift −280px, ease-out cubic. Reference move #3. | Rising whoosh → unresolved minor-second pad + soft boom |
 | 4.25–5.5 | **"your finances / shouldn't be a / guessing game."** ("guessing game" in a cyan→purple gradient) | Echo-type entrance, 0.2s stagger per line, blur 10px → 0 | Three ticks |
 | 5.45–6.05 | **Transition:** camera dives into the empty spot, a diagonal neon light streak wipes across, and a cyan-white flash hits | Camera scale ×7 (ease-in), blur to 14px, 24° streak sweep; flash peaks at 6.0s | Riser → whoosh → impact at 6.0 |
 
-**Motion prompt:** *Extreme macro of a glossy obsidian shell on brushed gunmetal, cyan and purple rim light, shallow depth of field, camera rotating from a 26° dutch angle and pulling back to a symmetrical three-shell hero shot. A banded $10K stack drops under the centre shell. Four whip-fast shuffles on arcs with motion blur and table reflections. The centre shell lifts in a clean vertical reveal: nothing underneath, only a cold cyan glow. Kinetic lowercase headline with trailing echo copies. Crash-zoom into the empty spot, neon light-streak wipe, white-cyan flash.*
+**Motion prompt:** *Extreme macro of an upturned coconut-shell half (hairy brown husk, three dark eyes, white flesh at the cut rim) on brushed gunmetal, with subtle cyan and purple rim light and shallow depth of field. The camera snaps from a 26° dutch angle back to a symmetrical three-coconut hero shot in under a second. A banded $10K stack drops under the centre coconut. Nine whip-fast shuffles on arcs with heavy motion blur and table reflections. The centre coconut lifts in a clean vertical reveal: nothing underneath, only a cold cyan glow. Kinetic lowercase headline with trailing echo copies. Crash-zoom into the empty spot, neon light-streak wipe, white-cyan flash.*
 
 ---
 

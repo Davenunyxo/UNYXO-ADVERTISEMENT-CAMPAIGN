@@ -147,14 +147,15 @@ def tension(d=1.2):
 
 # ------------------------------------------------------------------- cue sheet
 # 0–6 · the shell game
-add(0.0, whoosh(1.5, False), 0.3)                    # macro close-up pulls back
-add(0.05, boom(1.6, 70, 35), 0.35)
-add(1.3, whoosh(0.5, False), 0.25, 0.0)              # cash drops in
-add(1.8, slap(), 0.55)
-add(2.2, clack(820), 0.55)                           # shell covers the cash
-for k, s in enumerate((2.35, 2.76, 3.17, 3.58)):     # shuffles
-    add(s, whoosh(0.36, k % 2 == 0), 0.3, (-0.5, 0.5, -0.3, 0.3)[k])
-    add(s + 0.34, clack(760 + 60 * k), 0.38, (-0.5, 0.5, -0.3, 0.3)[k])
+add(0.0, whoosh(0.75, False), 0.35)                  # macro close-up snaps back (fast pan-in)
+add(0.02, boom(1.4, 80, 35), 0.4)
+add(0.66, whoosh(0.4, False), 0.25, 0.0)             # cash drops in
+add(1.0, slap(), 0.55)
+add(1.33, clack(820), 0.55)                          # coconut covers the cash
+for k in range(9):                                   # nine fast shuffles, 0.2s each
+    s, pan = 1.55 + k * 0.23, (-0.5, 0.5, -0.3, 0.3, 0.5, -0.5, 0.3, -0.3, 0.0)[k]
+    add(s, whoosh(0.2, k % 2 == 0), 0.28, pan)
+    add(s + 0.19, clack(700 + 35 * k), 0.32, pan)
 add(3.98, whoosh(0.5, True), 0.3)                    # the chosen shell lifts…
 add(4.35, tension(), 0.55)                           # …empty
 add(4.38, boom(0.9, 90, 45), 0.4)
