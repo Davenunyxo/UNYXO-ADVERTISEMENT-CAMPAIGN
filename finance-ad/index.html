@@ -4,155 +4,179 @@
 <meta charset="utf-8">
 <title>Unyxo Finance Ad</title>
 <style>
-@font-face{font-family:Poppins;font-weight:500;src:url(fonts/poppins-latin-500-normal.woff2) format("woff2")}
-@font-face{font-family:Poppins;font-weight:600;src:url(fonts/poppins-latin-600-normal.woff2) format("woff2")}
-@font-face{font-family:Poppins;font-weight:700;src:url(fonts/poppins-latin-700-normal.woff2) format("woff2")}
-@font-face{font-family:Poppins;font-weight:800;src:url(fonts/poppins-latin-800-normal.woff2) format("woff2")}
-@font-face{font-family:Poppins;font-weight:900;src:url(fonts/poppins-latin-900-normal.woff2) format("woff2")}
-:root{--bg:#09090B;--cyan:#22d3ee;--purple:#a855f7;--green:#10b981;--text:#f4f4f5;--muted:#8b8b95}
+@font-face{font-family:"Inter Display";src:url(fonts/inter-display.woff2) format("woff2");font-weight:100 900}
+:root{--bg:#09090B;--cyan:#22d3ee;--purple:#a855f7;--green:#10b981;--text:#f5f5f7;--muted:#86868b}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:1080px;height:1920px;background:var(--bg);overflow:hidden}
-body{font-family:Poppins,system-ui,sans-serif;color:var(--text);-webkit-font-smoothing:antialiased}
+body{font-family:"Inter Display",system-ui,sans-serif;font-optical-sizing:auto;color:var(--text);-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss03"}
 #stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--bg)}
 .scene{position:absolute;inset:0;overflow:hidden}
 .cam{position:absolute;inset:0}
-.grad{background:linear-gradient(90deg,var(--cyan),var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent}
-.ambient{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none}
-#vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.8) 100%)}
-#grain{position:absolute;inset:-50%;pointer-events:none;opacity:.06;
+.num{font-variant-numeric:tabular-nums}
+.grad{background:linear-gradient(92deg,#7df0ff 0%,#a5b4fc 48%,#d8a8ff 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* big display type — auto-fitted to the safe width in JS so nothing is ever clipped */
+.head{position:absolute;left:0;right:0;text-align:center;font-weight:900;letter-spacing:-.045em;line-height:.98;z-index:20}
+.head .row{position:relative;white-space:nowrap}
+.head .m{position:relative;display:inline-block;padding:0 .04em}
+.head .g{position:absolute;left:0;right:0;top:0;text-align:center;color:rgba(255,255,255,.16);white-space:nowrap}
+.head .g2{color:rgba(255,255,255,.06)}
+.head .m:not(.grad){color:#fff}
+.head .m.grad{filter:drop-shadow(0 0 30px rgba(125,240,255,.28))}
+
+#vignette{position:absolute;inset:0;pointer-events:none;z-index:15;background:radial-gradient(120% 75% at 50% 50%,transparent 55%,rgba(0,0,0,.72) 100%)}
+#grain{position:absolute;inset:-50%;pointer-events:none;opacity:.045;z-index:30;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-#flash{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 55%,#e9fdff,#67e8f9 30%,rgba(168,85,247,.6) 60%,transparent 80%);opacity:0}
-#streak{position:absolute;left:-600px;top:-400px;width:900px;height:3200px;opacity:0;pointer-events:none;
-  background:linear-gradient(90deg,transparent,rgba(34,211,238,.0) 20%,rgba(34,211,238,.85) 45%,#fff 50%,rgba(168,85,247,.85) 55%,transparent 80%);filter:blur(6px);mix-blend-mode:screen}
+#bloom{position:absolute;inset:0;pointer-events:none;z-index:25;opacity:0;mix-blend-mode:screen}
+#streak{position:absolute;left:-600px;top:-500px;width:700px;height:3200px;opacity:0;pointer-events:none;z-index:24;mix-blend-mode:screen;
+  background:linear-gradient(90deg,transparent,rgba(125,240,255,.0) 25%,rgba(125,240,255,.7) 46%,#fff 50%,rgba(216,168,255,.7) 54%,transparent 75%);filter:blur(10px)}
 
-/* ---------- echo headline (DRIP-style motion trail) */
-.echo{position:absolute;white-space:pre}
-.echo .g{position:absolute;left:0;right:0;top:0;color:rgba(255,255,255,.18)}
-.echo .g2{color:rgba(255,255,255,.07)}
-.echo .m{position:relative}
-
-/* ---------- scene 1: shell game */
-#surface{position:absolute;left:-200px;right:-200px;top:1040px;height:1300px;
+/* ---------------- scene 1 · studio */
+#studio{position:absolute;inset:0;background:
+  radial-gradient(70% 45% at 50% 30%,#1b1b21 0%,#0f0f13 45%,var(--bg) 75%)}
+#cone{position:absolute;left:50%;top:-200px;width:1400px;height:1500px;margin-left:-700px;pointer-events:none;
+  background:radial-gradient(40% 60% at 50% 0%,rgba(230,240,255,.10),transparent 70%);filter:blur(10px)}
+#floor{position:absolute;left:-300px;right:-300px;top:1080px;height:1200px;
   background:
-    radial-gradient(60% 30% at 50% 12%,rgba(160,190,220,.22),transparent 70%),
-    repeating-linear-gradient(90deg,rgba(255,255,255,.028) 0 2px,transparent 2px 6px),
-    linear-gradient(180deg,#23262d 0%,#15171c 25%,#0b0c0f 70%);
-  border-top:1px solid rgba(200,220,255,.25)}
-#horizon{position:absolute;left:0;right:0;top:1036px;height:10px;background:linear-gradient(90deg,transparent,rgba(34,211,238,.55),rgba(168,85,247,.55),transparent);filter:blur(4px)}
-.shell,.refl{position:absolute;left:0;top:0;width:280px;height:230px;margin-left:-140px}
-.refl{opacity:.2;transform-origin:50% 50%;-webkit-mask-image:linear-gradient(0deg,rgba(0,0,0,.9),transparent 70%);mask-image:linear-gradient(0deg,rgba(0,0,0,.9),transparent 70%)}
-#cash,#cashRefl{position:absolute;left:0;top:0;width:210px;height:130px;margin-left:-105px}
-#cashRefl{opacity:.16;-webkit-mask-image:linear-gradient(0deg,rgba(0,0,0,.9),transparent 70%);mask-image:linear-gradient(0deg,rgba(0,0,0,.9),transparent 70%)}
-#emptyGlow{position:absolute;left:540px;top:1178px;width:320px;height:70px;margin:-35px 0 0 -160px;border-radius:50%;
-  background:radial-gradient(closest-side,rgba(34,211,238,.45),rgba(168,85,247,.2) 55%,transparent);opacity:0}
-.spec{position:absolute;font-size:22px;font-weight:600;letter-spacing:6px;text-transform:uppercase;color:rgba(244,244,245,.75);display:flex;align-items:center;gap:16px}
-.spec b{font-weight:700;color:var(--cyan)}
-.spec i{display:block;height:1px;width:120px;background:linear-gradient(90deg,rgba(255,255,255,.7),rgba(34,211,238,.9))}
-#h1{z-index:10;left:70px;top:290px;font-size:104px;font-weight:900;line-height:1;letter-spacing:-2.5px}
-#h1 .m{text-shadow:0 4px 30px rgba(0,0,0,.6)}
-#h1 .m:not(.grad){color:#fff}
-#h1 .m.grad{background:linear-gradient(90deg,#67e8f9,#c084fc);-webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 0 24px rgba(103,232,249,.35))}
+    radial-gradient(38% 18% at 50% 9%,rgba(210,225,255,.16),transparent 70%),
+    linear-gradient(180deg,#141418 0%,#0d0d10 30%,var(--bg) 70%);
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 60px);mask-image:linear-gradient(180deg,transparent 0,#000 60px)}
+#rimline{position:absolute;left:10%;right:10%;top:1086px;height:2px;filter:blur(3px);opacity:.55;
+  background:linear-gradient(90deg,transparent,rgba(34,211,238,.5),rgba(168,85,247,.5),transparent)}
+.shell,.refl{position:absolute;left:0;top:0;width:300px;height:250px;margin-left:-150px}
+.refl{opacity:.22;transform-origin:50% 50%;filter:blur(2px);-webkit-mask-image:linear-gradient(0deg,#000,transparent 62%);mask-image:linear-gradient(0deg,#000,transparent 62%)}
+.shadow{position:absolute;left:0;top:0;width:340px;height:44px;margin:-22px 0 0 -170px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(0,0,0,.85),rgba(0,0,0,.35) 60%,transparent);filter:blur(6px)}
+#cash,#cashRefl{position:absolute;left:0;top:0;width:230px;height:150px;margin-left:-115px}
+#cashRefl{opacity:.18;filter:blur(2px);-webkit-mask-image:linear-gradient(0deg,#000,transparent 65%);mask-image:linear-gradient(0deg,#000,transparent 65%)}
+#emptyGlow{position:absolute;left:540px;top:1200px;width:360px;height:80px;margin:-40px 0 0 -180px;border-radius:50%;opacity:0;
+  background:radial-gradient(closest-side,rgba(125,240,255,.55),rgba(168,85,247,.22) 55%,transparent)}
+.spec{position:absolute;top:1470px;font-size:21px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:rgba(245,245,247,.72);display:flex;align-items:center;gap:18px;z-index:20}
+.spec b{font-weight:700;color:#7df0ff;letter-spacing:.1em}
+.spec i{display:block;height:1px;width:110px;background:linear-gradient(90deg,rgba(255,255,255,.65),rgba(125,240,255,.9))}
+#h1{top:250px}
 
-/* ---------- scene 2: dashboard */
-#h2{position:absolute;left:0;right:0;top:250px;text-align:center;font-size:58px;font-weight:700;line-height:1.1;letter-spacing:-.5px}
-#h2 .echo{position:relative;display:block}
-#dash{position:absolute;left:60px;top:450px;width:960px;height:1050px;border-radius:36px;padding:28px;transform-style:preserve-3d;
-  background:linear-gradient(160deg,rgba(40,44,60,.7),rgba(16,17,24,.86) 45%,rgba(12,12,18,.92));
-  border:1px solid rgba(255,255,255,.12);box-shadow:0 60px 140px rgba(0,0,0,.7),0 0 90px rgba(34,211,238,.12),inset 0 1px 0 rgba(255,255,255,.18)}
-.card{position:absolute;left:28px;right:28px;border-radius:22px;padding:20px 24px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08)}
-.row{display:flex;justify-content:space-between;align-items:center}
-.lbl{font-size:17px;font-weight:600;color:var(--muted);letter-spacing:.5px}
-.ttl{font-size:21px;font-weight:700}
-.chip{font-size:16px;font-weight:700;padding:5px 12px;border-radius:30px}
-.up{color:#34d399;background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.4)}
-.down{color:#67e8f9;background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.4)}
-#dhead{position:absolute;left:28px;right:28px;top:26px;height:50px}
-.brand{display:flex;align-items:center;gap:12px;font-size:22px;font-weight:800;letter-spacing:4px}
-.brand span{font-weight:500;letter-spacing:.5px;color:var(--muted);font-size:18px}
-.seg{display:flex;gap:6px;padding:5px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
-.seg div{padding:6px 14px;border-radius:10px;font-size:15px;font-weight:700;color:var(--muted)}
-.seg .on{background:linear-gradient(90deg,var(--cyan),var(--purple));color:#07070a}
-#kpis{position:absolute;left:28px;right:28px;top:94px;height:150px;display:flex;gap:16px}
-.kpi{flex:1;border-radius:22px;padding:18px 20px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08)}
-.kpi .v{font-size:36px;font-weight:800;margin:6px 0 8px;letter-spacing:-.5px}
-#cLine{top:262px;height:290px}
-#cBars{top:570px;height:190px}
-#cTable{top:778px;height:244px;padding:16px 24px}
-.tbl{width:100%;border-collapse:collapse;margin-top:8px;font-size:18px}
-.tbl th{font-size:14px;font-weight:700;letter-spacing:1.5px;color:var(--muted);text-align:right;padding:4px 0 8px}
+/* ---------------- scene 2 · dashboard */
+#s2bg{position:absolute;inset:0;background:radial-gradient(80% 50% at 50% 55%,#15151b,var(--bg) 70%)}
+.amb{position:absolute;border-radius:50%;filter:blur(130px);pointer-events:none}
+#h2{top:215px;letter-spacing:-.028em;line-height:1.04}
+#dash{position:absolute;left:54px;top:470px;width:972px;height:1030px;border-radius:44px;padding:30px;transform-style:preserve-3d;
+  background:linear-gradient(165deg,rgba(44,44,52,.78),rgba(22,22,28,.9) 40%,rgba(14,14,18,.94));
+  border:1px solid rgba(255,255,255,.1);box-shadow:0 80px 160px -20px rgba(0,0,0,.85),0 0 120px rgba(125,240,255,.08),inset 0 1px 0 rgba(255,255,255,.14)}
+.card{position:absolute;left:30px;right:30px;border-radius:28px;padding:22px 26px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07)}
+.row2{display:flex;justify-content:space-between;align-items:center}
+.lbl{font-size:18px;font-weight:500;color:var(--muted)}
+.ttl{font-size:24px;font-weight:700;letter-spacing:-.01em}
+.chip{font-size:16px;font-weight:700;padding:6px 12px;border-radius:30px}
+.up{color:#4ade80;background:rgba(74,222,128,.12)}
+.dn{color:#7df0ff;background:rgba(125,240,255,.12)}
+#dhead{position:absolute;left:30px;right:30px;top:28px;height:52px}
+.brand{display:flex;align-items:center;gap:14px;font-size:24px;font-weight:800;letter-spacing:-.01em}
+.brand span{font-weight:500;color:var(--muted)}
+.seg{display:flex;gap:4px;padding:4px;border-radius:14px;background:rgba(255,255,255,.06)}
+.seg div{padding:7px 15px;border-radius:10px;font-size:16px;font-weight:600;color:var(--muted)}
+.seg .on{background:#f5f5f7;color:#0b0b0e}
+#kpis{position:absolute;left:30px;right:30px;top:100px;height:160px;display:flex;gap:16px}
+.kpi{flex:1;border-radius:28px;padding:20px 22px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07)}
+.kpi .v{font-size:40px;font-weight:800;letter-spacing:-.03em;margin:4px 0 8px}
+#cLine{top:278px;height:300px}
+#cBars{top:596px;height:190px}
+#cTable{top:804px;height:196px;padding:18px 26px}
+.tbl{width:100%;border-collapse:collapse;margin-top:6px;font-size:19px}
+.tbl th{font-size:14px;font-weight:600;letter-spacing:.06em;color:var(--muted);text-align:right;padding:2px 0 6px;text-transform:uppercase}
 .tbl th:first-child,.tbl td:first-child{text-align:left}
-.tbl td{text-align:right;padding:7px 0;border-top:1px solid rgba(255,255,255,.06);font-weight:600}
-.tbl td.g{color:#34d399}
-.callout{position:absolute;display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:14px;font-size:18px;font-weight:700;white-space:nowrap;
-  background:rgba(9,9,11,.85);border:1px solid rgba(34,211,238,.55);box-shadow:0 0 30px rgba(34,211,238,.35)}
-.callout i{width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+.tbl td{text-align:right;padding:5px 0;border-top:1px solid rgba(255,255,255,.06);font-weight:600}
+.tbl td.g{color:#4ade80}
+.callout{position:absolute;display:flex;align-items:center;gap:10px;padding:12px 18px;border-radius:16px;font-size:19px;font-weight:700;white-space:nowrap;z-index:5;
+  background:rgba(20,20,24,.9);border:1px solid rgba(255,255,255,.14);box-shadow:0 20px 40px rgba(0,0,0,.5)}
+.callout i{width:10px;height:10px;border-radius:50%;background:#7df0ff;box-shadow:0 0 12px #7df0ff}
 
-/* ---------- scene 3: growth */
+/* ---------------- scene 3 · growth */
 #s3bg{position:absolute;inset:0;background:
-  radial-gradient(70% 45% at 50% 48%,rgba(16,185,129,.55),transparent 70%),
-  radial-gradient(60% 40% at 80% 90%,rgba(34,211,238,.35),transparent 70%),
-  linear-gradient(180deg,#021b14,#03261c 45%,#021016)}
-#s3grid{position:absolute;inset:0;opacity:.18;background:
-  repeating-linear-gradient(0deg,rgba(255,255,255,.35) 0 1px,transparent 1px 120px),
-  repeating-linear-gradient(90deg,rgba(255,255,255,.35) 0 1px,transparent 1px 120px)}
-#s3lbl{position:absolute;left:0;right:0;top:560px;text-align:center;font-size:30px;font-weight:600;letter-spacing:10px;text-transform:uppercase;color:#a7f3d0}
-#bigstat{left:50%;top:640px;font-size:250px;font-weight:800;letter-spacing:-8px;line-height:1}
-#bigstat .m{background:linear-gradient(180deg,#ffffff,#a7f3d0 70%,#34d399);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 40px rgba(16,185,129,.6))}
-#bigstat .g{color:rgba(167,243,208,.2)}#bigstat .g2{color:rgba(167,243,208,.08)}
-#s3sub{position:absolute;left:0;right:0;top:960px;text-align:center}
-#s3sub .v{font-size:96px;font-weight:800;letter-spacing:-2px}
-#s3sub .l{font-size:26px;font-weight:600;letter-spacing:6px;text-transform:uppercase;color:#a7f3d0;margin-top:4px}
-.coin{position:absolute;left:0;top:0;width:150px;height:150px;margin:-75px 0 0 -75px;border-radius:50%;display:grid;place-items:center;
-  font-size:84px;font-weight:800;color:#ecfdf5;
-  background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.55),rgba(52,211,153,.55) 30%,rgba(6,95,70,.85) 70%);
-  border:2px solid rgba(167,243,208,.8);box-shadow:0 0 50px rgba(16,185,129,.7),inset 0 -10px 20px rgba(0,0,0,.35),inset 0 6px 14px rgba(255,255,255,.35);
-  text-shadow:0 2px 10px rgba(0,0,0,.35)}
-.coin.c{border-color:rgba(165,243,252,.85);box-shadow:0 0 50px rgba(34,211,238,.7),inset 0 -10px 20px rgba(0,0,0,.35),inset 0 6px 14px rgba(255,255,255,.35);
-  background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.55),rgba(34,211,238,.5) 30%,rgba(14,80,110,.85) 70%)}
+  radial-gradient(75% 42% at 50% 44%,rgba(16,185,129,.62),transparent 70%),
+  radial-gradient(60% 35% at 85% 92%,rgba(34,211,238,.28),transparent 70%),
+  linear-gradient(180deg,#01140f,#022a1e 45%,#010d0b)}
+#s3grid{position:absolute;inset:0;opacity:.12;background:
+  repeating-linear-gradient(0deg,rgba(255,255,255,.4) 0 1px,transparent 1px 120px),
+  repeating-linear-gradient(90deg,rgba(255,255,255,.4) 0 1px,transparent 1px 120px);
+  -webkit-mask-image:radial-gradient(70% 50% at 50% 50%,#000,transparent);mask-image:radial-gradient(70% 50% at 50% 50%,#000,transparent)}
+#s3lbl{position:absolute;left:0;right:0;top:560px;text-align:center;font-size:30px;font-weight:600;letter-spacing:.02em;color:#b6f5d8}
+#bigstat{top:610px}
+#bigstat .m:not(.grad){background:linear-gradient(180deg,#ffffff 20%,#b6f5d8 70%,#4ade80);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 50px rgba(16,185,129,.55))}
+#bigstat .g{color:rgba(182,245,216,.2)}#bigstat .g2{color:rgba(182,245,216,.08)}
+#s3sub{position:absolute;left:0;right:0;top:990px;text-align:center}
+#s3sub .v{font-size:104px;font-weight:800;letter-spacing:-.04em}
+#s3sub .l{font-size:28px;font-weight:500;color:#b6f5d8;margin-top:2px}
+.coin{position:absolute;left:0;top:0;width:156px;height:156px;margin:-78px 0 0 -78px;border-radius:50%}
+.coin svg{width:100%;height:100%;overflow:visible}
 
-/* ---------- scene 4: brand */
-#glowC,#glowP{position:absolute;width:760px;height:760px;border-radius:50%;filter:blur(90px)}
-#glowC{left:40px;top:560px;background:rgba(34,211,238,.45)}
-#glowP{left:300px;top:640px;background:rgba(168,85,247,.45)}
-#logo{position:absolute;left:540px;top:820px;width:330px;height:334px;margin:-167px 0 0 -165px;filter:drop-shadow(0 0 30px rgba(165,243,252,.7)) drop-shadow(0 0 80px rgba(168,85,247,.5))}
-#word{position:absolute;left:0;right:0;top:1040px;text-align:center;font-size:74px;font-weight:800;letter-spacing:26px;padding-left:26px;
-  background:linear-gradient(180deg,#fff,#c9ced8 60%,#8d939e);-webkit-background-clip:text;background-clip:text;color:transparent}
-#h4{position:absolute;left:0;right:0;top:1200px;text-align:center;font-size:66px;font-weight:700;line-height:1.1;letter-spacing:-.5px}
-#h4 .echo{position:relative;display:block}
-#tag{position:absolute;left:0;right:0;top:1395px;text-align:center;font-size:28px;font-weight:500;letter-spacing:8px;text-transform:uppercase;color:#c4c4cc}
+/* ---------------- scene 4 · brand */
+#glowC,#glowP{position:absolute;width:780px;height:780px;border-radius:50%;filter:blur(110px)}
+#glowC{left:20px;top:520px;background:rgba(34,211,238,.42)}
+#glowP{left:280px;top:600px;background:rgba(168,85,247,.42)}
+#logo{position:absolute;left:540px;top:800px;width:300px;height:304px;margin:-152px 0 0 -150px;
+  filter:drop-shadow(0 0 26px rgba(190,245,255,.65)) drop-shadow(0 0 90px rgba(168,85,247,.45))}
+#word{position:absolute;left:0;right:0;top:1000px;text-align:center;font-size:70px;font-weight:800;letter-spacing:.34em;padding-left:.34em;
+  background:linear-gradient(180deg,#fff,#cfd3dc 60%,#8e939e);-webkit-background-clip:text;background-clip:text;color:transparent}
+#h4{top:1150px;letter-spacing:-.032em;line-height:1.02}
+#tag{position:absolute;left:0;right:0;top:1390px;text-align:center;font-size:30px;font-weight:500;color:#a1a1a6;letter-spacing:-.01em}
 </style>
 </head>
 <body>
 <div id="stage">
   <svg width="0" height="0" style="position:absolute">
     <defs>
-      <radialGradient id="shellG" cx=".35" cy=".25" r=".9">
-        <stop offset="0" stop-color="#5a606c"/><stop offset=".35" stop-color="#23262d"/><stop offset=".8" stop-color="#0b0c0f"/><stop offset="1" stop-color="#050506"/>
-      </radialGradient>
-      <linearGradient id="rimG" x1="0" x2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#a855f7"/></linearGradient>
-      <linearGradient id="billG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2fae76"/><stop offset=".5" stop-color="#1b7a52"/><stop offset="1" stop-color="#0f5a3b"/></linearGradient>
-      <symbol id="shellS" viewBox="0 0 280 230">
-        <ellipse cx="140" cy="214" rx="132" ry="15" fill="#050506"/>
-        <path d="M12 212 C 12 88, 66 14, 140 14 C 214 14, 268 88, 268 212 Z" fill="url(#shellG)"/>
-        <path d="M12 212 C 12 88, 66 14, 140 14 C 214 14, 268 88, 268 212" fill="none" stroke="url(#rimG)" stroke-width="2.5" opacity=".55"/>
-        <path d="M58 150 C 64 88, 98 46, 140 40" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".28"/>
-        <path d="M24 176 C 90 160, 190 160, 256 176" fill="none" stroke="#fff" stroke-width="1.5" opacity=".12"/>
-        <ellipse cx="140" cy="212" rx="128" ry="12" fill="none" stroke="url(#rimG)" stroke-width="2" opacity=".6"/>
+      <filter id="soft1" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="1.2"/></filter>
+      <filter id="soft5" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="5"/></filter>
+      <filter id="soft12" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="12"/></filter>
+      <linearGradient id="bodyG" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#3a3b42"/><stop offset=".45" stop-color="#18181c"/><stop offset="1" stop-color="#070708"/>
+      </linearGradient>
+      <linearGradient id="shadeG" x1="0" x2="1">
+        <stop offset="0" stop-color="#000" stop-opacity=".75"/><stop offset=".3" stop-color="#000" stop-opacity="0"/>
+        <stop offset=".72" stop-color="#000" stop-opacity=".1"/><stop offset="1" stop-color="#000" stop-opacity=".8"/>
+      </linearGradient>
+      <radialGradient id="keyG"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+      <linearGradient id="rimG" x1="0" x2="1"><stop offset="0" stop-color="#7df0ff"/><stop offset=".5" stop-color="#a5b4fc"/><stop offset="1" stop-color="#d8a8ff"/></linearGradient>
+      <clipPath id="domeClip"><path d="M16 224 C 16 96, 76 18, 150 18 C 224 18, 284 96, 284 224 Z"/></clipPath>
+      <symbol id="shellS" viewBox="0 0 300 250">
+        <path d="M16 224 C 16 96, 76 18, 150 18 C 224 18, 284 96, 284 224" fill="none" stroke="url(#rimG)" stroke-width="10" opacity=".28" filter="url(#soft12)"/>
+        <path d="M16 224 C 16 96, 76 18, 150 18 C 224 18, 284 96, 284 224 Z" fill="url(#bodyG)"/>
+        <g clip-path="url(#domeClip)">
+          <rect x="0" y="0" width="300" height="250" fill="url(#shadeG)"/>
+          <ellipse cx="118" cy="78" rx="96" ry="58" fill="url(#keyG)" filter="url(#soft12)"/>
+          <path d="M66 176 C 68 108, 100 58, 146 46" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".62" filter="url(#soft1)"/>
+          <path d="M214 60 C 236 78, 252 104, 258 132" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".22" filter="url(#soft1)"/>
+          <ellipse cx="150" cy="232" rx="140" ry="22" fill="#7df0ff" opacity=".16" filter="url(#soft5)"/>
+        </g>
+        <path d="M16 224 C 16 96, 76 18, 150 18 C 224 18, 284 96, 284 224" fill="none" stroke="url(#rimG)" stroke-width="2.4" opacity=".75"/>
+        <ellipse cx="150" cy="223" rx="134" ry="13" fill="#060607"/>
+        <ellipse cx="150" cy="222" rx="133" ry="12.5" fill="none" stroke="url(#rimG)" stroke-width="1.8" opacity=".7"/>
+        <path d="M30 224 C 80 214, 220 214, 270 224" fill="none" stroke="#fff" stroke-width="1.2" opacity=".18"/>
       </symbol>
-      <symbol id="cashS" viewBox="0 0 210 130">
+      <linearGradient id="billTop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3fbf86"/><stop offset=".55" stop-color="#1f8a5c"/><stop offset="1" stop-color="#12613f"/></linearGradient>
+      <symbol id="cashS" viewBox="0 0 230 150">
         <g>
-          <rect x="6" y="54" width="198" height="66" rx="8" fill="#0c4a31"/>
-          <rect x="6" y="46" width="198" height="66" rx="8" fill="#12603f" stroke="#2fae76" stroke-width="1"/>
-          <rect x="6" y="38" width="198" height="66" rx="8" fill="#15704a" stroke="#34c285" stroke-width="1"/>
-          <rect x="6" y="30" width="198" height="66" rx="8" fill="url(#billG)" stroke="#6ee7b7" stroke-width="1.5"/>
-          <rect x="18" y="38" width="174" height="50" rx="5" fill="none" stroke="#a7f3d0" stroke-width="1" opacity=".5"/>
-          <ellipse cx="105" cy="63" rx="24" ry="19" fill="#0f5a3b" stroke="#a7f3d0" stroke-width="1.2" opacity=".9"/>
-          <text x="105" y="73" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="28" fill="#d1fae5">$</text>
-          <rect x="84" y="28" width="42" height="70" rx="3" fill="#f5f0e6" opacity=".92"/>
-          <rect x="84" y="28" width="42" height="70" rx="3" fill="none" stroke="#c9b98f" stroke-width="1"/>
-          <text x="105" y="67" text-anchor="middle" font-family="Poppins" font-weight="800" font-size="13" fill="#3b3a36">$10K</text>
+          <rect x="8" y="70" width="214" height="66" rx="7" fill="#0b3f2a"/>
+          <g stroke="#e9f7ef" stroke-opacity=".55" stroke-width="1.1"><line x1="12" x2="218" y1="126" y2="126"/><line x1="12" x2="218" y1="120" y2="120"/><line x1="12" x2="218" y1="114" y2="114"/><line x1="12" x2="218" y1="108" y2="108"/><line x1="12" x2="218" y1="102" y2="102"/></g>
+          <rect x="8" y="30" width="214" height="72" rx="7" fill="url(#billTop)" stroke="#8ff0c2" stroke-width="1.2"/>
+          <rect x="18" y="38" width="194" height="56" rx="4" fill="none" stroke="#c8f7e0" stroke-width="1" stroke-dasharray="2 3" opacity=".6"/>
+          <ellipse cx="60" cy="66" rx="20" ry="22" fill="#15704a" stroke="#c8f7e0" stroke-width="1" opacity=".9"/>
+          <ellipse cx="172" cy="66" rx="18" ry="18" fill="none" stroke="#c8f7e0" stroke-width="1" opacity=".55"/>
+          <text x="172" y="73" text-anchor="middle" font-family="Inter Display" font-weight="800" font-size="20" fill="#e2fbef">$</text>
+          <rect x="95" y="26" width="42" height="80" rx="3" fill="#f4efe4"/>
+          <rect x="95" y="26" width="42" height="80" rx="3" fill="none" stroke="#c9b98f"/>
+          <text x="116" y="70" text-anchor="middle" font-family="Inter Display" font-weight="800" font-size="13" fill="#3b3a36">$10K</text>
+          <rect x="8" y="30" width="214" height="16" rx="7" fill="#fff" opacity=".12"/>
         </g>
       </symbol>
+      <radialGradient id="coinFace" cx=".38" cy=".3" r=".85">
+        <stop offset="0" stop-color="#eafff5"/><stop offset=".25" stop-color="#7ff2c0"/><stop offset=".62" stop-color="#149a68"/><stop offset="1" stop-color="#05432c"/>
+      </radialGradient>
+      <radialGradient id="coinFaceC" cx=".38" cy=".3" r=".85">
+        <stop offset="0" stop-color="#effdff"/><stop offset=".25" stop-color="#8eeeff"/><stop offset=".62" stop-color="#1596b8"/><stop offset="1" stop-color="#063c52"/>
+      </radialGradient>
+      <linearGradient id="coinEdge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9fff0"/><stop offset="1" stop-color="#0a5a3b"/></linearGradient>
       <mask id="uholes" maskUnits="userSpaceOnUse" x="0" y="560" width="900" height="920">
         <rect x="0" y="560" width="900" height="920" fill="#fff"/>
         <circle cx="143" cy="920" r="52" fill="#000"/><circle cx="747" cy="920" r="52" fill="#000"/><circle cx="445" cy="1333" r="52" fill="#000"/>
@@ -168,60 +192,62 @@ body{font-family:Poppins,system-ui,sans-serif;color:var(--text);-webkit-font-smo
 
   <!-- ===================== SCENE 1 · THE SHELL GAME ===================== -->
   <div class="scene" id="s1">
-    <div class="ambient" style="left:-200px;top:300px;width:700px;height:700px;background:rgba(34,211,238,.18)"></div>
-    <div class="ambient" style="left:600px;top:500px;width:700px;height:700px;background:rgba(168,85,247,.18)"></div>
     <div class="cam" id="s1cam">
-      <div id="surface"></div><div id="horizon"></div>
+      <div id="studio"></div><div id="cone"></div>
+      <div class="amb" style="left:-260px;top:420px;width:760px;height:760px;background:rgba(34,211,238,.12)"></div>
+      <div class="amb" style="left:580px;top:520px;width:760px;height:760px;background:rgba(168,85,247,.12)"></div>
+      <div id="floor"></div><div id="rimline"></div>
       <div id="emptyGlow"></div>
+      <div class="shadow" id="d0"></div><div class="shadow" id="d1"></div><div class="shadow" id="d2"></div>
       <svg class="refl" id="r0"><use href="#shellS"/></svg><svg class="refl" id="r1"><use href="#shellS"/></svg><svg class="refl" id="r2"><use href="#shellS"/></svg>
       <svg id="cashRefl"><use href="#cashS"/></svg>
       <svg id="cash"><use href="#cashS"/></svg>
       <svg class="shell" id="sh0"><use href="#shellS"/></svg><svg class="shell" id="sh1"><use href="#shellS"/></svg><svg class="shell" id="sh2"><use href="#shellS"/></svg>
     </div>
-    <div class="spec" id="spec1" style="left:80px;top:1440px"><b>01</b>Your cash<i></i></div>
-    <div class="spec" id="spec2" style="right:80px;top:1440px"><i style="background:linear-gradient(90deg,rgba(168,85,247,.9),rgba(255,255,255,.7))"></i>Somewhere<b>?</b></div>
-    <div class="echo" id="h1" data-lines="your finances|shouldn't be a|guessing game."></div>
+    <div class="spec" id="spec1" style="left:70px"><b>01</b>Your cash<i></i></div>
+    <div class="spec" id="spec2" style="right:70px"><i style="background:linear-gradient(90deg,rgba(216,168,255,.9),rgba(255,255,255,.65))"></i>Somewhere<b>?</b></div>
+    <div class="head" id="h1" data-lines="Your finances|shouldn't be a|*guessing game." data-size="132"></div>
   </div>
 
   <!-- ===================== SCENE 2 · DASHBOARD ===================== -->
   <div class="scene" id="s2">
-    <div class="ambient" style="left:-250px;top:200px;width:800px;height:800px;background:rgba(34,211,238,.16)"></div>
-    <div class="ambient" style="left:500px;top:1000px;width:800px;height:800px;background:rgba(168,85,247,.16)"></div>
-    <div id="h2"><span class="echo" data-lines="keep track of all your financials"></span><span class="echo" data-lines="in one convenient space" data-grad="1"></span></div>
-    <div class="cam" id="s2cam" style="perspective:1800px">
+    <div id="s2bg"></div>
+    <div class="amb" style="left:-280px;top:260px;width:820px;height:820px;background:rgba(34,211,238,.13)"></div>
+    <div class="amb" style="left:520px;top:1040px;width:820px;height:820px;background:rgba(168,85,247,.13)"></div>
+    <div class="head" id="h2" data-lines="Track all of your finances|*in one convenient space" data-size="84"></div>
+    <div class="cam" id="s2cam" style="perspective:2000px">
       <div id="dash">
-        <div id="dhead" class="row">
-          <div class="brand"><svg width="30" height="30" viewBox="20 600 850 860"><use href="#ulogo"/></svg>UNYXO <span>Finance</span></div>
+        <div id="dhead" class="row2">
+          <div class="brand"><svg width="32" height="32" viewBox="20 600 850 860"><use href="#ulogo"/></svg>Unyxo <span>Finance</span></div>
           <div class="seg"><div>Q1</div><div>Q2</div><div>Q3</div><div class="on">Q4</div></div>
         </div>
         <div id="kpis">
-          <div class="kpi"><div class="lbl">Revenue</div><div class="v" data-count="148920" data-prefix="$">$0</div><span class="chip up">▲ 32%</span></div>
-          <div class="kpi" id="kExp"><div class="lbl">Expenses</div><div class="v" data-count="61480" data-prefix="$">$0</div><span class="chip down">▼ 12%</span></div>
-          <div class="kpi"><div class="lbl">Net profit</div><div class="v" data-count="87440" data-prefix="$">$0</div><span class="chip up">▲ 48%</span></div>
+          <div class="kpi"><div class="lbl">Revenue</div><div class="v num" data-count="148920">$0</div><span class="chip up">↑ 32%</span></div>
+          <div class="kpi"><div class="lbl">Expenses</div><div class="v num" data-count="61480">$0</div><span class="chip dn">↓ 12%</span></div>
+          <div class="kpi"><div class="lbl">Net profit</div><div class="v num" data-count="87440">$0</div><span class="chip up">↑ 48%</span></div>
         </div>
         <div class="card" id="cLine">
-          <div class="row"><div class="ttl">Revenue growth</div><span class="chip up">+32% YoY</span></div>
-          <svg id="lineSvg" width="856" height="210" viewBox="0 0 856 210" style="margin-top:10px;overflow:visible">
-            <defs><linearGradient id="areaG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22d3ee" stop-opacity=".45"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></linearGradient>
-              <linearGradient id="lineG" x1="0" x2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#a855f7"/></linearGradient>
-              <clipPath id="lineClip"><rect id="lineClipR" x="0" y="-20" width="0" height="260"/></clipPath></defs>
-            <g stroke="rgba(255,255,255,.07)"><line x1="0" x2="856" y1="40" y2="40"/><line x1="0" x2="856" y1="100" y2="100"/><line x1="0" x2="856" y1="160" y2="160"/></g>
-            <g clip-path="url(#lineClip)"><path id="area" fill="url(#areaG)"/><path id="line" fill="none" stroke="url(#lineG)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 0 10px rgba(34,211,238,.7))"/></g>
-            <circle id="lineHead" r="9" fill="#fff" style="filter:drop-shadow(0 0 12px #22d3ee)"/>
-            <g id="months" font-family="Poppins" font-size="14" font-weight="600" fill="#6b6b75"></g>
+          <div class="row2"><div class="ttl">Revenue growth</div><span class="chip up">+32% YoY</span></div>
+          <svg id="lineSvg" width="860" height="220" viewBox="0 0 860 220" style="margin-top:12px;overflow:visible">
+            <defs><linearGradient id="areaG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7df0ff" stop-opacity=".42"/><stop offset="1" stop-color="#7df0ff" stop-opacity="0"/></linearGradient>
+              <linearGradient id="lineG" x1="0" x2="1"><stop offset="0" stop-color="#7df0ff"/><stop offset="1" stop-color="#c79bff"/></linearGradient>
+              <clipPath id="lineClip"><rect id="lineClipR" x="-10" y="-30" width="0" height="280"/></clipPath></defs>
+            <g stroke="rgba(255,255,255,.06)"><line x1="0" x2="860" y1="40" y2="40"/><line x1="0" x2="860" y1="100" y2="100"/><line x1="0" x2="860" y1="160" y2="160"/></g>
+            <g clip-path="url(#lineClip)"><path id="area" fill="url(#areaG)"/><path id="line" fill="none" stroke="url(#lineG)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 0 12px rgba(125,240,255,.6))"/></g>
+            <circle id="lineHead" r="10" fill="#fff" style="filter:drop-shadow(0 0 14px #7df0ff)"/>
+            <g id="months" font-family="Inter Display" font-size="15" font-weight="600" fill="#6e6e73"></g>
           </svg>
         </div>
         <div class="card" id="cBars">
-          <div class="row"><div class="ttl">Monthly profit</div><div class="lbl">Jan – Dec</div></div>
-          <div id="bars" style="position:absolute;left:24px;right:24px;bottom:18px;height:112px;display:flex;align-items:flex-end;gap:14px"></div>
+          <div class="row2"><div class="ttl">Monthly profit</div><div class="lbl">Jan – Dec</div></div>
+          <div id="bars" style="position:absolute;left:26px;right:26px;bottom:20px;height:104px;display:flex;align-items:flex-end;gap:14px"></div>
         </div>
         <div class="card" id="cTable">
-          <div class="row"><div class="ttl">Quarterly performance</div><div class="lbl">FY 2026</div></div>
-          <table class="tbl"><thead><tr><th>QUARTER</th><th>REVENUE</th><th>EXPENSES</th><th>PROFIT</th><th>GROWTH</th></tr></thead><tbody id="tbody"></tbody></table>
+          <table class="tbl num"><thead><tr><th>Quarter</th><th>Revenue</th><th>Expenses</th><th>Profit</th><th>Growth</th></tr></thead><tbody id="tbody"></tbody></table>
         </div>
       </div>
-      <div class="callout" id="co1" style="left:600px;top:712px"><i></i>Q4 · best quarter</div>
-      <div class="callout" id="co2" style="left:360px;top:492px;border-color:rgba(168,85,247,.6);box-shadow:0 0 30px rgba(168,85,247,.35)"><i style="background:#c084fc;box-shadow:0 0 12px #c084fc"></i>Costs down 12%</div>
+      <div class="callout" id="co1" style="left:560px;top:790px"><i></i>Q4 · best quarter</div>
+      <div class="callout" id="co2" style="left:372px;top:503px"><i style="background:#d8a8ff;box-shadow:0 0 12px #d8a8ff"></i>Costs down 12%</div>
     </div>
   </div>
 
@@ -230,12 +256,12 @@ body{font-family:Poppins,system-ui,sans-serif;color:var(--text);-webkit-font-smo
     <div class="cam" id="s3cam">
       <div id="s3bg"></div><div id="s3grid"></div>
       <svg width="1080" height="1920" style="position:absolute;inset:0">
-        <defs><linearGradient id="trendG" x1="0" x2="1"><stop offset="0" stop-color="#34d399" stop-opacity=".2"/><stop offset="1" stop-color="#a7f3d0"/></linearGradient></defs>
-        <path id="trend" d="M-40 1640 C 160 1600, 220 1520, 360 1480 S 560 1360, 680 1250 S 900 1000, 1120 820" fill="none" stroke="url(#trendG)" stroke-width="8" stroke-linecap="round" style="filter:drop-shadow(0 0 16px #34d399)"/>
+        <defs><linearGradient id="trendG" x1="0" x2="1"><stop offset="0" stop-color="#4ade80" stop-opacity=".15"/><stop offset="1" stop-color="#d1fae5"/></linearGradient></defs>
+        <path id="trend" d="M-40 1660 C 170 1630, 250 1540, 390 1500 S 590 1370, 710 1260 S 920 1010, 1120 830" fill="none" stroke="url(#trendG)" stroke-width="7" stroke-linecap="round" style="filter:drop-shadow(0 0 18px #34d399)"/>
       </svg>
-      <div id="s3lbl">profit growth · Q1 → Q4</div>
-      <div class="echo" id="bigstat" data-lines="+266%"></div>
-      <div id="s3sub"><div class="v" id="s3v">$0</div><div class="l">revenue this year</div></div>
+      <div id="s3lbl">Profit growth · Q1 → Q4</div>
+      <div class="head" id="bigstat" data-lines="+266%" data-size="330"></div>
+      <div id="s3sub"><div class="v num" id="s3v">$0</div><div class="l">Revenue this year</div></div>
       <div id="coins"></div>
     </div>
   </div>
@@ -245,12 +271,12 @@ body{font-family:Poppins,system-ui,sans-serif;color:var(--text);-webkit-font-smo
     <div id="glowC"></div><div id="glowP"></div>
     <svg id="logo" viewBox="0 0 850 860"><use href="#ulogo" width="850" height="860"/></svg>
     <div id="word">UNYXO</div>
-    <div id="h4"><span class="echo" data-lines="track your financials"></span><span class="echo" data-lines="with Unyxo" data-grad="1"></span></div>
+    <div class="head" id="h4" data-lines="Track your financials|*with Unyxo" data-size="104"></div>
     <div id="tag">Business done better.</div>
   </div>
 
   <div id="streak"></div>
-  <div id="flash"></div>
+  <div id="bloom"></div>
   <div id="vignette"></div>
   <div id="grain"></div>
 </div>
@@ -261,48 +287,52 @@ const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
 const P=(t,a,b)=>clamp((t-a)/(b-a));
 const lerp=(a,b,x)=>a+(b-a)*x;
 const eo=x=>1-Math.pow(1-x,3), eo5=x=>1-Math.pow(1-x,5), ei=x=>x*x*x;
+const expo=x=>x>=1?1:1-Math.pow(2,-10*x);
 const eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
 const back=x=>{const c1=1.7,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
 const $=id=>document.getElementById(id);
 const show=(el,on)=>{el.style.display=on?'block':'none'};
+const SAFE=940;   // max text width (px) — keeps every line clear of the edges and Reels UI
 
-// echo headlines: main line + two trailing ghosts that converge onto it
-const echoes={};
-document.querySelectorAll('.echo').forEach((el,k)=>{
-  const lines=el.dataset.lines.split('|'); el.innerHTML='';
-  const L=lines.map(tx=>{const row=document.createElement('div');row.style.position='relative';
+// ---------- headlines: main line + two converging ghost copies, auto-fitted to SAFE ----------
+document.querySelectorAll('.head').forEach(el=>{
+  el.style.fontSize=el.dataset.size+'px';
+  el._L=el.dataset.lines.split('|').map(raw=>{
+    const grad=raw.startsWith('*'), tx=grad?raw.slice(1):raw;
+    const row=document.createElement('div');row.className='row';
     const g2=document.createElement('div');g2.className='g g2';g2.textContent=tx;
     const g=document.createElement('div');g.className='g';g.textContent=tx;
-    const m=document.createElement('div');m.className='m'+(el.dataset.grad?' grad':'');m.textContent=tx;
-    if(tx==='guessing game.'){m.className='m grad'}
-    row.append(g2,g,m);el.appendChild(row);return {row,g,g2,m}});
-  echoes[el.id||('e'+k)]=L; el._L=L;
+    const m=document.createElement('span');m.className='m'+(grad?' grad':'');m.textContent=tx;
+    row.append(g2,g,m);el.appendChild(row);return {row,g,g2,m};
+  });
 });
-function echo(el,t0,t,{dur=.7,stagger=.12,spread=34,dir=1}={}){
-  if(!el._L){[...el.querySelectorAll('.echo')].forEach((c,i)=>echo(c,t0+i*stagger*2,t,{dur,stagger,spread,dir}));return}
-  el._L.forEach((l,i)=>{const k=P(t,t0+i*stagger,t0+i*stagger+dur),e=eo5(k);
-    l.m.style.opacity=e;l.m.style.transform=`translateY(${(1-e)*50*dir}px)`;l.m.style.filter=`blur(${(1-e)*10}px)`;
-    const s=(1-e)*spread+(1-k)*0;
-    l.g.style.opacity=k>0&&k<1?.9:0;l.g.style.transform=`translateY(${(1-e)*50*dir+s}px)`;
-    l.g2.style.opacity=k>0&&k<1?.9:0;l.g2.style.transform=`translateY(${(1-e)*50*dir+s*2}px)`;});
+function fitHeads(){document.querySelectorAll('.head').forEach(el=>{
+  const w=Math.max(...el._L.map(l=>l.m.getBoundingClientRect().width));
+  if(w>SAFE) el.style.fontSize=(parseFloat(el.style.fontSize)*SAFE/w)+'px';
+});}
+function echo(el,t0,t,{dur=.65,stagger=.14,spread=.26}={}){
+  const fs=parseFloat(el.style.fontSize);
+  el._L.forEach((l,i)=>{const k=P(t,t0+i*stagger,t0+i*stagger+dur),e=expo(k);
+    const y=(1-e)*fs*.42, s=(1-e)*fs*spread;
+    l.m.style.opacity=clamp(e*1.4);l.m.style.transform=`translateY(${y}px)`;l.m.style.filter=`blur(${(1-e)*12}px)`;
+    const gv=k>0&&k<1?1:0;
+    l.g.style.opacity=gv;l.g.style.transform=`translateY(${y+s}px)`;
+    l.g2.style.opacity=gv;l.g2.style.transform=`translateY(${y+s*2}px)`;});
 }
 
 // ---------- scene 1 data ----------
-const SX=[240,540,840], BASE=1190;          // shell slots, shell rim baseline
+const SX=[240,540,840], BASE=1206;          // shell slots, rim baseline
 const SWAPS=[[0,1],[1,2],[0,2],[0,1],[1,2],[0,2],[1,2],[0,1],[0,2]].map(([a,b],k)=>[1.55+k*.23,a,b]), SD=.2;
-// the shell that ends in the centre slot gets lifted (it's never the one hiding the cash)
 const LIFT_ID=(()=>{const slot=[0,1,2];for(const [,a,b] of SWAPS){const ia=slot.indexOf(a),ib=slot.indexOf(b);slot[ia]=b;slot[ib]=a}return slot.indexOf(1)})();
-const shells=[0,1,2].map(i=>$('sh'+i)), refls=[0,1,2].map(i=>$('r'+i));
+const shells=[0,1,2].map(i=>$('sh'+i)), refls=[0,1,2].map(i=>$('r'+i)), shadows=[0,1,2].map(i=>$('d'+i));
 function shellState(id,t){
-  let slot=[0,1,2];   // slot[id]
-  let st={x:SX[slot[id]],dy:0,sc:1,z:2,blur:0};
+  let slot=[0,1,2];
   for(const [s,a,b] of SWAPS){
-    const ia=slot.indexOf(a), ib=slot.indexOf(b);   // shells currently in slots a,b
+    const ia=slot.indexOf(a), ib=slot.indexOf(b);
     if(t>=s+SD){slot[ia]=b;slot[ib]=a;continue}
-    if(t>=s){const p=eio((t-s)/SD),arc=Math.sin(Math.PI*p);
-      if(id===ia||id===ib){const from=slot[id],to=from===a?b:a,right=to>from;
-        return {x:lerp(SX[from],SX[to],p),dy:right?64*arc:-50*arc,sc:right?1+.1*arc:1-.09*arc,z:right?4:1,blur:8*arc};}
-    }
+    if(t>=s&&(id===ia||id===ib)){const p=eio((t-s)/SD),arc=Math.sin(Math.PI*p);
+      const from=slot[id],to=from===a?b:a,right=to>from;
+      return {x:lerp(SX[from],SX[to],p),dy:right?64*arc:-50*arc,sc:right?1+.1*arc:1-.09*arc,z:right?4:1,blur:8*arc};}
     break;
   }
   return {x:SX[slot[id]],dy:0,sc:1,z:2,blur:0};
@@ -311,23 +341,30 @@ function shellState(id,t){
 // ---------- scene 2 data ----------
 const REV=[8.2,9.1,8.7,10.4,11.2,10.9,12.8,13.6,13.1,15.2,16.4,18.3];
 const PROF=[3.1,3.6,3.2,4.4,4.9,4.6,5.8,6.3,6.0,7.2,8.1,9.4];
-const MON='JFMAMJJASOND';
-const lx=i=>18+i*(820/11), ly=v=>190-(v-7)/12*170;
-(function(){
-  let d='M'+REV.map((v,i)=>`${lx(i).toFixed(1)} ${ly(v).toFixed(1)}`).join(' L');
-  $('line').setAttribute('d',d);$('area').setAttribute('d',d+` L${lx(11)} 205 L${lx(0)} 205 Z`);
-  $('months').innerHTML=[...MON].map((m,i)=>`<text x="${lx(i)}" y="232" text-anchor="middle">${m}</text>`).join('');
-  $('bars').innerHTML=PROF.map(()=>'<div style="flex:1;border-radius:8px 8px 3px 3px;background:linear-gradient(180deg,#22d3ee,#a855f7);box-shadow:0 0 16px rgba(168,85,247,.45);transform-origin:bottom"></div>').join('');
-  const Q=[['Q1','$26,000','$16,100','$9,900','—'],['Q2','$32,500','$15,480','$17,020','+25.0%'],['Q3','$39,500','$15,200','$24,300','+21.5%'],['Q4','$50,920','$14,700','$36,220','+28.9%']];
-  $('tbody').innerHTML=Q.map(r=>`<tr>${r.map((c,i)=>`<td class="${i===4&&c!=='—'?'g':''}">${c}</td>`).join('')}</tr>`).join('');
-})();
+const lx=i=>16+i*(828/11), ly=v=>192-(v-7)/12*172;
+const PTS=REV.map((v,i)=>[lx(i),ly(v)]);
+function smooth(p){let d=`M${p[0][0]} ${p[0][1]}`;           // Catmull-Rom → Bézier for an Apple-smooth curve
+  for(let i=0;i<p.length-1;i++){const p0=p[i-1]||p[i],p1=p[i],p2=p[i+1],p3=p[i+2]||p2;
+    d+=` C${p1[0]+(p2[0]-p0[0])/6} ${p1[1]+(p2[1]-p0[1])/6}, ${p2[0]-(p3[0]-p1[0])/6} ${p2[1]-(p3[1]-p1[1])/6}, ${p2[0]} ${p2[1]}`;}
+  return d;}
+$('line').setAttribute('d',smooth(PTS));$('area').setAttribute('d',smooth(PTS)+` L${lx(11)} 210 L${lx(0)} 210 Z`);
+$('months').innerHTML=[...'JFMAMJJASOND'].map((m,i)=>`<text x="${lx(i)}" y="238" text-anchor="middle">${m}</text>`).join('');
+$('bars').innerHTML=PROF.map(()=>'<div style="flex:1;border-radius:10px;background:linear-gradient(180deg,#7df0ff,#8b5cf6);box-shadow:0 0 18px rgba(139,92,246,.35);transform-origin:bottom"></div>').join('');
+$('tbody').innerHTML=[['Q1','$26,000','$16,100','$9,900','—'],['Q2','$32,500','$15,480','$17,020','+25.0%'],['Q3','$39,500','$15,200','$24,300','+21.5%'],['Q4','$50,920','$14,700','$36,220','+28.9%']]
+  .map(r=>`<tr>${r.map((c,i)=>`<td class="${i===4&&c!=='—'?'g':''}">${c}</td>`).join('')}</tr>`).join('');
 const bars=[...$('bars').children], trs=[...$('tbody').children], kpiVals=[...document.querySelectorAll('[data-count]')];
 const cards=[$('kpis'),$('cLine'),$('cBars'),$('cTable')], DEPTH=[70,150,95,35];
+const lineLen=$('line').getTotalLength();
 const fmt=n=>'$'+Math.round(n).toLocaleString('en-US');
 
 // ---------- scene 3 data ----------
-const COINS=[[180,420,12.40,0],[900,470,12.90,1],[150,1330,13.40,1],[920,1290,13.90,0],[330,1520,14.40,0],[760,1560,14.90,1],[540,300,14.40,1]];
-$('coins').innerHTML=COINS.map(c=>`<div class="coin${c[3]?' c':''}">$</div>`).join('');
+const COINS=[[180,420,12.40,0],[900,470,12.90,1],[150,1360,13.40,1],[925,1320,13.90,0],[330,1560,14.40,0],[760,1590,14.90,1],[540,300,14.40,1]];
+$('coins').innerHTML=COINS.map(c=>`<div class="coin"><svg viewBox="-80 -80 160 160">
+  <ellipse cx="0" cy="70" rx="58" ry="10" fill="#000" opacity=".35" filter="url(#soft5)"/>
+  <circle r="74" fill="url(#coinEdge)"/><circle r="68" fill="url(#${c[3]?'coinFaceC':'coinFace'})"/>
+  <circle r="56" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="2"/><circle r="52" fill="none" stroke="#000" stroke-opacity=".18" stroke-width="2"/>
+  <text x="0" y="27" text-anchor="middle" font-family="Inter Display" font-weight="900" font-size="78" fill="#fff" style="filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))">$</text>
+  <ellipse cx="-24" cy="-36" rx="30" ry="14" fill="#fff" opacity=".35" transform="rotate(-30 -24 -36)" filter="url(#soft5)"/></svg></div>`).join('');
 const coins=[...$('coins').children];
 const trend=$('trend'), TLEN=trend.getTotalLength();
 
@@ -336,62 +373,56 @@ function render(t){
   // ---------------- SCENE 1 · 0–6.0
   show($('s1'),t<6.1);
   if(t<6.1){
-    // camera: extreme diagonal macro close-up → pull back to hero shot → slow drift → zoom-through into the empty spot
-    const pb=eo(P(t,0,.7)), zi=ei(P(t,5.45,6.05));
-    const cam=$('s1cam');
-    cam.style.transformOrigin='540px 1110px';
-    cam.style.transform=`translate(${lerp(-150,0,pb)}px,${lerp(120,0,pb)}px) rotate(${lerp(-26,0,pb)}deg) scale(${lerp(2.9,1,pb)*(1+.04*P(t,.7,5.4))*lerp(1,7,zi)})`;
-    cam.style.filter=zi>0?`blur(${zi*14}px)`:'none';
-    // cash: dropped in 0.7–1.0, covered by the shell 1.1–1.34, then hidden under it
-    const drop=P(t,.7,1.0), cy=BASE-130+ (drop<1? -700*(1-eo(drop)) : 0) + (drop>=1?-10*Math.sin(Math.PI*P(t,1.0,1.12)):0);
+    const pb=expo(P(t,0,.8)), zi=ei(P(t,5.45,6.05));
+    const cam=$('s1cam');cam.style.transformOrigin='540px 1130px';
+    cam.style.transform=`translate(${lerp(-150,0,pb)}px,${lerp(120,0,pb)}px) rotate(${lerp(-26,0,pb)}deg) scale(${lerp(2.9,1,pb)*(1+.035*P(t,.8,5.4))*lerp(1,7,zi)})`;
+    cam.style.filter=zi>0?`blur(${zi*16}px)`:'none';
+    const drop=P(t,.7,1.0), cy=BASE-150+(drop<1?-700*(1-eo(drop)):0)+(drop>=1?-10*Math.sin(Math.PI*P(t,1.0,1.12)):0);
     const cashOn=t>.7&&t<1.36;
     show($('cash'),cashOn);show($('cashRefl'),cashOn&&drop>.8);
     $('cash').style.transform=`translate(540px,${cy}px)`;
-    $('cashRefl').style.transform=`translate(540px,${BASE-12}px) scaleY(-1)`;
+    $('cashRefl').style.transform=`translate(540px,${BASE-18}px) scaleY(-1)`;
     shells.forEach((sh,id)=>{
       const s=shellState(id,t);
       let lift=0,rot=0;
-      if(id===1){lift=-250*(1-eio(P(t,1.1,1.34)));}                  // hovering, then lowers over the cash
-      if(id===LIFT_ID){const k=eo(P(t,3.98,4.5));lift=-280*k;rot=-9*k;}     // the chosen shell — lifted: empty
-      const y=BASE-214+s.dy+lift;
-      sh.style.transform=`translate(${s.x}px,${y}px) rotate(${rot}deg) scale(${s.sc})`;
+      if(id===1){lift=-250*(1-eio(P(t,1.1,1.34)));}
+      if(id===LIFT_ID){const k=expo(P(t,3.98,4.55));lift=-290*k;rot=-8*k;}
+      sh.style.transform=`translate(${s.x}px,${BASE-224+s.dy+lift}px) rotate(${rot}deg) scale(${s.sc})`;
       sh.style.zIndex=s.z;sh.style.filter=s.blur>.2?`blur(${s.blur}px)`:'none';
       const r=refls[id];
-      r.style.transform=`translate(${s.x}px,${BASE-16+Math.max(0,-lift)-s.dy}px) rotate(${-rot}deg) scaleY(-1) scale(${s.sc})`;
-      r.style.opacity=.2*(1-P(-lift,0,90));r.style.filter=s.blur>.2?`blur(${s.blur}px)`:'none';
+      r.style.transform=`translate(${s.x}px,${BASE-26+Math.max(0,-lift)-s.dy}px) rotate(${-rot}deg) scaleY(-1) scale(${s.sc})`;
+      r.style.opacity=.22*(1-P(-lift,0,90));
+      const up=P(-lift,0,300), d=shadows[id];
+      d.style.transform=`translate(${s.x}px,${BASE+2+s.dy*.1}px) scale(${(1-.45*up)*s.sc},${1-.3*up})`;d.style.opacity=1-.75*up;
     });
-    $('emptyGlow').style.opacity=eo(P(t,4.2,4.7))*(.75+.25*Math.sin(t*6));
-    // spec call-outs (reference-style), then headline with echo trails
+    $('emptyGlow').style.opacity=eo(P(t,4.2,4.7))*(.8+.2*Math.sin(t*6));
     const sp=eo(P(t,.9,1.3))*(1-P(t,3.9,4.2));
     [$('spec1'),$('spec2')].forEach((e,i)=>{e.style.opacity=sp;e.style.transform=`translateX(${(1-sp)*(i?40:-40)}px)`});
-    echo($('h1'),4.25,t,{dur:.6,stagger:.2});
-    $('h1').style.opacity=1-P(t,5.5,5.8);
+    echo($('h1'),4.15,t,{stagger:.16});
+    const hz=P(t,5.45,5.95);
+    $('h1').style.opacity=1-hz;$('h1').style.transform=`scale(${1+.08*eo(hz)})`;
   }
 
   // ---------------- SCENE 2 · 6.0–12.0
   const u=t-6;
   show($('s2'),t>5.9&&t<12.15);
   if(t>5.9&&t<12.15){
-    echo($('h2'),6.35,t,{dur:.6,stagger:.18});
+    echo($('h2'),6.3,t,{stagger:.16});
     $('h2').style.opacity=1-P(u,5.0,5.4);
-    // dashboard: diagonal entrance straightening out (reference move), then exploded layers, then push-in
-    const en=eo5(P(u,0,1.25)), ex=eio(P(u,4.35,5.0))*(1-0), push=ei(P(u,5.1,6.05));
-    const d=$('dash');
-    d.style.transformOrigin='50% 40%';
-    d.style.transform=`translateY(${lerp(260,0,en)}px) rotateX(${lerp(42,0,en)+16*ex}deg) rotateZ(${lerp(-17,0,en)}deg) rotateY(${-20*ex}deg) scale(${lerp(1.3,1,en)*(1-.06*ex)})`;
+    const en=expo(P(u,0,1.2)), ex=eio(P(u,4.35,5.0)), push=ei(P(u,5.1,6.05));
+    const d=$('dash');d.style.transformOrigin='50% 40%';
+    d.style.transform=`translateY(${lerp(280,0,en)}px) rotateX(${lerp(42,0,en)+16*ex}deg) rotateZ(${lerp(-17,0,en)}deg) rotateY(${-20*ex}deg) scale(${lerp(1.3,1,en)*(1-.06*ex)})`;
     d.style.opacity=clamp(en*1.6);
     cards.forEach((c,i)=>{c.style.transform=`translateZ(${DEPTH[i]*ex}px)`;c.style.filter=push>0&&i!==1?`blur(${push*10}px)`:'none'});
-    const cam=$('s2cam');cam.style.transformOrigin='950px 790px';
+    const cam=$('s2cam');cam.style.transformOrigin='944px 800px';
     cam.style.transform=`scale(${lerp(1,4.2,push)})`;cam.style.filter=push>.5?`blur(${(push-.5)*8}px)`:'none';
-    // KPIs count up
-    const kc=eo(P(u,.9,2.1));kpiVals.forEach(v=>v.textContent=fmt(+v.dataset.count*kc));
-    // revenue line draws, head rides the tip
-    const ld=eio(P(u,1.2,2.7)), X=lerp(0,lx(11),ld);
-    $('lineClipR').setAttribute('width',X+10);
-    let i=Math.min(10,Math.floor(ld*11)), f=ld*11-i; const Y=lerp(ly(REV[i]),ly(REV[i+1]),f);
-    $('lineHead').setAttribute('cx',X);$('lineHead').setAttribute('cy',Y);$('lineHead').style.opacity=ld>0?1:0;
+    const kc=expo(P(u,.9,2.1));kpiVals.forEach(v=>v.textContent=fmt(+v.dataset.count*kc));
+    const ld=eio(P(u,1.2,2.7));
+    const pt=$('line').getPointAtLength(lineLen*ld);
+    $('lineClipR').setAttribute('width',pt.x+14);
+    $('lineHead').setAttribute('cx',pt.x);$('lineHead').setAttribute('cy',pt.y);$('lineHead').style.opacity=ld>0?1:0;
     bars.forEach((b,k)=>{const g=back(P(u,1.6+k*.07,2.1+k*.07));b.style.height=(PROF[k]/9.4*100*Math.max(0,g))+'%'});
-    trs.forEach((r,k)=>{const g=eo(P(u,2.6+k*.18,3.0+k*.18));r.style.opacity=g;r.style.transform=`translateX(${(1-g)*40}px)`});
+    trs.forEach((r,k)=>{const g=expo(P(u,2.6+k*.16,3.1+k*.16));r.style.opacity=g;r.style.transform=`translateX(${(1-g)*40}px)`});
     [$('co1'),$('co2')].forEach((c,k)=>{const g=back(P(u,3.4+k*.3,3.8+k*.3));c.style.opacity=clamp(g)*(1-P(u,4.3,4.6));c.style.transform=`scale(${Math.max(0,g)})`});
   }
 
@@ -399,54 +430,53 @@ function render(t){
   const v=t-12;
   show($('s3'),t>11.95&&t<16.2);
   if(t>11.95&&t<16.2){
-    const pull=eio(P(v,3.2,4.0)), cam=$('s3cam');
-    cam.style.transformOrigin='540px 960px';
-    cam.style.transform=`scale(${lerp(1.12,1,eo(P(v,0,.8)))*lerp(1,.3,pull)})`;
+    const pull=eio(P(v,3.2,4.0)), cam=$('s3cam');cam.style.transformOrigin='540px 960px';
+    cam.style.transform=`scale(${lerp(1.12,1,expo(P(v,0,.9)))*lerp(1,.3,pull)})`;
     cam.style.borderRadius=`${pull*120}px`;cam.style.overflow='hidden';cam.style.opacity=1-P(v,3.6,4.0);
     trend.style.strokeDasharray=TLEN;trend.style.strokeDashoffset=TLEN*(1-eio(P(v,.1,1.4)));
-    $('s3lbl').style.opacity=eo(P(v,.25,.7));
-    // big stat: echo trail re-fires on every beat
-    echo($('bigstat'),.2+12,t,{dur:.55,spread:60});
+    $('s3lbl').style.opacity=eo(P(v,.25,.7));$('s3lbl').style.transform=`translateY(${(1-eo(P(v,.25,.7)))*20}px)`;
+    echo($('bigstat'),12.2,t,{dur:.55,spread:.2});
     const beat=((v-.4)%.5+.5)%.5, pulse=v>.4?Math.exp(-beat*9):0;
-    $('bigstat').style.transform=`translateX(-50%) scale(${1+.05*pulse})`;
-    const sv=eo(P(v,.5,2.6));$('s3v').textContent=fmt(148920*sv);
+    $('bigstat').style.transform=`scale(${1+.045*pulse})`;
+    $('s3v').textContent=fmt(148920*expo(P(v,.5,2.4)));
     $('s3sub').style.opacity=eo(P(v,.5,.9));
-    // $ symbols emerge and bounce on the beat
-    coins.forEach((c,k)=>{const [x,y,t0]=COINS[k];const e=back(P(t,t0,t0+.35));
-      const ph=Math.max(0,t-t0), hop=Math.abs(Math.sin(Math.PI*ph/.5))*80*Math.exp(-ph*.35), sq=1+.12*Math.exp(-((ph%.5)*14));
+    coins.forEach((c,k)=>{const [x,y,t0]=COINS[k];const e=back(P(t,t0,t0+.32));
+      const ph=Math.max(0,t-t0), hop=Math.abs(Math.sin(Math.PI*ph/.5))*84*Math.exp(-ph*.3), sq=1+.13*Math.exp(-((ph%.5)*14));
       c.style.opacity=clamp(e*3);
-      c.style.transform=`translate(${x}px,${y-hop+(1-clamp(e))*160}px) scale(${Math.max(0,e)*(t>t0+.35?1:1)}) scaleX(${sq}) scaleY(${2-sq})`;});
+      c.style.transform=`translate(${x}px,${y-hop+(1-clamp(e))*160}px) rotate(${Math.sin(ph*3+k)*8}deg) scale(${Math.max(0,e)}) scaleX(${sq}) scaleY(${2-sq})`;});
   }
 
   // ---------------- SCENE 4 · 16.0–20.0
   const w=t-16;
   show($('s4'),t>15.6);
   if(t>15.6){
-    const pan=eo5(P(w,-.1,1.2)), br=.75+.25*Math.sin(t*2.2);
-    $('logo').style.opacity=clamp(P(w,-.1,.4));
-    $('logo').style.transform=`perspective(1200px) translateX(${lerp(760,0,pan)}px) rotateY(${lerp(-55,0,pan)}deg) scale(${lerp(.8,1,pan)})`;
+    const pan=expo(P(w,-.1,1.3)), br=.75+.25*Math.sin(t*2.2);
+    $('logo').style.opacity=clamp(P(w,-.1,.35));
+    $('logo').style.transform=`perspective(1200px) translateX(${lerp(760,0,pan)}px) rotateY(${lerp(-55,0,pan)}deg) scale(${lerp(.82,1,pan)})`;
     $('glowC').style.opacity=eo(P(w,.2,1.4))*br;$('glowP').style.opacity=eo(P(w,.4,1.6))*(1.75-br);
     $('glowC').style.transform=`translateX(${Math.sin(t*.9)*40}px)`;$('glowP').style.transform=`translateX(${-Math.sin(t*.9)*40}px)`;
-    const wk=eo(P(w,.9,1.6));$('word').style.opacity=wk;$('word').style.letterSpacing=lerp(46,26,wk)+'px';
-    echo($('h4'),16+1.4,t,{dur:.6,stagger:.2});
-    const tg=eo(P(w,2.2,2.8));$('tag').style.opacity=tg;$('tag').style.transform=`translateY(${(1-tg)*16}px)`;
+    const wk=expo(P(w,.9,1.7));$('word').style.opacity=wk;$('word').style.letterSpacing=lerp(.6,.34,wk)+'em';
+    echo($('h4'),17.35,t,{stagger:.16});
+    const tg=expo(P(w,2.2,2.9));$('tag').style.opacity=tg;$('tag').style.transform=`translateY(${(1-tg)*18}px)`;
   }
 
-  // ---------------- transitions
-  const f1=Math.max(0,1-Math.abs(t-6.0)/.22), f2=Math.max(0,1-Math.abs(t-12.02)/.25), f3=Math.max(0,1-Math.abs(t-15.95)/.3)*.35;
-  $('flash').style.opacity=Math.max(f1,f2*.9,f3);
-  $('flash').style.background=t>11?'radial-gradient(circle at 50% 50%,#ecfdf5,#6ee7b7 30%,rgba(34,211,238,.5) 60%,transparent 80%)':'';
+  // ---------------- transitions: soft light blooms (no hard white flashes)
+  const b1=Math.max(0,1-Math.abs(t-6.0)/.28), b2=Math.max(0,1-Math.abs(t-12.02)/.3), b3=Math.max(0,1-Math.abs(t-15.95)/.35)*.4;
+  const bl=$('bloom');
+  bl.style.opacity=Math.max(b1,b2,b3);
+  bl.style.background=t>11?'radial-gradient(circle at 50% 50%,#f0fff8,rgba(110,231,183,.85) 25%,rgba(34,211,238,.35) 55%,transparent 78%)'
+                           :'radial-gradient(circle at 50% 55%,#f2feff,rgba(125,240,255,.85) 25%,rgba(168,85,247,.35) 55%,transparent 78%)';
   const sk=P(t,5.62,6.08);
   $('streak').style.opacity=sk>0&&sk<1?Math.sin(Math.PI*sk):0;
   $('streak').style.transform=`rotate(24deg) translateX(${lerp(-900,2200,eio(sk))}px)`;
   $('grain').style.transform=`translate(${(t*97%13)-6}px,${(t*71%11)-5}px)`;
 }
 window.render=render;
-window.ready=document.fonts.ready.then(()=>{render(0);return true});
+window.ready=document.fonts.ready.then(()=>{fitHeads();render(0);return true});
 if(!navigator.webdriver){
   const qs=new URLSearchParams(location.search);
-  if(qs.has('t'))document.fonts.ready.then(()=>render(+qs.get('t')));
-  else{let t0;const loop=ts=>{t0??=ts;render(((ts-t0)/1000)%20.5);requestAnimationFrame(loop)};requestAnimationFrame(loop)}
+  if(qs.has('t'))window.ready.then(()=>render(+qs.get('t')));
+  else window.ready.then(()=>{let t0;const loop=ts=>{t0??=ts;render(((ts-t0)/1000)%20.5);requestAnimationFrame(loop)};requestAnimationFrame(loop)});
 }
 </script>
 </body>

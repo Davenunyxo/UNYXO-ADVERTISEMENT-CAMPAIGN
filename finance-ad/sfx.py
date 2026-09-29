@@ -145,6 +145,26 @@ def tension(d=1.2):
     return (np.sin(2 * np.pi * 220 * t) + np.sin(2 * np.pi * 233.1 * t) + 0.5 * np.sin(2 * np.pi * 110 * t)) * env(len(t), 0.02, 0.45) * 0.4
 
 
+def hat(d=0.06):
+    return band_noise(d, 7000, 16000) * env(int(SR * d), 0.0005, 0.012)
+
+
+def snap():
+    """Crisp 'snap' transient (a nod to KitKat) for the shell lift."""
+    n = int(SR * 0.09)
+    crack = band_noise(0.09, 1800, 12000) * env(n, 0.0002, 0.006)
+    wood = np.sin(2 * np.pi * 1350 * t_axis(0.09)) * env(n, 0.0005, 0.012)
+    return crack + 0.5 * wood
+
+
+def pad(freqs, d, attack=0.8, release=1.2):
+    """Warm detuned pad; notes in Hz."""
+    t = t_axis(d)
+    out = sum(np.sin(2 * np.pi * f * (1 + dt) * t + ph) for f in freqs for dt, ph in ((-0.003, 0), (0.003, 1.3)))
+    shape = np.clip(t / attack, 0, 1) * np.clip((d - t) / release, 0, 1)
+    return out / (2 * len(freqs)) * shape * (1 + 0.08 * np.sin(2 * np.pi * 0.25 * t))
+
+
 # ------------------------------------------------------------------- cue sheet
 # 0–6 · the shell game
 add(0.0, whoosh(0.75, False), 0.35)                  # macro close-up snaps back (fast pan-in)
@@ -196,6 +216,16 @@ add(16.95, shimmer(1.4, 18), 0.4)
 for k in range(2):
     add(17.4 + 0.24 * k, tick(1760 + 200 * k, 0.05), 0.18)
 add(18.2, chime([1047, 1319, 1568, 2093], 0.09, 0.5), 0.3)
+
+# music bed: dark pad under the shell game, 120 BPM pulse through dashboard + growth, resolving pad on the logo
+add(0.0, pad([110.0, 164.8, 246.9, 261.6], 6.2, 0.4, 0.7), 0.16)           # A minor(add9) — unresolved
+for b in np.arange(6.5, 12.0, 0.5):
+    add(b, kick(), 0.2)
+for h in np.arange(6.25, 15.5, 0.25):
+    add(h, hat(), 0.05 if (h * 4) % 2 else 0.08, 0.35 if (h * 4) % 2 else -0.35)
+add(6.0, pad([130.8, 196.0, 246.9, 329.6], 6.0, 1.2, 1.0), 0.07)           # Cmaj7 bed under the dashboard
+add(4.0, snap(), 0.55)                                                        # the lift snaps open
+add(15.9, pad([130.8, 164.8, 196.0, 246.9, 293.7], 4.1, 0.6, 0.8), 0.2)    # Cmaj9 — resolves on the brand
 
 # --------------------------------------------------------------- master
 ir_t = t_axis(1.2)
