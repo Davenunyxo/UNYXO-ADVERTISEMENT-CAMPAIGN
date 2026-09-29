@@ -33,14 +33,16 @@ if (stills) {
   }
 } else {
   const out = outArg || (portrait ? 'out/unyxo-smart-booking-ad-reels.mp4' : 'out/unyxo-smart-booking-ad.mp4');
-  // Instagram-friendly: H.264 High@4.2, yuv420p, constant 30fps, high bitrate, AAC audio, faststart
+  // Instagram Reels spec: 1080×1920, H.264 High@4.2, yuv420p BT.709, constant 30fps, CRF 15 (capped 25 Mbps), AAC 48 kHz, faststart
   const ff = spawn(ffmpeg, ['-y', '-f', 'image2pipe', '-framerate', String(fps), '-i', '-',
     // sound effects from `python3 sfx.py` (ad/sfx.wav); silent track if it hasn't been generated
     ...(existsSync(audio) ? ['-i', audio] : ['-f', 'lavfi', '-i', 'anullsrc=channel_layout=stereo:sample_rate=48000']),
     '-t', String(duration),
     '-c:v', 'libx264', '-preset', 'slow', '-profile:v', 'high', '-level', '4.2', '-crf', '15',
     '-maxrate', '25M', '-bufsize', '50M', '-pix_fmt', 'yuv420p', '-r', String(fps), '-g', String(fps * 2),
-    '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', out],
+    // BT.709 colour tags so Instagram/phones don't shift the colours; 48 kHz stereo AAC
+    '-color_primaries', 'bt709', '-color_trc', 'bt709', '-colorspace', 'bt709', '-color_range', 'tv',
+    '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-ac', '2', '-movflags', '+faststart', out],
     { stdio: ['pipe', 'inherit', 'inherit'] });
   const frames = Math.round(fps * duration);
   for (let f = 0; f < frames; f++) {
