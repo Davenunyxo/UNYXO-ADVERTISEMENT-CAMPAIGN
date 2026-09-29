@@ -151,7 +151,7 @@ add(0.0, whoosh(0.75, False), 0.35)                  # macro close-up snaps back
 add(0.02, boom(1.4, 80, 35), 0.4)
 add(0.66, whoosh(0.4, False), 0.25, 0.0)             # cash drops in
 add(1.0, slap(), 0.55)
-add(1.33, clack(820), 0.55)                          # coconut covers the cash
+add(1.33, clack(820), 0.55)                          # shell covers the cash
 for k in range(9):                                   # nine fast shuffles, 0.2s each
     s, pan = 1.55 + k * 0.23, (-0.5, 0.5, -0.3, 0.3, 0.5, -0.5, 0.3, -0.3, 0.0)[k]
     add(s, whoosh(0.2, k % 2 == 0), 0.28, pan)
